@@ -828,13 +828,8 @@ function cageHTML(kennel, key, label, max) {
     ${birthHTML}
   </div>`;
 }
- 
-function renderKennel(kennel) {
-  const el = document.getElementById('kv-'+kennel);
-  const isBirth = kennel==='birth';
-  const rows = 10;
-  const max  = isBirth ? 1 : 2;
- 
+
+// 統計計算
   let used=0, total=0, count=0;
   for (let r=1; r<=rows; r++) {
     if (isBirth) {
@@ -844,30 +839,46 @@ function renderKennel(kennel) {
         if (n>0) { used++; count+=n; }
       });
     } else {
-      ['L','R'].forEach(s => ['上','下'].forEach(lv => {
+      // 犬舎A・B: 壁側(W)・通路側(P) × 左右
+      ['LW','LP','RP','RW'].forEach(k => {
         total++;
-        const n = getCageDogs(kennel,`${s}${r}${lv}`).length;
+        const n = getCageDogs(kennel,`${k}${r}`).length;
         if (n>0) { used++; count+=n; }
-      }));
+      });
     }
   }
   const capacity = isBirth ? total : total*2;
- 
-  let leftHTML='', rightHTML='';
-  for (let r=rows; r>=1; r--) {
-    if (isBirth) {
-      leftHTML  += cageHTML(kennel,`L${r}`,`左 ${r}番`,max) + '<div style="height:5px;"></div>';
-      rightHTML += cageHTML(kennel,`R${r}`,`右 ${r}番`,max) + '<div style="height:5px;"></div>';
-    } else {
-      leftHTML  += `<div class="row-label">${r}列</div>`;
-      leftHTML  += cageHTML(kennel,`L${r}上`,`左${r} 上段`,max);
-      leftHTML  += cageHTML(kennel,`L${r}下`,`左${r} 下段`,max);
-      leftHTML  += '<div style="height:5px;"></div>';
-      rightHTML += `<div class="row-label">${r}列</div>`;
-      rightHTML += cageHTML(kennel,`R${r}上`,`右${r} 上段`,max);
-      rightHTML += cageHTML(kennel,`R${r}下`,`右${r} 下段`,max);
-      rightHTML += '<div style="height:5px;"></div>';
+
+ if (isBirth) {
+    // お産部屋は従来通り
+    let leftHTML='', rightHTML='';
+    for (let r=rows; r>=1; r--) {
+      leftHTML  += cageHTML(kennel,`L${r}`,r,max) + '<div style="height:4px;"></div>';
+      rightHTML += cageHTML(kennel,`R${r}`,r,max) + '<div style="height:4px;"></div>';
     }
+    el.innerHTML = `
+      <div class="stats-bar">
+        <div class="stat"><strong>${count}</strong>頭在室</div>
+        <div class="stat"><strong>${used}/${total}</strong>ケージ使用中</div>
+        <div class="stat"><strong>${capacity-count}</strong>頭収容可能</div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 32px 1fr;gap:4px;align-items:start;">
+        <div class="cage-col">${leftHTML}</div>
+        <div class="aisle">通　路</div>
+        <div class="cage-col">${rightHTML}</div>
+      </div>`;
+    return;
+  }
+
+  // 犬舎A・B 新レイアウト
+  // 列構成: [壁側(LW)] [通路側(LP)] [通路] [通路側(RP)] [壁側(RW)]
+  // 奥(8列目)が上、入り口(1列目)が下 → rows→1 の順で上から並べる
+  let lwHTML='', lpHTML='', rpHTML='', rwHTML='';
+  for (let r=rows; r>=1; r--) {
+    lwHTML += cageHTML(kennel,`LW${r}`,r,max) + '<div style="height:4px;"></div>';
+    lpHTML += cageHTML(kennel,`LP${r}`,r,max) + '<div style="height:4px;"></div>';
+    rpHTML += cageHTML(kennel,`RP${r}`,r,max) + '<div style="height:4px;"></div>';
+    rwHTML += cageHTML(kennel,`RW${r}`,r,max) + '<div style="height:4px;"></div>';
   }
  
   el.innerHTML = `
@@ -877,10 +888,25 @@ function renderKennel(kennel) {
       <div class="stat"><strong>${capacity-count}</strong>頭収容可能</div>
     </div>
     <div class="kennel-layout">
-      <div class="cage-col">${leftHTML}</div>
+      <div class="cage-col">
+        <div class="col-label">壁側（下）</div>
+        ${lwHTML}
+      </div>
+      <div class="cage-col">
+        <div class="col-label">通路側（上）</div>
+        ${lpHTML}
+      </div>
       <div class="aisle">通　路</div>
-      <div class="cage-col">${rightHTML}</div>
-    </div>`;
+      <div class="cage-col">
+        <div class="col-label">通路側（上）</div>
+        ${rpHTML}
+      </div>
+      <div class="cage-col">
+        <div class="col-label">壁側（下）</div>
+        ${rwHTML}
+      </div>
+    </div>
+    <div class="entrance-label">&#9660; 入り口</div>`;
 }
  
 function openCageModal(kennel, key, max) {
