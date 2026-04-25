@@ -52,31 +52,66 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sa
 .stat strong { font-size: 20px; font-weight: 700; color: #C05A10; display: block; }
  
 /* 犬舎レイアウト */
-.kennel-layout { display: grid; grid-template-columns: 1fr 36px 1fr; gap: 6px; align-items: start; }
+/* 全体: [壁下][通上] 通路 [通上][壁下] の4カラム */
+.kennel-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr 32px 1fr 1fr;
+  gap: 4px;
+  align-items: end; /* 入り口=下なので下揃え */
+}
 .aisle {
-  background: #E8C89A; border: 2px solid #C0A070; border-radius: 10px;
+  background: #E8C89A; border: 2px solid #C0A070; border-radius: 8px;
   display: flex; align-items: center; justify-content: center;
-  font-size: 11px; color: #705030; font-weight: 600;
-  writing-mode: vertical-rl; padding: 10px 0; min-height: 200px;
+  font-size: 10px; color: #705030; font-weight: 700;
+  writing-mode: vertical-rl; padding: 8px 0;
+  align-self: stretch;
 }
-.cage-col { display: flex; flex-direction: column; gap: 5px; }
-.row-label { font-size: 10px; color: #A08060; font-weight: 600; margin-bottom: 2px; padding-left: 2px; }
- 
+.cage-col { display: flex; flex-direction: column; gap: 4px; }
+.col-label {
+  text-align: center; font-size: 10px; color: #A08060; font-weight: 700;
+  padding: 3px 0; border-bottom: 2px solid #E0C0A0; margin-bottom: 2px;
+}
+.row-num {
+  position: absolute; left: 3px; top: 50%; transform: translateY(-50%);
+  font-size: 9px; color: #C0A080; font-weight: 700; line-height: 1;
+}
+
+/* ケージ：横並び2頭 */
 .cage {
-  border: 2px solid #D8C0A8; border-radius: 10px;
-  padding: 7px 9px; cursor: pointer; background: #FFF8F4; min-height: 54px;
+  position: relative;
+  border: 2px solid #D8C0A8; border-radius: 8px;
+  padding: 4px 6px 4px 18px; /* 左に列番号スペース */
+  cursor: pointer; background: #FFF8F4;
   transition: border-color 0.15s, box-shadow 0.15s;
+  min-height: 38px;
 }
-.cage:hover { border-color: #E8832A; box-shadow: 0 0 0 3px rgba(232,131,42,0.15); }
-.cage.full { background: #FFF0E0; border-color: #E8A060; }
-.cage.half { background: #FFF8EE; border-color: #E8C090; }
+.cage:hover { border-color: #E8832A; box-shadow: 0 0 0 2px rgba(232,131,42,0.15); }
+.cage.full  { background: #FFF0E0; border-color: #E8A060; }
+.cage.half  { background: #FFF8EE; border-color: #E8C090; }
 .cage.empty { background: #F5F0EA; border-color: #D0C0B0; }
-.cage-id { font-size: 9px; color: #B09070; font-weight: 600; margin-bottom: 3px; }
-.cage-dogs { display: flex; flex-direction: column; gap: 3px; }
-.dog-tag { display: inline-flex; align-items: center; font-size: 11px; font-weight: 600; padding: 2px 7px; border-radius: 10px; width: fit-content; }
+
+/* 2頭横並び */
+.cage-dogs {
+  display: flex; flex-direction: row; gap: 3px;
+  flex-wrap: wrap; align-items: center;
+}
+.dog-tag {
+  display: inline-flex; align-items: center;
+  font-size: 10px; font-weight: 600;
+  padding: 2px 5px; border-radius: 8px;
+  white-space: nowrap; max-width: 100%;
+  overflow: hidden; text-overflow: ellipsis;
+}
 .dog-tag.female { background: #F5D0DC; color: #882244; }
 .dog-tag.male   { background: #C8DEFF; color: #114488; }
 .empty-tag { font-size: 10px; color: #B0A090; }
+
+/* 入り口ラベル */
+.entrance-label {
+  text-align: center; font-size: 11px; color: #E8832A; font-weight: 700;
+  padding: 6px 0 2px; letter-spacing: 1px;
+}
+
 .birth-info { margin-top: 5px; padding-top: 5px; border-top: 1px solid #E0C8B0; font-size: 10px; color: #806040; line-height: 1.8; font-weight: 500; }
 .birth-info .bdate { color: #C05A10; font-weight: 700; }
  
