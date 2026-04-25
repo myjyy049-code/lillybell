@@ -8,7 +8,7 @@
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sans JP', sans-serif; background: #FFF0E4; color: #1A1A1A; min-height: 100vh; }
-
+ 
 /* ヘッダー */
 .app-header {
   background: linear-gradient(135deg, #E8832A 0%, #F0AA40 100%);
@@ -29,12 +29,12 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sa
 }
 .tab.active { background: #FFF0E4; color: #C05A10; }
 .tab:hover:not(.active) { background: rgba(255,255,255,0.35); }
-
+ 
 /* コンテンツ */
 .content { padding: 16px; max-width: 800px; margin: 0 auto; }
 .page { display: none; }
 .page.active { display: block; }
-
+ 
 /* サブタブ */
 .sub-tabs { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
 .stab {
@@ -45,77 +45,51 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sa
 .stab.active { background: #E8832A; color: #fff; border-color: #E8832A; }
 .kview { display: none; }
 .kview.active { display: block; }
-
+ 
 /* 統計バー */
 .stats-bar { display: flex; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; }
 .stat { background: #fff; border: 2px solid #E0C0A0; border-radius: 10px; padding: 8px 14px; font-size: 12px; color: #805030; font-weight: 500; }
 .stat strong { font-size: 20px; font-weight: 700; color: #C05A10; display: block; }
-
+ 
 /* 犬舎レイアウト */
-/* 全体: [壁下][通上] 通路 [通上][壁下] の4カラム */
-.kennel-layout {
-  display: grid;
-  grid-template-columns: 1fr 1fr 32px 1fr 1fr;
-  gap: 4px;
-  align-items: end; /* 入り口=下なので下揃え */
-}
+.kennel-layout { display: grid; grid-template-columns: 1fr 36px 1fr; gap: 6px; align-items: start; }
 .aisle {
-  background: #E8C89A; border: 2px solid #C0A070; border-radius: 8px;
+  background: #E8C89A; border: 2px solid #C0A070; border-radius: 10px;
   display: flex; align-items: center; justify-content: center;
-  font-size: 10px; color: #705030; font-weight: 700;
-  writing-mode: vertical-rl; padding: 8px 0;
-  align-self: stretch;
+  font-size: 11px; color: #705030; font-weight: 600;
+  writing-mode: vertical-rl; padding: 10px 0; min-height: 200px;
 }
-.cage-col { display: flex; flex-direction: column; gap: 4px; }
-.col-label {
-  text-align: center; font-size: 10px; color: #A08060; font-weight: 700;
-  padding: 3px 0; border-bottom: 2px solid #E0C0A0; margin-bottom: 2px;
-}
-.row-num {
-  position: absolute; left: 3px; top: 50%; transform: translateY(-50%);
-  font-size: 9px; color: #C0A080; font-weight: 700; line-height: 1;
-}
-
-/* ケージ：横並び2頭 */
+.cage-col { display: flex; flex-direction: column; gap: 5px; }
+.row-label { font-size: 10px; color: #A08060; font-weight: 600; margin-bottom: 2px; padding-left: 2px; }
+ 
 .cage {
-  position: relative;
-  border: 2px solid #D8C0A8; border-radius: 8px;
-  padding: 4px 6px 4px 18px; /* 左に列番号スペース */
-  cursor: pointer; background: #FFF8F4;
+  border: 2px solid #D8C0A8; border-radius: 10px;
+  padding: 7px 9px; cursor: pointer; background: #FFF8F4; min-height: 54px;
   transition: border-color 0.15s, box-shadow 0.15s;
-  min-height: 38px;
 }
-.cage:hover { border-color: #E8832A; box-shadow: 0 0 0 2px rgba(232,131,42,0.15); }
-.cage.full  { background: #FFF0E0; border-color: #E8A060; }
-.cage.half  { background: #FFF8EE; border-color: #E8C090; }
+.cage:hover { border-color: #E8832A; box-shadow: 0 0 0 3px rgba(232,131,42,0.15); }
+.cage.full { background: #FFF0E0; border-color: #E8A060; }
+.cage.half { background: #FFF8EE; border-color: #E8C090; }
 .cage.empty { background: #F5F0EA; border-color: #D0C0B0; }
-
-/* 2頭横並び */
-.cage-dogs {
-  display: flex; flex-direction: row; gap: 3px;
-  flex-wrap: wrap; align-items: center;
-}
-.dog-tag {
-  display: inline-flex; align-items: center;
-  font-size: 10px; font-weight: 600;
-  padding: 2px 5px; border-radius: 8px;
-  white-space: nowrap; max-width: 100%;
-  overflow: hidden; text-overflow: ellipsis;
-}
+.cage-id { font-size: 9px; color: #B09070; font-weight: 600; margin-bottom: 3px; }
+.cage-dogs { display: flex; flex-direction: column; gap: 3px; }
+.dog-tag { display: inline-flex; align-items: center; font-size: 11px; font-weight: 600; padding: 2px 7px; border-radius: 10px; width: fit-content; }
 .dog-tag.female { background: #F5D0DC; color: #882244; }
 .dog-tag.male   { background: #C8DEFF; color: #114488; }
 .empty-tag { font-size: 10px; color: #B0A090; }
-
-/* 入り口ラベル */
-.entrance-label {
-  text-align: center; font-size: 11px; color: #E8832A; font-weight: 700;
-  padding: 6px 0 2px; letter-spacing: 1px;
-}
-
 .birth-info { margin-top: 5px; padding-top: 5px; border-top: 1px solid #E0C8B0; font-size: 10px; color: #806040; line-height: 1.8; font-weight: 500; }
 .birth-info .bdate { color: #C05A10; font-weight: 700; }
-
-/* 犬カード */
+ 
+/* ===== 犬の管理 ビュー切り替え ===== */
+.view-toggle { display: flex; gap: 6px; margin-bottom: 14px; }
+.vtoggle-btn {
+  padding: 6px 14px; font-size: 13px; font-weight: 600;
+  border-radius: 20px; cursor: pointer;
+  border: 2px solid #D0A080; background: #fff; color: #A06040; transition: all 0.15s;
+}
+.vtoggle-btn.active { background: #E8832A; color: #fff; border-color: #E8832A; }
+ 
+/* 犬カード (グリッドビュー) */
 .dog-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(148px, 1fr)); gap: 10px; margin-bottom: 16px; }
 .dog-card { background: #fff; border: 2px solid #E0C8B0; border-radius: 14px; padding: 13px; cursor: pointer; transition: border-color 0.15s, box-shadow 0.15s; position: relative; }
 .dog-card:hover { border-color: #E8832A; box-shadow: 0 2px 10px rgba(232,131,42,0.15); }
@@ -133,7 +107,28 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sa
   border-radius: 50%; display: flex; align-items: center; justify-content: center;
 }
 .dog-del-btn:hover { background: #E8832A; color: #fff; }
-
+ 
+/* 犬リストビュー */
+.dog-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
+.dog-list-row {
+  background: #fff; border: 2px solid #E0C8B0; border-radius: 12px;
+  padding: 10px 14px; display: flex; align-items: center; gap: 12px;
+  cursor: pointer; transition: border-color 0.15s, box-shadow 0.15s; position: relative;
+}
+.dog-list-row:hover { border-color: #E8832A; box-shadow: 0 2px 8px rgba(232,131,42,0.15); }
+.dog-list-avatar { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 19px; flex-shrink: 0; }
+.dog-list-info { flex: 1; min-width: 0; }
+.dog-list-name { font-size: 15px; font-weight: 700; color: #1A1A1A; }
+.dog-list-sub { font-size: 12px; color: #806040; margin-top: 2px; font-weight: 500; }
+.dog-list-badges { display: flex; gap: 5px; align-items: center; flex-shrink: 0; }
+.dog-list-del {
+  background: #F0E0D0; border: none; color: #A08060; font-size: 13px;
+  cursor: pointer; width: 22px; height: 22px;
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.dog-list-del:hover { background: #E8832A; color: #fff; }
+ 
 .add-btn {
   width: 100%; padding: 12px; border: 2px dashed #D0A080;
   border-radius: 12px; background: transparent; color: #A06040;
@@ -145,7 +140,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sa
   background: #E8832A; color: #fff; font-size: 13px; font-weight: 600; cursor: pointer;
 }
 .add-btn-sm:hover { background: #C05A10; }
-
+ 
 /* 詳細パネル */
 .detail-panel { display: none; background: #fff; border: 2px solid #E0C0A0; border-radius: 14px; padding: 16px; margin-bottom: 16px; }
 .detail-panel.open { display: block; }
@@ -161,13 +156,18 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sa
 .save-btn { margin-top: 8px; padding: 10px 20px; border-radius: 10px; border: none; background: #E8832A; color: #fff; font-size: 14px; cursor: pointer; font-weight: 700; }
 .save-btn:hover { background: #C05A10; }
 .edit-fields { display: flex; flex-direction: column; gap: 8px; margin-bottom: 14px; }
-
+ 
 /* シフトカレンダー */
 .month-nav { display: flex; align-items: center; gap: 14px; margin-bottom: 14px; }
 .month-nav button { background: #fff; border: 2px solid #D8C0A8; border-radius: 8px; padding: 6px 14px; cursor: pointer; font-size: 14px; color: #805030; font-weight: 600; }
 .month-nav button:hover { background: #FFF0E0; border-color: #E8832A; }
 .month-nav span { font-size: 17px; font-weight: 700; color: #1A1A1A; }
-
+ 
+/* シフト凡例 */
+.shift-legend { display: flex; gap: 10px; margin-bottom: 12px; flex-wrap: wrap; }
+.shift-legend-item { display: flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 600; color: #555; }
+.shift-legend-dot { width: 12px; height: 12px; border-radius: 3px; }
+ 
 .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; margin-bottom: 16px; }
 .cal-dow { text-align: center; font-size: 12px; font-weight: 700; padding: 5px 0; color: #806040; }
 .cal-dow.sun { color: #CC2222; }
@@ -180,15 +180,23 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sa
 .cal-date.sun { color: #CC2222; }
 .cal-date.sat { color: #1144AA; }
 .cal-shifts { display: flex; flex-direction: column; gap: 2px; }
-.cal-shift-tag { font-size: 9px; background: #D0EEC0; color: #2A5A10; border-radius: 4px; padding: 1px 4px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-
+/* スタッフ別シフトカラー (3人分) */
+.cal-shift-tag { font-size: 9px; border-radius: 4px; padding: 1px 4px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.shift-color-0 { background: #C8EFC8; color: #1A5A1A; }
+.shift-color-1 { background: #C8DEFF; color: #112288; }
+.shift-color-2 { background: #FFE0C0; color: #804020; }
+.shift-color-3 { background: #F5D0DC; color: #882244; }
+.shift-color-4 { background: #E8E0FF; color: #442288; }
+ 
 /* シフト編集モーダル */
 .staff-shift-list { display: flex; flex-direction: column; gap: 10px; margin-top: 8px; }
 .staff-shift-row { display: flex; align-items: center; gap: 6px; font-size: 13px; }
 .staff-shift-row label { width: 56px; flex-shrink: 0; font-weight: 700; color: #1A1A1A; font-size: 13px; }
 .staff-shift-row input[type=time] { flex: 1; padding: 6px 8px; border: 2px solid #D8C0A8; border-radius: 8px; font-size: 13px; font-family: inherit; background: #FFF8F4; color: #1A1A1A; }
 .time-sep { font-size: 12px; color: #B09070; font-weight: 600; }
-
+/* シフトモーダル スタッフ名カラードット */
+.shift-dot { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 4px; vertical-align: middle; }
+ 
 /* 給与 */
 .wage-section { margin-bottom: 20px; }
 .wage-section h3 { font-size: 12px; font-weight: 700; color: #A08060; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px; }
@@ -202,7 +210,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sa
 .wage-card .whours { font-size: 12px; color: #A08060; margin-bottom: 10px; font-weight: 500; }
 .wage-card .wamt { font-size: 26px; font-weight: 700; color: #C05A10; }
 .wage-card .wyen { font-size: 15px; }
-
+ 
 /* スタッフ管理 */
 .staff-card { background: #fff; border: 2px solid #E0C0A0; border-radius: 12px; padding: 14px 16px; margin-bottom: 10px; display: flex; align-items: center; gap: 12px; }
 .staff-icon { width: 40px; height: 40px; border-radius: 50%; background: #FFE0C0; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
@@ -211,7 +219,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sa
 .staff-info .swage { font-size: 12px; color: #A08060; margin-top: 2px; font-weight: 500; }
 .staff-edit-btn { padding: 6px 12px; border: 2px solid #D8C0A8; border-radius: 8px; background: #FFF8F4; color: #806040; font-size: 12px; font-weight: 600; cursor: pointer; }
 .staff-edit-btn:hover { border-color: #E8832A; color: #C05A10; background: #FFF0E0; }
-
+ 
 /* 交配管理 */
 .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
 .section-title { font-size: 14px; color: #806040; font-weight: 600; }
@@ -229,7 +237,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sa
 .birth-result .blabel { color: #A08060; font-size: 11px; font-weight: 500; }
 .breed-del { position: absolute; top: 10px; right: 10px; background: #F0E0D0; border: none; color: #A08060; font-size: 12px; cursor: pointer; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; }
 .breed-del:hover { background: #E8832A; color: #fff; }
-
+ 
 /* モーダル */
 .overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); align-items: center; justify-content: center; z-index: 200; }
 .overlay.open { display: flex; }
@@ -254,22 +262,22 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sa
 .mgrid3 input { padding: 9px 6px; border: 2px solid #D8C0A8; border-radius: 9px; font-size: 13px; font-family: inherit; text-align: center; background: #FFF8F4; color: #1A1A1A; font-weight: 600; }
 .mgrid3 input:focus { outline: none; border-color: #E8832A; }
 .mlabel { font-size: 11px; font-weight: 700; color: #A08060; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.3px; }
-
+ 
 /* ローディング・トースト */
 .loading { text-align: center; padding: 40px; color: #A08060; font-size: 14px; font-weight: 500; }
 .toast { position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%); background: #1A1A1A; color: #fff; padding: 10px 22px; border-radius: 22px; font-size: 14px; font-weight: 600; z-index: 300; opacity: 0; transition: opacity 0.3s; pointer-events: none; white-space: nowrap; }
 .toast.show { opacity: 1; }
-
+ 
 /* ボトムナビ */
 .bottom-nav { display: none; position: fixed; bottom: 0; left: 0; right: 0; background: #fff; border-top: 2px solid #E0C0A0; padding: 6px 0 max(6px, env(safe-area-inset-bottom)); z-index: 100; box-shadow: 0 -3px 16px rgba(180,100,0,0.12); }
 .bottom-nav-inner { display: flex; justify-content: space-around; }
 .bnav-btn { display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 4px 8px; background: none; border: none; cursor: pointer; color: #B09070; font-size: 10px; font-weight: 600; font-family: inherit; }
 .bnav-btn .bicon { font-size: 20px; line-height: 1; }
 .bnav-btn.active { color: #E8832A; }
-
+ 
 .paw-divider { text-align: center; color: #E8A060; font-size: 20px; margin: 16px 0; letter-spacing: 8px; }
 .hint { font-size: 12px; color: #A08060; margin-top: 8px; font-weight: 500; text-align: center; }
-
+ 
 @media (max-width: 600px) {
   .tab-bar { display: none; }
   .bottom-nav { display: block; }
@@ -277,12 +285,11 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sa
   .app-header { padding: 10px 14px 10px; }
   .app-header .header-top { margin-bottom: 0; }
   .dog-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 8px; }
-  .kennel-layout { grid-template-columns: 1fr 1fr 22px 1fr 1fr; gap: 3px; }
-  .cage { min-height: 34px; padding: 3px 4px 3px 16px; }
-  .row-num { font-size: 8px; }
-  .dog-tag { font-size: 9px; padding: 1px 4px; }
-  .col-label { font-size: 9px; }
-  .aisle { font-size: 8px; }
+  .kennel-layout { grid-template-columns: 1fr 26px 1fr; gap: 3px; }
+  .cage { min-height: 50px; padding: 5px 6px; }
+  .cage-id { font-size: 8px; }
+  .dog-tag { font-size: 10px; }
+  .aisle { font-size: 9px; }
   .wage-cards { grid-template-columns: 1fr 1fr; gap: 8px; }
   .cal-grid { gap: 2px; }
   .cal-cell { min-height: 55px; padding: 3px; }
@@ -292,26 +299,26 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sa
 </style>
 </head>
 <body>
-
+ 
 <div class="app-header">
   <div class="header-top">
     <div>
       <h1>&#127800; LillyBell</h1>
-      <div class="subtitle">&#20167;&#33385;&#32207;&#21512;&#31649;&#29702;&#12471;&#12473;&#12486;&#12512;</div>
+      <div class="subtitle">犬舎総合管理システム</div>
     </div>
   </div>
   <div class="tab-bar">
-    <button class="tab active" onclick="switchMain('dogs',this)" data-tab="dogs">&#128054; &#29356;&#12398;&#31649;&#29702;</button>
-    <button class="tab" onclick="switchMain('kennel',this)" data-tab="kennel">&#127968; &#29356;&#33385;</button>
-    <button class="tab" onclick="switchMain('breed',this)" data-tab="breed">&#128149; &#20132;&#37197;</button>
-    <button class="tab" onclick="switchMain('shift',this)" data-tab="shift">&#128197; &#12471;&#12501;&#12488;</button>
-    <button class="tab" onclick="switchMain('staff',this)" data-tab="staff">&#128101; &#12473;&#12479;&#12483;&#12501;</button>
-    <button class="tab" onclick="switchMain('wage',this)" data-tab="wage">&#128180; &#32989;&#19982;</button>
+    <button class="tab active" onclick="switchMain('dogs',this)" data-tab="dogs">&#128054; 犬の管理</button>
+    <button class="tab" onclick="switchMain('kennel',this)" data-tab="kennel">&#127968; 犬舎</button>
+    <button class="tab" onclick="switchMain('breed',this)" data-tab="breed">&#128149; 交配</button>
+    <button class="tab" onclick="switchMain('shift',this)" data-tab="shift">&#128197; シフト</button>
+    <button class="tab" onclick="switchMain('staff',this)" data-tab="staff">&#128101; スタッフ</button>
+    <button class="tab" onclick="switchMain('wage',this)" data-tab="wage">&#128180; 給与</button>
   </div>
 </div>
-
+ 
 <div class="content">
-
+ 
   <!-- 犬の管理 -->
   <div class="page active" id="page-dogs">
     <div class="detail-panel" id="detail-panel">
@@ -325,40 +332,48 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sa
       </div>
       <div class="edit-fields" id="edit-fields"></div>
       <div class="record-section" id="birth-history" style="display:none;">
-        <h4>&#20986;&#29987;&#23653;&#27508;</h4>
-        <div style="font-size:13px;color:#A08060;padding:6px 0;">&#20132;&#37197;&#31649;&#29702;&#12479;&#12502;&#12391;&#30906;&#35469;&#12391;&#12365;&#12414;&#12377;</div>
+        <h4>出産履歴</h4>
+        <div style="font-size:13px;color:#A08060;padding:6px 0;">交配管理タブで確認できます</div>
       </div>
       <div class="record-section">
-        <h4>&#20581;&#24247;&#12513;&#12514;</h4>
-        <textarea class="memo-box" id="dog-memo" placeholder="&#27880;&#35352;&#12375;&#12390;&#12362;&#12365;&#12383;&#12356;&#12371;&#12392;&#12434;&#20837;&#21147;..."></textarea>
-        <button class="save-btn" onclick="saveDogEdit()">&#20445;&#23384;</button>
+        <h4>健康メモ</h4>
+        <textarea class="memo-box" id="dog-memo" placeholder="注記しておきたいことを入力..."></textarea>
+        <button class="save-btn" onclick="saveDogEdit()">保存</button>
       </div>
     </div>
-    <div class="dog-grid" id="dog-grid"><div class="loading">&#35501;&#12415;&#36796;&#12415;&#20013;...</div></div>
-    <button class="add-btn" onclick="openModal('add-dog-overlay')">&#65291; &#29356;&#12434;&#36861;&#21152;</button>
+ 
+    <!-- ビュー切り替えボタン -->
+    <div class="view-toggle">
+      <button class="vtoggle-btn active" id="btn-grid-view" onclick="switchDogView('grid')">&#9638; グリッド</button>
+      <button class="vtoggle-btn" id="btn-list-view" onclick="switchDogView('list')">&#9776; リスト</button>
+    </div>
+ 
+    <div class="dog-grid" id="dog-grid"><div class="loading">読み込み中...</div></div>
+    <div class="dog-list" id="dog-list" style="display:none;"></div>
+    <button class="add-btn" onclick="openModal('add-dog-overlay')">&#65291; 犬を追加</button>
   </div>
-
+ 
   <!-- 犬舎 -->
   <div class="page" id="page-kennel">
     <div class="sub-tabs">
-      <button class="stab active" onclick="switchKennel('A',this)">&#29356;&#33385; A</button>
-      <button class="stab" onclick="switchKennel('B',this)">&#29356;&#33385; B</button>
-      <button class="stab" onclick="switchKennel('birth',this)">&#127868; &#12362;&#29987;&#37096;&#23627;</button>
+      <button class="stab active" onclick="switchKennel('A',this)">犬舎 A</button>
+      <button class="stab" onclick="switchKennel('B',this)">犬舎 B</button>
+      <button class="stab" onclick="switchKennel('birth',this)">&#127868; お産部屋</button>
     </div>
     <div class="kview active" id="kv-A"></div>
     <div class="kview" id="kv-B"></div>
     <div class="kview" id="kv-birth"></div>
   </div>
-
+ 
   <!-- 交配管理 -->
   <div class="page" id="page-breed">
     <div class="section-header">
-      <span class="section-title">&#20132;&#37197;&#35352;&#37682;</span>
-      <button class="add-btn-sm" onclick="openBreedModal()">&#65291; &#36861;&#21152;</button>
+      <span class="section-title">交配記録</span>
+      <button class="add-btn-sm" onclick="openBreedModal()">&#65291; 追加</button>
     </div>
-    <div id="breed-list"><div class="loading">&#35501;&#12415;&#36796;&#12415;&#20013;...</div></div>
+    <div id="breed-list"><div class="loading">読み込み中...</div></div>
   </div>
-
+ 
   <!-- シフト -->
   <div class="page" id="page-shift">
     <div class="month-nav">
@@ -366,68 +381,71 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sa
       <span id="month-label"></span>
       <button onclick="changeMonth(1)">&#9654;</button>
     </div>
+    <div class="shift-legend" id="shift-legend"></div>
     <div class="cal-grid" id="cal-grid"></div>
   </div>
-
+ 
   <!-- スタッフ管理 -->
   <div class="page" id="page-staff">
     <div class="section-header">
-      <span class="section-title">&#12473;&#12479;&#12483;&#12501;&#19968;&#35235;</span>
+      <span class="section-title">スタッフ一覧</span>
     </div>
-    <div id="staff-list-view"><div class="loading">&#35501;&#12415;&#36796;&#12415;&#20013;...</div></div>
+    <div id="staff-list-view"><div class="loading">読み込み中...</div></div>
   </div>
-
+ 
   <!-- 給与 -->
   <div class="page" id="page-wage">
     <div class="wage-section">
-      <h3>&#26178;&#32989;&#35373;&#23450;</h3>
+      <h3>時給設定</h3>
       <div class="hourly-box" id="hourly-list"></div>
     </div>
     <div class="wage-section">
-      <h3>&#20170;&#26376;&#12398;&#32989;&#19982;</h3>
+      <h3>今月の給与</h3>
       <div class="wage-cards" id="wage-cards"></div>
     </div>
     <div class="paw-divider">&#128062; &#128062; &#128062;</div>
-    <p class="hint">&#12471;&#12501;&#12488;&#34920;&#12398;&#21202;&#21153;&#26178;&#38291; &#215; &#26178;&#32989;&#12391;&#33258;&#21205;&#35336;&#31639;</p>
+    <p class="hint">シフト表の勤務時間 &times; 時給で自動計算</p>
   </div>
-
+ 
 </div>
-
+ 
 <!-- ボトムナビ -->
 <nav class="bottom-nav">
   <div class="bottom-nav-inner">
-    <button class="bnav-btn active" onclick="switchMain('dogs',this)" data-tab="dogs"><span class="bicon">&#128054;</span>&#29356;</button>
-    <button class="bnav-btn" onclick="switchMain('kennel',this)" data-tab="kennel"><span class="bicon">&#127968;</span>&#29356;&#33385;</button>
-    <button class="bnav-btn" onclick="switchMain('breed',this)" data-tab="breed"><span class="bicon">&#128149;</span>&#20132;&#37197;</button>
-    <button class="bnav-btn" onclick="switchMain('shift',this)" data-tab="shift"><span class="bicon">&#128197;</span>&#12471;&#12501;&#12488;</button>
-    <button class="bnav-btn" onclick="switchMain('staff',this)" data-tab="staff"><span class="bicon">&#128101;</span>&#12473;&#12479;&#12483;&#12501;</button>
-    <button class="bnav-btn" onclick="switchMain('wage',this)" data-tab="wage"><span class="bicon">&#128180;</span>&#32989;&#19982;</button>
+    <button class="bnav-btn active" onclick="switchMain('dogs',this)" data-tab="dogs"><span class="bicon">&#128054;</span>犬</button>
+    <button class="bnav-btn" onclick="switchMain('kennel',this)" data-tab="kennel"><span class="bicon">&#127968;</span>犬舎</button>
+    <button class="bnav-btn" onclick="switchMain('breed',this)" data-tab="breed"><span class="bicon">&#128149;</span>交配</button>
+    <button class="bnav-btn" onclick="switchMain('shift',this)" data-tab="shift"><span class="bicon">&#128197;</span>シフト</button>
+    <button class="bnav-btn" onclick="switchMain('staff',this)" data-tab="staff"><span class="bicon">&#128101;</span>スタッフ</button>
+    <button class="bnav-btn" onclick="switchMain('wage',this)" data-tab="wage"><span class="bicon">&#128180;</span>給与</button>
   </div>
 </nav>
-
+ 
 <div class="toast" id="toast"></div>
-
+ 
 <!-- 犬追加モーダル -->
 <div class="overlay" id="add-dog-overlay">
   <div class="modal">
     <button class="modal-close" onclick="closeModal('add-dog-overlay')">&#10005;</button>
-    <h3>&#29356;&#12434;&#36861;&#21152;</h3>
-    <div class="mlabel">&#21517;&#21069;</div>
-    <input class="minput" id="new-name" placeholder="&#12418;&#12418;&#12053;">
-    <div class="mlabel">&#29356;&#31278;</div>
-    <input class="minput" id="new-breed" placeholder="&#12488;&#12452;&#12503;&#12540;&#12489;&#12523;">
-    <div class="mlabel">&#24615;&#21029;</div>
+    <h3>犬を追加</h3>
+    <div class="mlabel">名前</div>
+    <input class="minput" id="new-name" placeholder="もも">
+    <div class="mlabel">犬種</div>
+    <input class="minput" id="new-breed" placeholder="トイプードル">
+    <div class="mlabel">性別</div>
     <select class="mselect" id="new-gender">
-      <option value="female">&#12513;&#12473;</option>
-      <option value="male">&#12458;&#12473;</option>
+      <option value="female">メス</option>
+      <option value="male">オス</option>
     </select>
-    <div class="mlabel">&#29983;&#24180;&#26376;&#26085;</div>
+    <div class="mlabel">生年月日</div>
     <input class="minput" id="new-born" placeholder="2023.04.01">
-    <button class="save-btn" style="width:100%;margin-top:4px;" onclick="saveDog()">&#36861;&#21152;&#12377;&#12427;</button>
-    <button class="mclose-btn" onclick="closeModal('add-dog-overlay')">&#12461;&#12515;&#12531;&#12475;&#12523;</button>
+    <div class="mlabel">特徴</div>
+    <input class="minput" id="new-features" placeholder="特徴・メモ">
+    <button class="save-btn" style="width:100%;margin-top:4px;" onclick="saveDog()">追加する</button>
+    <button class="mclose-btn" onclick="closeModal('add-dog-overlay')">キャンセル</button>
   </div>
 </div>
-
+ 
 <!-- ケージモーダル -->
 <div class="overlay" id="cage-overlay">
   <div class="modal">
@@ -436,95 +454,95 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sa
     <div id="modal-cage-body"></div>
     <div class="madd-row">
       <select id="cage-dog-select"></select>
-      <button onclick="assignDog()">&#21332;&#12426;&#24403;&#12390;</button>
+      <button onclick="assignDog()">割り当て</button>
     </div>
-    <button class="mclose-btn" onclick="closeModal('cage-overlay')">&#38281;&#12376;&#12427;</button>
+    <button class="mclose-btn" onclick="closeModal('cage-overlay')">閉じる</button>
   </div>
 </div>
-
+ 
 <!-- お産部屋出産情報モーダル -->
 <div class="overlay" id="birth-info-overlay">
   <div class="modal">
     <button class="modal-close" onclick="closeModal('birth-info-overlay')">&#10005;</button>
     <h3 id="bi-title"></h3>
-    <div class="mlabel">&#20986;&#29987;&#20104;&#23450;&#26085;</div>
+    <div class="mlabel">出産予定日</div>
     <input class="minput" id="bi-due" type="date">
-    <div class="mlabel">&#20986;&#29987;&#26085;</div>
+    <div class="mlabel">出産日</div>
     <input class="minput" id="bi-birth" type="date">
-    <div class="mlabel">&#29983;&#12414;&#12428;&#12383;&#23376;&#29392;&#25968;</div>
+    <div class="mlabel">生まれた子犬数</div>
     <div class="mgrid3">
-      <input id="bi-male" type="number" min="0" placeholder="&#9794;&#39604;&#25968;">
-      <input id="bi-female" type="number" min="0" placeholder="&#9792;&#39604;&#25968;">
-      <input id="bi-dead" type="number" min="0" placeholder="&#27515;&#29987;">
+      <input id="bi-male" type="number" min="0" placeholder="&#9794;頭数">
+      <input id="bi-female" type="number" min="0" placeholder="&#9792;頭数">
+      <input id="bi-dead" type="number" min="0" placeholder="死産">
     </div>
-    <button class="save-btn" style="width:100%;" onclick="saveBirthInfo()">&#20445;&#23384;</button>
-    <button class="mclose-btn" onclick="closeModal('birth-info-overlay')">&#12461;&#12515;&#12531;&#12475;&#12523;</button>
+    <button class="save-btn" style="width:100%;" onclick="saveBirthInfo()">保存</button>
+    <button class="mclose-btn" onclick="closeModal('birth-info-overlay')">キャンセル</button>
   </div>
 </div>
-
+ 
 <!-- 交配追加モーダル -->
 <div class="overlay" id="breed-overlay">
   <div class="modal">
     <button class="modal-close" onclick="closeModal('breed-overlay')">&#10005;</button>
-    <h3>&#20132;&#37197;&#35352;&#37682;&#12434;&#36861;&#21152;</h3>
-    <div class="mlabel">&#27597;&#29356;&#65288;&#12513;&#12473;&#65289;</div>
+    <h3>交配記録を追加</h3>
+    <div class="mlabel">母犬（メス）</div>
     <select class="mselect" id="b-female"></select>
-    <div class="mlabel">&#29261;&#29356;&#65288;&#12458;&#12473;&#65289;</div>
+    <div class="mlabel">父犬（オス）</div>
     <select class="mselect" id="b-male"></select>
-    <div class="mlabel">&#12473;&#12486;&#12540;&#12479;&#12473;</div>
+    <div class="mlabel">ステータス</div>
     <select class="mselect" id="b-status">
-      <option value="planned">&#20132;&#37197;&#20104;&#23450;</option>
-      <option value="pregnant">&#22950;&#22029;&#20013;</option>
-      <option value="done">&#23436;&#20102;</option>
+      <option value="planned">交配予定</option>
+      <option value="pregnant">妊娠中</option>
+      <option value="done">完了</option>
     </select>
-    <div class="mlabel">&#20132;&#37197;&#26085;</div>
+    <div class="mlabel">交配日</div>
     <input class="minput" id="b-mating-date" type="date">
-    <div class="mlabel">&#20986;&#29987;&#20104;&#23450;&#26085;</div>
+    <div class="mlabel">出産予定日</div>
     <input class="minput" id="b-due-date" type="date">
-    <div class="mlabel">&#20986;&#29987;&#26085;</div>
+    <div class="mlabel">出産日</div>
     <input class="minput" id="b-birth-date" type="date">
-    <div class="mlabel">&#20986;&#29987;&#25968;&#65288;&#23436;&#20102;&#26178;&#65289;</div>
+    <div class="mlabel">出産数（完了時）</div>
     <div class="mgrid3">
-      <input id="b-male-count" type="number" min="0" placeholder="&#9794;&#39604;&#25968;">
-      <input id="b-female-count" type="number" min="0" placeholder="&#9792;&#39604;&#25968;">
-      <input id="b-dead-count" type="number" min="0" placeholder="&#27515;&#29987;">
+      <input id="b-male-count" type="number" min="0" placeholder="&#9794;頭数">
+      <input id="b-female-count" type="number" min="0" placeholder="&#9792;頭数">
+      <input id="b-dead-count" type="number" min="0" placeholder="死産">
     </div>
-    <button class="save-btn" style="width:100%;" onclick="saveBreed()">&#36861;&#21152;&#12377;&#12427;</button>
-    <button class="mclose-btn" onclick="closeModal('breed-overlay')">&#12461;&#12515;&#12531;&#12475;&#12523;</button>
+    <button class="save-btn" style="width:100%;" onclick="saveBreed()">追加する</button>
+    <button class="mclose-btn" onclick="closeModal('breed-overlay')">キャンセル</button>
   </div>
 </div>
-
+ 
 <!-- シフト編集モーダル -->
 <div class="overlay" id="shift-overlay">
   <div class="modal">
     <button class="modal-close" onclick="closeModal('shift-overlay')">&#10005;</button>
     <h3 id="shift-modal-title"></h3>
     <div class="staff-shift-list" id="staff-shift-list"></div>
-    <button class="save-btn" style="width:100%;margin-top:14px;" onclick="saveShifts()">&#20445;&#23384;</button>
-    <button class="mclose-btn" onclick="closeModal('shift-overlay')">&#12461;&#12515;&#12531;&#12475;&#12523;</button>
+    <button class="save-btn" style="width:100%;margin-top:14px;" onclick="saveShifts()">保存</button>
+    <button class="mclose-btn" onclick="closeModal('shift-overlay')">キャンセル</button>
   </div>
 </div>
-
+ 
 <!-- スタッフ編集モーダル -->
 <div class="overlay" id="staff-edit-overlay">
   <div class="modal">
     <button class="modal-close" onclick="closeModal('staff-edit-overlay')">&#10005;</button>
-    <h3>&#12473;&#12479;&#12483;&#12501;&#32232;&#38598;</h3>
+    <h3>スタッフ編集</h3>
     <input type="hidden" id="edit-staff-id">
-    <div class="mlabel">&#21517;&#21069;</div>
-    <input class="minput" id="edit-staff-name" placeholder="&#21439;&#20013; &#12415;&#12422;&#12365;">
-    <div class="mlabel">&#26178;&#32989;&#65288;&#20870;&#65289;</div>
+    <div class="mlabel">名前</div>
+    <input class="minput" id="edit-staff-name" placeholder="田中 みゆき">
+    <div class="mlabel">時給（円）</div>
     <input class="minput" id="edit-staff-wage" type="number" placeholder="1000">
-    <button class="save-btn" style="width:100%;" onclick="saveStaff()">&#20445;&#23384;</button>
-    <button class="mclose-btn" onclick="closeModal('staff-edit-overlay')">&#12461;&#12515;&#12531;&#12475;&#12523;</button>
+    <button class="save-btn" style="width:100%;" onclick="saveStaff()">保存</button>
+    <button class="mclose-btn" onclick="closeModal('staff-edit-overlay')">キャンセル</button>
   </div>
 </div>
-
+ 
 <script>
 // ================= Supabase =================
 const SUPA_URL = 'https://akrtgasyenuptcoezwhs.supabase.co';
 const SUPA_KEY = 'sb_publishable_VbnT0A4f8QdDLkBXYC7sOw_k2cUVXTh';
-
+ 
 async function supaFetch(path, method='GET', body=null) {
   const headers = {
     'apikey': SUPA_KEY,
@@ -540,11 +558,20 @@ async function supaFetch(path, method='GET', body=null) {
   const text = await res.text();
   return text ? JSON.parse(text) : null;
 }
-
+ 
 // ================= 状態 =================
-const EMOJIS = [' ',' ',' ',' ',' ? ',' '];
+const EMOJIS = [' ',' ',' ',' ',' ',' ? '];
 const BG_COLORS = ['#FFE0EC','#FFF0D0','#D8EEFF','#E0FFE8','#F0E0FF','#FFE8D0'];
-
+ 
+// スタッフカラー (3人分 + 予備)
+const STAFF_COLORS = [
+  { bg: '#C8EFC8', text: '#1A5A1A' },
+  { bg: '#C8DEFF', text: '#112288' },
+  { bg: '#FFE0C0', text: '#804020' },
+  { bg: '#F5D0DC', text: '#882244' },
+  { bg: '#E8E0FF', text: '#442288' },
+];
+ 
 let dogs = [], cageAssignments = [], birthInfoMap = {}, breedRecords = [], staffList = [], shiftsMap = {};
 let currentMonth = new Date().getMonth();
 let currentYear  = new Date().getFullYear();
@@ -552,7 +579,8 @@ let currentKennel = 'A';
 let currentCageKey = null, currentCageMax = 2, currentBirthCageKey = null;
 let editingDogId = null, editingShiftDate = null;
 let addingNew = false;
-
+let dogViewMode = 'grid'; // 'grid' or 'list'
+ 
 // ================= ユーティリティ =================
 function showToast(msg) {
   const t = document.getElementById('toast');
@@ -562,21 +590,44 @@ function showToast(msg) {
 }
 function openModal(id)  { document.getElementById(id).classList.add('open'); }
 function closeModal(id) { document.getElementById(id).classList.remove('open'); }
-
+ 
+// スタッフインデックスからカラー取得
+function getStaffColor(idx) {
+  return STAFF_COLORS[idx % STAFF_COLORS.length];
+}
+ 
 // ================= 犬の管理 =================
 async function loadDogs() {
   dogs = await supaFetch('dogs?order=id.asc');
   renderDogs();
 }
-
+ 
 function dogLocLabel(loc) {
   if (loc==='birth') return 'お産部屋';
   if (loc==='A') return '犬舎A';
   if (loc==='B') return '犬舎B';
   return '未配置';
 }
-
+ 
+// ビュー切り替え
+function switchDogView(mode) {
+  dogViewMode = mode;
+  document.getElementById('btn-grid-view').classList.toggle('active', mode==='grid');
+  document.getElementById('btn-list-view').classList.toggle('active', mode==='list');
+  document.getElementById('dog-grid').style.display = mode==='grid' ? '' : 'none';
+  document.getElementById('dog-list').style.display = mode==='list' ? '' : 'none';
+  renderDogs();
+}
+ 
 function renderDogs() {
+  if (dogViewMode === 'grid') {
+    renderDogsGrid();
+  } else {
+    renderDogsList();
+  }
+}
+ 
+function renderDogsGrid() {
   const grid = document.getElementById('dog-grid');
   if (!dogs.length) { grid.innerHTML = '<p style="color:#A08060;font-size:14px;font-weight:500;">犬が登録されていません</p>'; return; }
   grid.innerHTML = dogs.map((d,i) => {
@@ -592,7 +643,31 @@ function renderDogs() {
     </div>`;
   }).join('');
 }
-
+ 
+function renderDogsList() {
+  const list = document.getElementById('dog-list');
+  if (!dogs.length) { list.innerHTML = '<p style="color:#A08060;font-size:14px;font-weight:500;">犬が登録されていません</p>'; return; }
+  list.innerHTML = dogs.map((d,i) => {
+    const emoji = d.emoji || EMOJIS[i % EMOJIS.length];
+    const bg    = d.bg    || BG_COLORS[i % BG_COLORS.length];
+    const genderLabel = d.gender==='female' ? 'メス' : 'オス';
+    const genderCls   = d.gender==='female' ? 'badge-f' : 'badge-m';
+    const featuresText = d.features ? `<span style="color:#A08060;"> ｜ ${d.features}</span>` : '';
+    return `<div class="dog-list-row" onclick="openDetail(${d.id})">
+      <div class="dog-list-avatar" style="background:${bg};">${emoji}</div>
+      <div class="dog-list-info">
+        <div class="dog-list-name">${d.name}</div>
+        <div class="dog-list-sub">${d.breed}${d.born ? ' ｜ ' + d.born : ''}${featuresText}</div>
+      </div>
+      <div class="dog-list-badges">
+        <span class="badge ${genderCls}">${genderLabel}</span>
+        <span class="badge badge-loc">${dogLocLabel(d.location)}</span>
+      </div>
+      <button class="dog-list-del" onclick="event.stopPropagation();deleteDog(${d.id})">&#10005;</button>
+    </div>`;
+  }).join('');
+}
+ 
 function openDetail(id) {
   editingDogId = id;
   const d = dogs.find(x=>x.id===id);
@@ -616,32 +691,35 @@ function openDetail(id) {
       <option value="male" ${d.gender==='male'?'selected':''}>オス</option>
     </select>
     <div class="mlabel">生年月日</div>
-    <input class="minput" id="edit-born" value="${d.born||''}" placeholder="2023.04.01" style="margin-bottom:0;">
+    <input class="minput" id="edit-born" value="${d.born||''}" placeholder="2023.04.01" style="margin-bottom:6px;">
+    <div class="mlabel">特徴</div>
+    <input class="minput" id="edit-features" value="${d.features||''}" placeholder="特徴・メモ" style="margin-bottom:0;">
   `;
   const panel = document.getElementById('detail-panel');
   panel.classList.add('open');
   panel.scrollIntoView({behavior:'smooth', block:'nearest'});
 }
-
+ 
 function closeDetail() {
   document.getElementById('detail-panel').classList.remove('open');
   editingDogId = null;
 }
-
+ 
 async function saveDogEdit() {
   if (!editingDogId) return;
-  const name   = document.getElementById('edit-name').value.trim();
-  const breed  = document.getElementById('edit-breed').value.trim();
-  const gender = document.getElementById('edit-gender').value;
-  const born   = document.getElementById('edit-born').value.trim();
-  const memo   = document.getElementById('dog-memo').value;
+  const name     = document.getElementById('edit-name').value.trim();
+  const breed    = document.getElementById('edit-breed').value.trim();
+  const gender   = document.getElementById('edit-gender').value;
+  const born     = document.getElementById('edit-born').value.trim();
+  const features = document.getElementById('edit-features').value.trim();
+  const memo     = document.getElementById('dog-memo').value;
   if (!name||!breed) { showToast('名前と犬種は必須です'); return; }
-  await supaFetch(`dogs?id=eq.${editingDogId}`, 'PATCH', {name, breed, gender, born, memo});
+  await supaFetch(`dogs?id=eq.${editingDogId}`, 'PATCH', {name, breed, gender, born, features, memo});
   showToast('保存しました');
   await loadDogs();
   closeDetail();
 }
-
+ 
 async function deleteDog(id) {
   if (!confirm('この犬を削除しますか？')) return;
   await supaFetch(`cage_assignments?dog_id=eq.${id}`, 'DELETE');
@@ -651,24 +729,25 @@ async function deleteDog(id) {
   await loadCageAssignments();
   renderKennel(currentKennel);
 }
-
+ 
 async function saveDog() {
   if (addingNew) return;
   addingNew = true;
-  const name   = document.getElementById('new-name').value.trim();
-  const breed  = document.getElementById('new-breed').value.trim();
-  const gender = document.getElementById('new-gender').value;
-  const born   = document.getElementById('new-born').value.trim();
+  const name     = document.getElementById('new-name').value.trim();
+  const breed    = document.getElementById('new-breed').value.trim();
+  const gender   = document.getElementById('new-gender').value;
+  const born     = document.getElementById('new-born').value.trim();
+  const features = document.getElementById('new-features').value.trim();
   if (!name||!breed) { showToast('名前と犬種は必須です'); addingNew=false; return; }
   const idx = dogs.length % EMOJIS.length;
-  await supaFetch('dogs', 'POST', {name, breed, gender, born, emoji:EMOJIS[idx], bg:BG_COLORS[idx]});
+  await supaFetch('dogs', 'POST', {name, breed, gender, born, features, emoji:EMOJIS[idx], bg:BG_COLORS[idx]});
   closeModal('add-dog-overlay');
-  ['new-name','new-breed','new-born'].forEach(id=>document.getElementById(id).value='');
+  ['new-name','new-breed','new-born','new-features'].forEach(id=>document.getElementById(id).value='');
   showToast('追加しました');
   await loadDogs();
   addingNew = false;
 }
-
+ 
 // ================= 犬舎 =================
 async function loadCageAssignments() {
   cageAssignments = await supaFetch('cage_assignments?select=*');
@@ -678,20 +757,21 @@ async function loadBirthInfo() {
   birthInfoMap = {};
   rows.forEach(r => { birthInfoMap[r.cage_key] = r; });
 }
-
+ 
 function getCageDogs(kennel, key) {
   return cageAssignments
     .filter(a=>a.kennel===kennel && a.cage_key===key)
     .map(a=>dogs.find(d=>d.id===a.dog_id))
     .filter(Boolean);
 }
-
-function cageHTML(kennel, key, rowNum, max) {
+ 
+function cageHTML(kennel, key, label, max) {
   const cDogs = getCageDogs(kennel, key);
   const cls = cDogs.length>=max?'full':cDogs.length>0?'half':'empty';
   const tagsHTML = cDogs.length===0
     ? '<span class="empty-tag">空き</span>'
-    : cDogs.map(d=>`<span class="dog-tag ${d.gender}">${d.emoji||' '}${d.name}</span>`).join('');
+    : cDogs.map(d=>`<span class="dog-tag ${d.gender}">${d.emoji||' '} ${d.name}</span>`).join('');
+ 
   let birthHTML = '';
   if (kennel==='birth' && cDogs.length>0) {
     const info = birthInfoMap[key];
@@ -702,25 +782,24 @@ function cageHTML(kennel, key, rowNum, max) {
         ${info.birth_date?`<div>出産: <span class="bdate">${info.birth_date}</span></div>`:''}
         ${(info.male_count||info.female_count)?`<div>&#9794;${info.male_count||0} &#9792;${info.female_count||0}${info.dead_count>0?' 死産'+info.dead_count:''}</div>`:''}
       </div>
-      <button onclick="event.stopPropagation();openBirthInfoModal('${key}','${dName}')" style="margin-top:5px;font-size:10px;color:#E8832A;background:#FFF5EE;border:1.5px solid #E8A060;border-radius:6px;padding:2px 6px;cursor:pointer;width:100%;font-weight:600;">出産情報を編集</button>`;
+      <button onclick="event.stopPropagation();openBirthInfoModal('${key}','${dName}')" style="margin-top:5px;font-size:11px;color:#E8832A;background:#FFF5EE;border:1.5px solid #E8A060;border-radius:7px;padding:3px 8px;cursor:pointer;width:100%;font-weight:600;">出産情報を編集</button>`;
     } else {
-      birthHTML = `<button onclick="event.stopPropagation();openBirthInfoModal('${key}','${dName}')" style="margin-top:4px;font-size:10px;color:#A08060;background:#F8F0E8;border:1.5px dashed #C8A880;border-radius:6px;padding:2px 6px;cursor:pointer;width:100%;font-weight:600;">&#127868; 出産情報</button>`;
+      birthHTML = `<button onclick="event.stopPropagation();openBirthInfoModal('${key}','${dName}')" style="margin-top:5px;font-size:11px;color:#A08060;background:#F8F0E8;border:1.5px dashed #C8A880;border-radius:7px;padding:3px 8px;cursor:pointer;width:100%;font-weight:600;">  出産情報を入力</button>`;
     }
   }
   return `<div class="cage ${cls}" onclick="openCageModal('${kennel}','${key}',${max})">
-    <span class="row-num">${rowNum}</span>
+    <div class="cage-id">${label}</div>
     <div class="cage-dogs">${tagsHTML}</div>
     ${birthHTML}
   </div>`;
 }
-
+ 
 function renderKennel(kennel) {
   const el = document.getElementById('kv-'+kennel);
   const isBirth = kennel==='birth';
-  const rows = isBirth ? 10 : 8;
+  const rows = 10;
   const max  = isBirth ? 1 : 2;
-
-  // 統計計算
+ 
   let used=0, total=0, count=0;
   for (let r=1; r<=rows; r++) {
     if (isBirth) {
@@ -730,48 +809,32 @@ function renderKennel(kennel) {
         if (n>0) { used++; count+=n; }
       });
     } else {
-      // 犬舎A・B: 壁側(W)・通路側(P) × 左右
-      ['LW','LP','RP','RW'].forEach(k => {
+      ['L','R'].forEach(s => ['上','下'].forEach(lv => {
         total++;
-        const n = getCageDogs(kennel,`${k}${r}`).length;
+        const n = getCageDogs(kennel,`${s}${r}${lv}`).length;
         if (n>0) { used++; count+=n; }
-      });
+      }));
     }
   }
   const capacity = isBirth ? total : total*2;
-
-  if (isBirth) {
-    // お産部屋は従来通り
-    let leftHTML='', rightHTML='';
-    for (let r=rows; r>=1; r--) {
-      leftHTML  += cageHTML(kennel,`L${r}`,r,max) + '<div style="height:4px;"></div>';
-      rightHTML += cageHTML(kennel,`R${r}`,r,max) + '<div style="height:4px;"></div>';
-    }
-    el.innerHTML = `
-      <div class="stats-bar">
-        <div class="stat"><strong>${count}</strong>頭在室</div>
-        <div class="stat"><strong>${used}/${total}</strong>ケージ使用中</div>
-        <div class="stat"><strong>${capacity-count}</strong>頭収容可能</div>
-      </div>
-      <div style="display:grid;grid-template-columns:1fr 32px 1fr;gap:4px;align-items:start;">
-        <div class="cage-col">${leftHTML}</div>
-        <div class="aisle">通　路</div>
-        <div class="cage-col">${rightHTML}</div>
-      </div>`;
-    return;
-  }
-
-  // 犬舎A・B 新レイアウト
-  // 列構成: [壁側(LW)] [通路側(LP)] [通路] [通路側(RP)] [壁側(RW)]
-  // 奥(8列目)が上、入り口(1列目)が下 → rows→1 の順で上から並べる
-  let lwHTML='', lpHTML='', rpHTML='', rwHTML='';
+ 
+  let leftHTML='', rightHTML='';
   for (let r=rows; r>=1; r--) {
-    lwHTML += cageHTML(kennel,`LW${r}`,r,max) + '<div style="height:4px;"></div>';
-    lpHTML += cageHTML(kennel,`LP${r}`,r,max) + '<div style="height:4px;"></div>';
-    rpHTML += cageHTML(kennel,`RP${r}`,r,max) + '<div style="height:4px;"></div>';
-    rwHTML += cageHTML(kennel,`RW${r}`,r,max) + '<div style="height:4px;"></div>';
+    if (isBirth) {
+      leftHTML  += cageHTML(kennel,`L${r}`,`左 ${r}番`,max) + '<div style="height:5px;"></div>';
+      rightHTML += cageHTML(kennel,`R${r}`,`右 ${r}番`,max) + '<div style="height:5px;"></div>';
+    } else {
+      leftHTML  += `<div class="row-label">${r}列</div>`;
+      leftHTML  += cageHTML(kennel,`L${r}上`,`左${r} 上段`,max);
+      leftHTML  += cageHTML(kennel,`L${r}下`,`左${r} 下段`,max);
+      leftHTML  += '<div style="height:5px;"></div>';
+      rightHTML += `<div class="row-label">${r}列</div>`;
+      rightHTML += cageHTML(kennel,`R${r}上`,`右${r} 上段`,max);
+      rightHTML += cageHTML(kennel,`R${r}下`,`右${r} 下段`,max);
+      rightHTML += '<div style="height:5px;"></div>';
+    }
   }
-
+ 
   el.innerHTML = `
     <div class="stats-bar">
       <div class="stat"><strong>${count}</strong>頭在室</div>
@@ -779,27 +842,12 @@ function renderKennel(kennel) {
       <div class="stat"><strong>${capacity-count}</strong>頭収容可能</div>
     </div>
     <div class="kennel-layout">
-      <div class="cage-col">
-        <div class="col-label">壁側（下）</div>
-        ${lwHTML}
-      </div>
-      <div class="cage-col">
-        <div class="col-label">通路側（上）</div>
-        ${lpHTML}
-      </div>
+      <div class="cage-col">${leftHTML}</div>
       <div class="aisle">通　路</div>
-      <div class="cage-col">
-        <div class="col-label">通路側（上）</div>
-        ${rpHTML}
-      </div>
-      <div class="cage-col">
-        <div class="col-label">壁側（下）</div>
-        ${rwHTML}
-      </div>
-    </div>
-    <div class="entrance-label">&#9660; 入り口</div>`;
+      <div class="cage-col">${rightHTML}</div>
+    </div>`;
 }
-
+ 
 function openCageModal(kennel, key, max) {
   currentKennel=kennel; currentCageKey=key; currentCageMax=max;
   const cDogs = getCageDogs(kennel, key);
@@ -820,7 +868,7 @@ function openCageModal(kennel, key, max) {
     : available.map(d=>`<option value="${d.id}">${d.emoji||' '} ${d.name}（${d.gender==='female'?'メス':'オス'}）</option>`).join('');
   openModal('cage-overlay');
 }
-
+ 
 async function removeDogFromCage(dogId) {
   await supaFetch(`cage_assignments?kennel=eq.${currentKennel}&cage_key=eq.${currentCageKey}&dog_id=eq.${dogId}`,'DELETE');
   await supaFetch(`dogs?id=eq.${dogId}`,'PATCH',{location:null});
@@ -829,7 +877,7 @@ async function removeDogFromCage(dogId) {
   renderKennel(currentKennel);
   openCageModal(currentKennel, currentCageKey, currentCageMax);
 }
-
+ 
 async function assignDog() {
   const sel = document.getElementById('cage-dog-select');
   const dogId = parseInt(sel.value);
@@ -843,7 +891,7 @@ async function assignDog() {
   renderKennel(currentKennel);
   openCageModal(currentKennel, currentCageKey, currentCageMax);
 }
-
+ 
 function openBirthInfoModal(key, dogName) {
   currentBirthCageKey = key;
   document.getElementById('bi-title').textContent = `  ${dogName} の出産情報`;
@@ -855,7 +903,7 @@ function openBirthInfoModal(key, dogName) {
   document.getElementById('bi-dead').value   = info.dead_count  ||'';
   openModal('birth-info-overlay');
 }
-
+ 
 async function saveBirthInfo() {
   const data = {
     cage_key:     currentBirthCageKey,
@@ -876,7 +924,7 @@ async function saveBirthInfo() {
   await loadBirthInfo();
   renderKennel('birth');
 }
-
+ 
 function switchKennel(k, el) {
   document.querySelectorAll('.stab').forEach(t=>t.classList.remove('active'));
   el.classList.add('active');
@@ -884,7 +932,7 @@ function switchKennel(k, el) {
   document.getElementById('kv-'+k).classList.add('active');
   currentKennel=k; renderKennel(k);
 }
-
+ 
 // ================= 交配管理 =================
 async function loadBreedRecords() {
   breedRecords = await supaFetch('breed_records?order=id.desc');
@@ -892,7 +940,7 @@ async function loadBreedRecords() {
 }
 const STATUS_LABEL = {pregnant:'妊娠中', planned:'交配予定', done:'完了'};
 const STATUS_CLS   = {pregnant:'pregnant', planned:'planned', done:'done'};
-
+ 
 function renderBreed() {
   const el = document.getElementById('breed-list');
   if (!breedRecords.length) { el.innerHTML='<p style="color:#A08060;font-size:14px;font-weight:500;text-align:center;padding:20px 0;">交配記録がありません</p>'; return; }
@@ -903,7 +951,7 @@ function renderBreed() {
     return `<div class="breed-card">
       <button class="breed-del" onclick="deleteBreed(${r.id})">&#10005;</button>
       <div class="breed-card-top">
-        <div class="breed-pair">&#9792; ${fm?fm.name:'?'} &#215; &#9794; ${ml?ml.name:'?'}</div>
+        <div class="breed-pair">&#9792; ${fm?fm.name:'?'} &times; &#9794; ${ml?ml.name:'?'}</div>
         <span class="bstatus ${STATUS_CLS[r.status]||'planned'}">${STATUS_LABEL[r.status]||r.status}</span>
       </div>
       <div class="breed-dates">
@@ -921,7 +969,7 @@ function renderBreed() {
     </div>`;
   }).join('');
 }
-
+ 
 function openBreedModal() {
   const females = dogs.filter(d=>d.gender==='female');
   const males   = dogs.filter(d=>d.gender==='male');
@@ -934,7 +982,7 @@ function openBreedModal() {
   ['b-mating-date','b-due-date','b-birth-date','b-male-count','b-female-count','b-dead-count'].forEach(id=>document.getElementById(id).value='');
   openModal('breed-overlay');
 }
-
+ 
 async function saveBreed() {
   const data = {
     female_id:    parseInt(document.getElementById('b-female').value)||null,
@@ -952,34 +1000,36 @@ async function saveBreed() {
   closeModal('breed-overlay');
   await loadBreedRecords();
 }
-
+ 
 async function deleteBreed(id) {
   if (!confirm('この交配記録を削除しますか？')) return;
   await supaFetch(`breed_records?id=eq.${id}`,'DELETE');
   showToast('削除しました');
   await loadBreedRecords();
 }
-
+ 
 // ================= スタッフ管理 =================
 async function loadStaff() {
   staffList = await supaFetch('staff?order=id.asc');
 }
-
+ 
 function renderStaffList() {
   const el = document.getElementById('staff-list-view');
   if (!staffList.length) { el.innerHTML='<div class="loading">スタッフが登録されていません</div>'; return; }
-  el.innerHTML = staffList.map(s => `
+  el.innerHTML = staffList.map((s,i) => {
+    const color = getStaffColor(i);
+    return `
     <div class="staff-card">
-      <div class="staff-icon">&#128101;</div>
+      <div class="staff-icon" style="background:${color.bg};color:${color.text};">&#128101;</div>
       <div class="staff-info">
         <div class="sname">${s.name}</div>
-        <div class="swage">時給 \${s.hourly_wage.toLocaleString()}</div>
+        <div class="swage">時給 &yen;${s.hourly_wage.toLocaleString()}</div>
       </div>
       <button class="staff-edit-btn" onclick="openStaffEdit(${s.id})">編集</button>
     </div>
-  `).join('');
+  `}).join('');
 }
-
+ 
 function openStaffEdit(id) {
   const s = staffList.find(x=>x.id===id);
   if (!s) return;
@@ -988,7 +1038,7 @@ function openStaffEdit(id) {
   document.getElementById('edit-staff-wage').value = s.hourly_wage;
   openModal('staff-edit-overlay');
 }
-
+ 
 async function saveStaff() {
   const id   = parseInt(document.getElementById('edit-staff-id').value);
   const name = document.getElementById('edit-staff-name').value.trim();
@@ -1001,7 +1051,7 @@ async function saveStaff() {
   renderStaffList();
   renderWage();
 }
-
+ 
 // ================= シフト =================
 async function loadShifts() {
   const y=currentYear, m=currentMonth+1;
@@ -1012,29 +1062,44 @@ async function loadShifts() {
   shiftsMap = {};
   rows.forEach(r=>{ shiftsMap[`${r.staff_id}_${r.work_date}`]=r; });
 }
-
+ 
+function renderShiftLegend() {
+  const el = document.getElementById('shift-legend');
+  el.innerHTML = staffList.map((s,i) => {
+    const color = getStaffColor(i);
+    const shortName = s.name.split(' ').pop() || s.name;
+    return `<div class="shift-legend-item">
+      <div class="shift-legend-dot" style="background:${color.bg};border:1.5px solid ${color.text};"></div>
+      ${shortName}
+    </div>`;
+  }).join('');
+}
+ 
 async function renderShiftCal() {
   await loadShifts();
   document.getElementById('month-label').textContent = `${currentYear}年${currentMonth+1}月`;
+  renderShiftLegend();
+ 
   const daysInMonth = new Date(currentYear,currentMonth+1,0).getDate();
   const firstDow    = new Date(currentYear,currentMonth,1).getDay();
   const DOWS = ['日','月','火','水','木','金','土'];
   const today = new Date();
-
+ 
   let html = DOWS.map((d,i)=>`<div class="cal-dow ${i===0?'sun':i===6?'sat':''}">${d}</div>`).join('');
   for (let i=0;i<firstDow;i++) html += '<div class="cal-cell empty-cell"></div>';
-
+ 
   for (let day=1; day<=daysInMonth; day++) {
     const dow = new Date(currentYear,currentMonth,day).getDay();
     const isToday = today.getFullYear()===currentYear && today.getMonth()===currentMonth && today.getDate()===day;
     const dateStr = `${currentYear}-${String(currentMonth+1).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
     const dateCls = dow===0?'sun':dow===6?'sat':'';
     let shiftsHTML = '';
-    staffList.forEach(s=>{
+    staffList.forEach((s,idx)=>{
       const sh = shiftsMap[`${s.id}_${dateStr}`];
       if (sh&&sh.start_time) {
-        const name = s.name.split(' ')[1]||s.name;
-        shiftsHTML += `<div class="cal-shift-tag">${name} ${sh.start_time.slice(0,5)}-${sh.end_time.slice(0,5)}</div>`;
+        const color = getStaffColor(idx);
+        const shortName = s.name.split(' ').pop() || s.name;
+        shiftsHTML += `<div class="cal-shift-tag" style="background:${color.bg};color:${color.text};">${shortName} ${sh.start_time.slice(0,5)}-${sh.end_time.slice(0,5)}</div>`;
       }
     });
     html += `<div class="cal-cell ${isToday?'today':''}" onclick="openShiftModal('${dateStr}',${day})">
@@ -1044,20 +1109,21 @@ async function renderShiftCal() {
   }
   document.getElementById('cal-grid').innerHTML = html;
 }
-
+ 
 function openShiftModal(dateStr, day) {
   editingShiftDate = dateStr;
   const dow = new Date(currentYear,currentMonth,day).getDay();
   const DOWS = ['日','月','火','水','木','金','土'];
   document.getElementById('shift-modal-title').textContent = `${currentMonth+1}月${day}日（${DOWS[dow]}）`;
   let html = '';
-  staffList.forEach(s=>{
+  staffList.forEach((s,idx)=>{
     const sh = shiftsMap[`${s.id}_${dateStr}`];
     const start = sh?.start_time?.slice(0,5)||'';
     const end   = sh?.end_time?.slice(0,5)  ||'';
-    const name  = s.name.split(' ')[1]||s.name;
+    const shortName = s.name.split(' ').pop() || s.name;
+    const color = getStaffColor(idx);
     html += `<div class="staff-shift-row">
-      <label>${name}</label>
+      <label><span class="shift-dot" style="background:${color.bg};border:1.5px solid ${color.text};"></span>${shortName}</label>
       <input type="time" id="shift-start-${s.id}" value="${start}">
       <span class="time-sep">?</span>
       <input type="time" id="shift-end-${s.id}" value="${end}">
@@ -1066,7 +1132,7 @@ function openShiftModal(dateStr, day) {
   document.getElementById('staff-shift-list').innerHTML = html;
   openModal('shift-overlay');
 }
-
+ 
 async function saveShifts() {
   await Promise.all(staffList.map(async s=>{
     const start = document.getElementById(`shift-start-${s.id}`).value;
@@ -1085,7 +1151,7 @@ async function saveShifts() {
   closeModal('shift-overlay');
   await renderShiftCal();
 }
-
+ 
 async function changeMonth(delta) {
   currentMonth+=delta;
   if (currentMonth>11) { currentMonth=0; currentYear++; }
@@ -1093,21 +1159,25 @@ async function changeMonth(delta) {
   await renderShiftCal();
   renderWageCards();
 }
-
+ 
 // ================= 給与 =================
 function renderWage() {
-  document.getElementById('hourly-list').innerHTML = staffList.map(s=>
-    `<div class="hourly-row">
-      <span>${s.name}</span>
+  document.getElementById('hourly-list').innerHTML = staffList.map((s,i)=> {
+    const color = getStaffColor(i);
+    return `<div class="hourly-row">
+      <span style="display:flex;align-items:center;gap:7px;">
+        <span style="display:inline-block;width:10px;height:10px;border-radius:3px;background:${color.bg};border:1.5px solid ${color.text};"></span>
+        ${s.name}
+      </span>
       <div style="display:flex;align-items:center;gap:5px;">
         <input type="number" value="${s.hourly_wage}" onchange="updateWage(${s.id},this.value)">
         <span style="font-size:13px;color:#A08060;font-weight:600;">円/時</span>
       </div>
-    </div>`
-  ).join('');
+    </div>`;
+  }).join('');
   renderWageCards();
 }
-
+ 
 async function updateWage(staffId, val) {
   const wage = parseInt(val)||0;
   await supaFetch(`staff?id=eq.${staffId}`,'PATCH',{hourly_wage:wage});
@@ -1115,9 +1185,9 @@ async function updateWage(staffId, val) {
   if (s) s.hourly_wage=wage;
   renderWageCards();
 }
-
+ 
 function renderWageCards() {
-  document.getElementById('wage-cards').innerHTML = staffList.map(s=>{
+  document.getElementById('wage-cards').innerHTML = staffList.map((s,i)=>{
     let totalH=0, workDays=0;
     Object.keys(shiftsMap).forEach(k=>{
       if (k.startsWith(`${s.id}_`)) {
@@ -1131,14 +1201,18 @@ function renderWageCards() {
       }
     });
     const total=Math.round(totalH*s.hourly_wage);
-    return `<div class="wage-card">
-      <div class="wname">${s.name}</div>
+    const color = getStaffColor(i);
+    return `<div class="wage-card" style="border-color:${color.bg};">
+      <div class="wname" style="display:flex;align-items:center;gap:6px;">
+        <span style="display:inline-block;width:10px;height:10px;border-radius:3px;background:${color.bg};border:1.5px solid ${color.text};"></span>
+        ${s.name}
+      </div>
       <div class="whours">${workDays}日 / ${totalH.toFixed(1)}h</div>
-      <div class="wamt"><span class="wyen">\</span>${total.toLocaleString()}</div>
+      <div class="wamt"><span class="wyen">&yen;</span>${total.toLocaleString()}</div>
     </div>`;
   }).join('');
 }
-
+ 
 // ================= タブ切替 =================
 function switchMain(tab, el) {
   document.querySelectorAll('.tab, .bnav-btn').forEach(t=>t.classList.remove('active'));
@@ -1151,7 +1225,7 @@ function switchMain(tab, el) {
   if (tab==='kennel') renderKennel(currentKennel);
   if (tab==='staff')  renderStaffList();
 }
-
+ 
 // ================= 初期化 =================
 async function init() {
   try {
