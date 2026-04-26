@@ -653,8 +653,9 @@ function calcBreedDates(estrusDate) {
     return;
   }
   const d = new Date(estrusDate + 'T00:00:00Z');
-  const d10 = new Date(d.getTime() + 10 * 24 * 60 * 60 * 1000);
-  const d12 = new Date(d.getTime() + 12 * 24 * 60 * 60 * 1000);
+  // 確認日を含めて数えて10日目・12日目 = 9日後・11日後
+  const d10 = new Date(d.getTime() + 9 * 24 * 60 * 60 * 1000);
+  const d12 = new Date(d.getTime() + 11 * 24 * 60 * 60 * 1000);
   const fmt = (date) => {
     const y = date.getUTCFullYear();
     const m = String(date.getUTCMonth() + 1).padStart(2, '0');
