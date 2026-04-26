@@ -290,7 +290,17 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sa
 }
 
 /* ===== 犬の管理 ビュー切り替え ===== */
-.view-toggle { display: flex; gap: 6px; margin-bottom: 14px; }
+.view-toggle { display: flex; gap: 6px; margin-bottom: 10px; }
+
+/* 犬種フィルター */
+.breed-filter-bar { display: flex; gap: 6px; margin-bottom: 14px; flex-wrap: wrap; }
+.bfilter-btn {
+  padding: 5px 12px; font-size: 12px; font-weight: 600;
+  border-radius: 20px; cursor: pointer;
+  border: 2px solid #D0A080; background: #fff; color: #A06040; transition: all 0.15s;
+  white-space: nowrap;
+}
+.bfilter-btn.active { background: #E8832A; color: #fff; border-color: #E8832A; }
 .vtoggle-btn {
   padding: 6px 14px; font-size: 13px; font-weight: 600;
   border-radius: 20px; cursor: pointer;
@@ -650,6 +660,13 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sa
       <button class="vtoggle-btn active" id="btn-grid-view" onclick="switchDogView('grid')">&#9638; グリッド</button>
       <button class="vtoggle-btn" id="btn-list-view" onclick="switchDogView('list')">&#9776; リスト</button>
     </div>
+    <div class="breed-filter-bar">
+      <button class="bfilter-btn active" id="bfilter-all"            onclick="switchBreedFilter('')">すべて</button>
+      <button class="bfilter-btn" id="bfilter-ミニチュアダックス"    onclick="switchBreedFilter('ミニチュアダックス')">ミニチュアダックス</button>
+      <button class="bfilter-btn" id="bfilter-トイプードル"          onclick="switchBreedFilter('トイプードル')">トイプードル</button>
+      <button class="bfilter-btn" id="bfilter-マルチーズ"            onclick="switchBreedFilter('マルチーズ')">マルチーズ</button>
+      <button class="bfilter-btn" id="bfilter-ミックス"              onclick="switchBreedFilter('ミックス')">ミックス</button>
+    </div>
     <div class="dog-grid" id="dog-grid"><div class="loading">読み込み中...</div></div>
     <div class="dog-list" id="dog-list" style="display:none;"></div>
     <button class="add-btn" onclick="openModal('add-dog-overlay')">&#65291; 犬を追加</button>
@@ -945,6 +962,7 @@ let currentDogrunArea = null;
 let editingDogId = null, editingShiftDate = null, editingBreedId = null;
 let addingNew = false;
 let dogViewMode = 'grid';
+let currentBreedFilter = '';
 
 // ================= ユーティリティ =================
 function showToast(msg) {
@@ -1127,6 +1145,14 @@ function dogLocLabel(loc) {
   if (loc==='B') return '犬舎B';
   return '未配置';
 }
+function switchBreedFilter(breed) {
+  currentBreedFilter = breed;
+  document.querySelectorAll('.bfilter-btn').forEach(b => b.classList.remove('active'));
+  const targetId = breed === '' ? 'bfilter-all' : `bfilter-${breed}`;
+  const target = document.getElementById(targetId);
+  if (target) target.classList.add('active');
+  renderDogs();
+}
 function switchDogView(mode) {
   dogViewMode = mode;
   document.getElementById('btn-grid-view').classList.toggle('active', mode==='grid');
@@ -1141,10 +1167,12 @@ function renderDogs() {
 }
 function renderDogsGrid() {
   const grid = document.getElementById('dog-grid');
-  if (!dogs.length) { grid.innerHTML = '<p style="color:#A08060;font-size:14px;font-weight:500;">犬が登録されていません</p>'; return; }
-  grid.innerHTML = dogs.map((d,i) => {
-    const emoji = d.emoji || EMOJIS[i % EMOJIS.length];
-    const bg    = d.bg    || BG_COLORS[i % BG_COLORS.length];
+  const filtered = currentBreedFilter ? dogs.filter(d => d.breed === currentBreedFilter) : dogs;
+  if (!filtered.length) { grid.innerHTML = '<p style="color:#A08060;font-size:14px;font-weight:500;">該当する犬がいません</p>'; return; }
+  grid.innerHTML = filtered.map((d,i) => {
+    const idx   = dogs.indexOf(d);
+    const emoji = d.emoji || EMOJIS[idx % EMOJIS.length];
+    const bg    = d.bg    || BG_COLORS[idx % BG_COLORS.length];
     return `<div class="dog-card" onclick="openDetail(${d.id})">
       <button class="dog-del-btn" onclick="event.stopPropagation();deleteDog(${d.id})">&#10005;</button>
       <div class="dog-avatar" style="background:${bg};">${emoji}</div>
@@ -1157,10 +1185,12 @@ function renderDogsGrid() {
 }
 function renderDogsList() {
   const list = document.getElementById('dog-list');
-  if (!dogs.length) { list.innerHTML = '<p style="color:#A08060;font-size:14px;font-weight:500;">犬が登録されていません</p>'; return; }
-  list.innerHTML = dogs.map((d,i) => {
-    const emoji = d.emoji || EMOJIS[i % EMOJIS.length];
-    const bg    = d.bg    || BG_COLORS[i % BG_COLORS.length];
+  const filtered = currentBreedFilter ? dogs.filter(d => d.breed === currentBreedFilter) : dogs;
+  if (!filtered.length) { list.innerHTML = '<p style="color:#A08060;font-size:14px;font-weight:500;">該当する犬がいません</p>'; return; }
+  list.innerHTML = filtered.map((d,i) => {
+    const idx   = dogs.indexOf(d);
+    const emoji = d.emoji || EMOJIS[idx % EMOJIS.length];
+    const bg    = d.bg    || BG_COLORS[idx % BG_COLORS.length];
     const featuresText = d.features ? `<span style="color:#A08060;"> ｜ ${d.features}</span>` : '';
     return `<div class="dog-list-row" onclick="openDetail(${d.id})">
       <div class="dog-list-avatar" style="background:${bg};">${emoji}</div>
