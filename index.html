@@ -127,33 +127,42 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sa
 .birth-info .bdate { color: #C05A10; font-weight: 700; }
 
 /* ====== ドッグラン ====== */
+.dogrun-wrapper {
+  overflow-x: auto;
+  padding-bottom: 8px;
+}
 .dogrun-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  display: flex;
+  flex-direction: row;
   gap: 8px;
+  min-width: max-content;
   margin-bottom: 16px;
 }
 .dogrun-area {
   border: 2px solid #D8C0A8;
   border-radius: 12px;
-  padding: 12px;
+  padding: 10px;
   cursor: pointer;
   background: #FFF8F4;
-  min-height: 100px;
+  width: 130px;
+  min-height: 120px;
   transition: border-color 0.15s, box-shadow 0.15s;
   display: flex;
   flex-direction: column;
+  flex-shrink: 0;
 }
 .dogrun-area:hover { border-color: #E8832A; box-shadow: 0 0 0 2px rgba(232,131,42,0.15); }
 .dogrun-area.full  { background: #FFF0E0; border-color: #E8A060; }
 .dogrun-area.half  { background: #FFF8EE; border-color: #E8C090; }
 .dogrun-area.empty { background: #F5F0EA; border-color: #D0C0B0; }
 .dogrun-area-label {
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 700;
   color: #C05A10;
   margin-bottom: 8px;
   text-align: center;
+  border-bottom: 1px solid #E8C0A0;
+  padding-bottom: 5px;
 }
 .dogrun-dogs {
   display: flex;
@@ -164,10 +173,9 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sa
 .dogrun-dog-item {
   display: flex;
   flex-direction: column;
-  gap: 2px;
-  font-size: 11px;
+  gap: 1px;
   background: #fff;
-  padding: 6px;
+  padding: 5px 6px;
   border-radius: 8px;
   border-left: 3px solid #E8832A;
 }
@@ -186,6 +194,15 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sa
   font-weight: 500;
   font-size: 10px;
 }
+
+/* ===== 犬の管理 ビュー切り替え ===== */
+.view-toggle { display: flex; gap: 6px; margin-bottom: 14px; }
+.vtoggle-btn {
+  padding: 6px 14px; font-size: 13px; font-weight: 600;
+  border-radius: 20px; cursor: pointer;
+  border: 2px solid #D0A080; background: #fff; color: #A06040; transition: all 0.15s;
+}
+.vtoggle-btn.active { background: #E8832A; color: #fff; border-color: #E8832A; }
 
 /* 犬カード (グリッドビュー) */
 .dog-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(148px, 1fr)); gap: 10px; margin-bottom: 16px; }
@@ -462,8 +479,9 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sa
 
   <!-- ドッグラン -->
   <div class="page" id="page-dogrun">
-    <div class="section-header">
-      <span class="section-title">ドッグラン配置</span>
+    <div class="sub-tabs">
+      <button class="stab active" onclick="switchDogrun('A',this)">犬舎 A</button>
+      <button class="stab" onclick="switchDogrun('B',this)">犬舎 B</button>
     </div>
     <div id="dogrun-container"><div class="loading">読み込み中...</div></div>
   </div>
@@ -882,21 +900,31 @@ async function saveDog() {
 }
 
 // ================= ドッグラン =================
+let currentDogrunKennel = 'A';
+
 async function loadDogrunAssignments() {
   dogrunAssignments = await supaFetch('dogrun_assignments?select=*');
 }
-function getDogrunDogs(area) {
+function getDogrunDogs(kennel, area) {
   return dogrunAssignments
-    .filter(a=>a.dogrun_area===area)
+    .filter(a=>a.kennel===kennel && a.dogrun_area===area)
     .map(a=>dogs.find(d=>d.id===a.dog_id))
     .filter(Boolean);
 }
+function switchDogrun(kennel, el) {
+  document.querySelectorAll('#page-dogrun .stab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  currentDogrunKennel = kennel;
+  renderDogrun();
+}
 function renderDogrun() {
   const el = document.getElementById('dogrun-container');
+  const kennel = currentDogrunKennel;
+  // 左から13→1の順（Excelの見取り図に合わせて）
   const areas = ['13','12','11','10','9','8','7','6','5','4','3','2','1'];
   let count=0, total=0;
   areas.forEach(a => {
-    const n = getDogrunDogs(a).length;
+    const n = getDogrunDogs(kennel, a).length;
     total += n;
     if (n>0) count++;
   });
@@ -904,9 +932,9 @@ function renderDogrun() {
     <div class="stat"><strong>${total}</strong>頭遊ぶ中</div>
     <div class="stat"><strong>${count}/${areas.length}</strong>エリア使用中</div>
   </div>`;
-  const gridHTML = `<div class="dogrun-grid">
+  const gridHTML = `<div class="dogrun-wrapper"><div class="dogrun-grid">
     ${areas.map(a => {
-      const doglist = getDogrunDogs(a);
+      const doglist = getDogrunDogs(kennel, a);
       const cls = doglist.length>0 ? (doglist.length>=3 ? 'full' : 'half') : 'empty';
       const dogsHTML = doglist.length===0
         ? '<span class="empty-tag">空き</span>'
@@ -920,29 +948,30 @@ function renderDogrun() {
         <div class="dogrun-dogs">${dogsHTML}</div>
       </div>`;
     }).join('')}
-  </div>`;
+  </div></div>`;
   el.innerHTML = statsHTML + gridHTML;
 }
 function openDogrunModal(area) {
   currentDogrunArea = area;
-  const doglist = getDogrunDogs(area);
-  document.getElementById('dogrun-modal-title').textContent = `エリア ${area}`;
+  const kennel = currentDogrunKennel;
+  const doglist = getDogrunDogs(kennel, area);
+  document.getElementById('dogrun-modal-title').textContent = `犬舎${kennel} - エリア ${area}`;
   const body = doglist.length===0
     ? '<p style="font-size:14px;color:#A08060;padding:8px 0;font-weight:500;">犬がいません</p>'
     : doglist.map(d=>`<div class="modal-dog-row">
-        <span style="font-size:13px;">${d.emoji||'🐾'} ${d.name} (${d.features||d.breed})</span>
-        <button class="mremove" onclick="removeDogFromRun(${d.id})">移動・解除</button>
+        <span style="font-size:13px;">${d.emoji||'🐾'} ${d.name}${d.features?' ('+d.features+')':''}</span>
+        <button class="mremove" onclick="removeDogFromRun(${d.id})">解除</button>
       </div>`).join('');
   document.getElementById('dogrun-modal-body').innerHTML = body;
   const available = dogs.filter(d=>!doglist.find(cd=>cd.id===d.id));
   const sel = document.getElementById('dogrun-dog-select');
   sel.innerHTML = available.length===0 ? '<option>割り当て可能な犬がいません</option>'
-    : available.map(d=>`<option value="${d.id}">${d.emoji||'🐾'} ${d.name}（${d.breed}）</option>`).join('');
+    : available.map(d=>`<option value="${d.id}">${d.emoji||'🐾'} ${d.name}（${d.features||d.breed}）</option>`).join('');
   openModal('dogrun-overlay');
 }
 async function removeDogFromRun(dogId) {
-  await supaFetch(`dogrun_assignments?dogrun_area=eq.${currentDogrunArea}&dog_id=eq.${dogId}`,'DELETE');
-  showToast('移動しました');
+  await supaFetch(`dogrun_assignments?kennel=eq.${currentDogrunKennel}&dogrun_area=eq.${currentDogrunArea}&dog_id=eq.${dogId}`,'DELETE');
+  showToast('解除しました');
   await loadDogrunAssignments();
   renderDogrun();
   openDogrunModal(currentDogrunArea);
@@ -951,8 +980,9 @@ async function assignDogToRun() {
   const sel = document.getElementById('dogrun-dog-select');
   const dogId = parseInt(sel.value);
   if (!dogId||isNaN(dogId)) return;
-  await supaFetch(`dogrun_assignments?dog_id=eq.${dogId}`,'DELETE');
-  await supaFetch('dogrun_assignments','POST',{dogrun_area:currentDogrunArea, dog_id:dogId});
+  // 同じ犬が他のエリアにいたら削除
+  await supaFetch(`dogrun_assignments?kennel=eq.${currentDogrunKennel}&dog_id=eq.${dogId}`,'DELETE');
+  await supaFetch('dogrun_assignments','POST',{kennel:currentDogrunKennel, dogrun_area:currentDogrunArea, dog_id:dogId});
   showToast('エリアに追加しました');
   await loadDogrunAssignments();
   renderDogrun();
