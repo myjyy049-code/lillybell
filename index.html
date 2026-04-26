@@ -268,8 +268,8 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sa
 .bstatus.pregnant { background: #C8EEC8; color: #1A5A1A; }
 .bstatus.planned  { background: #C8DEFF; color: #112288; }
 .bstatus.done     { background: #E8E8E8; color: #444444; }
-.breed-dates { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 12px; color: #A08060; margin-bottom: 8px; font-weight: 500; }
-.breed-dates span { color: #1A1A1A; font-weight: 700; display: block; margin-top: 2px; }
+.breed-dates { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; font-size: 12px; color: #A08060; margin-bottom: 8px; font-weight: 500; }
+.breed-dates span { color: #1A1A1A; font-weight: 700; display: block; margin-top: 2px; font-size: 11px; }
 .birth-result { display: flex; gap: 12px; flex-wrap: wrap; background: #FFF0E0; border-radius: 8px; padding: 10px 12px; font-size: 12px; margin-top: 8px; }
 .birth-result .bnum { font-weight: 700; font-size: 16px; color: #C05A10; }
 .birth-result .blabel { color: #A08060; font-size: 11px; font-weight: 500; }
@@ -319,6 +319,9 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sa
 .paw-divider { text-align: center; color: #E8A060; font-size: 20px; margin: 16px 0; letter-spacing: 8px; }
 .hint { font-size: 12px; color: #A08060; margin-top: 8px; font-weight: 500; text-align: center; }
 
+/* 発情日→交配日 自動計算の注釈 */
+.date-info { font-size: 11px; color: #A08060; margin-top: 3px; font-weight: 500; font-style: italic; }
+
 @media (max-width: 600px) {
   .tab-bar { display: none; }
   .bottom-nav { display: block; }
@@ -337,6 +340,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sa
   .cal-cell { min-height: 55px; padding: 3px; }
   .cal-shift-tag { font-size: 8px; }
   .staff-shift-row label { width: 46px; font-size: 12px; }
+  .breed-dates { grid-template-columns: 1fr; }
 }
 </style>
 </head>
@@ -535,8 +539,19 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sa
       <option value="pregnant">妊娠中</option>
       <option value="done">完了</option>
     </select>
-    <div class="mlabel">交配日</div>
-    <input class="minput" id="b-mating-date" type="date">
+    
+    <div class="mlabel">発情確認日</div>
+    <input class="minput" id="b-estrus-date" type="date" onchange="calcBreedDates(this.value)">
+    <div class="date-info">※ 交配日①②が自動計算されます</div>
+    
+    <div class="mlabel">交配日①</div>
+    <input class="minput" id="b-mating-date-1" type="date">
+    <div class="date-info">発情確認日の10日後</div>
+    
+    <div class="mlabel">交配日②</div>
+    <input class="minput" id="b-mating-date-2" type="date">
+    <div class="date-info">発情確認日の12日後</div>
+    
     <div class="mlabel">出産予定日</div>
     <input class="minput" id="b-due-date" type="date">
     <div class="mlabel">出産日</div>
@@ -629,6 +644,26 @@ function showToast(msg) {
 function openModal(id)  { document.getElementById(id).classList.add('open'); }
 function closeModal(id) { document.getElementById(id).classList.remove('open'); }
 function getStaffColor(idx) { return STAFF_COLORS[idx % STAFF_COLORS.length]; }
+
+// 発情確認日から交配日を自動計算
+function calcBreedDates(estrusDate) {
+  if (!estrusDate) {
+    document.getElementById('b-mating-date-1').value = '';
+    document.getElementById('b-mating-date-2').value = '';
+    return;
+  }
+  const d = new Date(estrusDate + 'T00:00:00Z');
+  const d10 = new Date(d.getTime() + 10 * 24 * 60 * 60 * 1000);
+  const d12 = new Date(d.getTime() + 12 * 24 * 60 * 60 * 1000);
+  const fmt = (date) => {
+    const y = date.getUTCFullYear();
+    const m = String(date.getUTCMonth() + 1).padStart(2, '0');
+    const day = String(date.getUTCDate()).padStart(2, '0');
+    return `${y}-${m}-${day}`;
+  };
+  document.getElementById('b-mating-date-1').value = fmt(d10);
+  document.getElementById('b-mating-date-2').value = fmt(d12);
+}
 
 // ================= 犬の管理 =================
 async function loadDogs() {
@@ -1012,7 +1047,11 @@ function renderBreed() {
         <span class="bstatus ${STATUS_CLS[r.status]||'planned'}">${STATUS_LABEL[r.status]||r.status}</span>
       </div>
       <div class="breed-dates">
-        <div>交配日<span>${r.mating_date||'—'}</span></div>
+        <div>発情確認<span>${r.estrus_date||'—'}</span></div>
+        <div>交配日①<span>${r.mating_date_1||'—'}</span></div>
+        <div>交配日②<span>${r.mating_date_2||'—'}</span></div>
+      </div>
+      <div class="breed-dates" style="margin-bottom:0;">
         <div>出産予定<span>${r.due_date||'—'}</span></div>
         <div>出産日<span>${r.birth_date||'—'}</span></div>
         <div></div>
@@ -1047,7 +1086,9 @@ function openBreedModal(id) {
     document.getElementById('b-female').value       = r.female_id || '';
     document.getElementById('b-male').value         = r.male_id   || '';
     document.getElementById('b-status').value       = r.status    || 'planned';
-    document.getElementById('b-mating-date').value  = r.mating_date  || '';
+    document.getElementById('b-estrus-date').value  = r.estrus_date  || '';
+    document.getElementById('b-mating-date-1').value = r.mating_date_1 || '';
+    document.getElementById('b-mating-date-2').value = r.mating_date_2 || '';
     document.getElementById('b-due-date').value     = r.due_date     || '';
     document.getElementById('b-birth-date').value   = r.birth_date   || '';
     document.getElementById('b-male-count').value   = r.male_count   ?? '';
@@ -1058,7 +1099,7 @@ function openBreedModal(id) {
     document.getElementById('breed-modal-title').textContent = '交配記録を追加';
     document.getElementById('breed-save-btn').textContent = '追加する';
     document.getElementById('edit-breed-id').value = '';
-    ['b-mating-date','b-due-date','b-birth-date','b-male-count','b-female-count','b-dead-count'].forEach(id=>document.getElementById(id).value='');
+    ['b-estrus-date','b-mating-date-1','b-mating-date-2','b-due-date','b-birth-date','b-male-count','b-female-count','b-dead-count'].forEach(id=>document.getElementById(id).value='');
     document.getElementById('b-status').value = 'planned';
   }
   openModal('breed-overlay');
@@ -1066,15 +1107,17 @@ function openBreedModal(id) {
 
 async function saveBreed() {
   const data = {
-    female_id:    parseInt(document.getElementById('b-female').value)||null,
-    male_id:      parseInt(document.getElementById('b-male').value)||null,
-    status:       document.getElementById('b-status').value,
-    mating_date:  document.getElementById('b-mating-date').value||null,
-    due_date:     document.getElementById('b-due-date').value||null,
-    birth_date:   document.getElementById('b-birth-date').value||null,
-    male_count:   parseInt(document.getElementById('b-male-count').value)||null,
-    female_count: parseInt(document.getElementById('b-female-count').value)||null,
-    dead_count:   parseInt(document.getElementById('b-dead-count').value)||null,
+    female_id:     parseInt(document.getElementById('b-female').value)||null,
+    male_id:       parseInt(document.getElementById('b-male').value)||null,
+    status:        document.getElementById('b-status').value,
+    estrus_date:   document.getElementById('b-estrus-date').value||null,
+    mating_date_1: document.getElementById('b-mating-date-1').value||null,
+    mating_date_2: document.getElementById('b-mating-date-2').value||null,
+    due_date:      document.getElementById('b-due-date').value||null,
+    birth_date:    document.getElementById('b-birth-date').value||null,
+    male_count:    parseInt(document.getElementById('b-male-count').value)||null,
+    female_count:  parseInt(document.getElementById('b-female-count').value)||null,
+    dead_count:    parseInt(document.getElementById('b-dead-count').value)||null,
   };
   if (editingBreedId) {
     await supaFetch(`breed_records?id=eq.${editingBreedId}`,'PATCH',data);
