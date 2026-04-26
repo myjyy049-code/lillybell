@@ -743,7 +743,13 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sa
     <div class="mlabel">名前</div>
     <input class="minput" id="new-name" placeholder="もも">
     <div class="mlabel">犬種</div>
-    <input class="minput" id="new-breed" placeholder="トイプードル">
+    <select class="mselect" id="new-breed">
+      <option value="">選択してください</option>
+      <option value="ミニチュアダックス">ミニチュアダックス</option>
+      <option value="トイプードル">トイプードル</option>
+      <option value="マルチーズ">マルチーズ</option>
+      <option value="ミックス">ミックス</option>
+    </select>
     <div class="mlabel">性別</div>
     <select class="mselect" id="new-gender">
       <option value="female">メス</option>
@@ -1186,7 +1192,12 @@ function openDetail(id) {
     <div class="mlabel">名前</div>
     <input class="minput" id="edit-name" value="${d.name}" style="margin-bottom:6px;">
     <div class="mlabel">犬種</div>
-    <input class="minput" id="edit-breed" value="${d.breed}" style="margin-bottom:6px;">
+    <select class="mselect" id="edit-breed" style="margin-bottom:6px;">
+      <option value="ミニチュアダックス" ${d.breed==='ミニチュアダックス'?'selected':''}>ミニチュアダックス</option>
+      <option value="トイプードル" ${d.breed==='トイプードル'?'selected':''}>トイプードル</option>
+      <option value="マルチーズ" ${d.breed==='マルチーズ'?'selected':''}>マルチーズ</option>
+      <option value="ミックス" ${d.breed==='ミックス'?'selected':''}>ミックス</option>
+    </select>
     <div class="mlabel">性別</div>
     <select class="mselect" id="edit-gender" style="margin-bottom:6px;">
       <option value="female" ${d.gender==='female'?'selected':''}>メス</option>
@@ -1243,7 +1254,8 @@ async function saveDog() {
   const idx = dogs.length % EMOJIS.length;
   await supaFetch('dogs', 'POST', {name, breed, gender, born, features, emoji:EMOJIS[idx], bg:BG_COLORS[idx]});
   closeModal('add-dog-overlay');
-  ['new-name','new-breed','new-born','new-features'].forEach(id=>document.getElementById(id).value='');
+  ['new-name','new-born','new-features'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('new-breed').value = '';
   showToast('追加しました');
   await loadDogs();
   addingNew = false;
