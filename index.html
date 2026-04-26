@@ -51,6 +51,100 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sa
 .stat { background: #fff; border: 2px solid #E0C0A0; border-radius: 10px; padding: 8px 14px; font-size: 12px; color: #805030; font-weight: 500; }
 .stat strong { font-size: 20px; font-weight: 700; color: #C05A10; display: block; }
 
+/* ====== ダッシュボード ====== */
+.dash-greeting {
+  background: linear-gradient(135deg, #E8832A 0%, #F5B84A 100%);
+  border-radius: 16px; padding: 16px 20px; margin-bottom: 16px; color: #fff;
+  display: flex; align-items: center; justify-content: space-between;
+  box-shadow: 0 4px 16px rgba(232,131,42,0.3);
+}
+.dash-greeting-left h2 { font-size: 18px; font-weight: 700; margin-bottom: 4px; }
+.dash-greeting-left p { font-size: 12px; opacity: 0.85; }
+.dash-greeting-right { font-size: 36px; }
+
+.dash-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.dash-card {
+  background: #fff; border: 2px solid #E0C0A0; border-radius: 14px; padding: 14px 16px;
+}
+.dash-card-full { grid-column: 1 / -1; }
+.dash-card-title {
+  font-size: 11px; font-weight: 700; color: #B09070; text-transform: uppercase;
+  letter-spacing: 0.5px; margin-bottom: 10px; display: flex; align-items: center; gap: 6px;
+}
+.dash-card-title span { font-size: 14px; }
+
+/* 犬の統計 */
+.dog-stats-row { display: flex; gap: 8px; flex-wrap: wrap; }
+.dog-stat-item {
+  flex: 1; min-width: 60px; background: #FFF8F4; border-radius: 10px;
+  padding: 10px 8px; text-align: center; border: 1.5px solid #F0DEC8;
+}
+.dog-stat-item .dsnum { font-size: 24px; font-weight: 700; color: #C05A10; line-height: 1; }
+.dog-stat-item .dslabel { font-size: 10px; color: #A08060; font-weight: 600; margin-top: 4px; }
+
+/* 在室状況 */
+.kennel-status-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+.kennel-status-item {
+  background: #FFF8F4; border-radius: 10px; padding: 10px 8px; text-align: center;
+  border: 1.5px solid #F0DEC8;
+}
+.kennel-status-item .ksnum { font-size: 22px; font-weight: 700; color: #C05A10; line-height: 1; }
+.kennel-status-item .kslabel { font-size: 10px; color: #A08060; font-weight: 600; margin-top: 4px; }
+.kennel-status-item .ksbar {
+  height: 4px; background: #F0E0D0; border-radius: 2px; margin-top: 6px; overflow: hidden;
+}
+.kennel-status-item .ksbar-fill { height: 100%; background: #E8832A; border-radius: 2px; transition: width 0.4s; }
+
+/* 妊娠中一覧 */
+.pregnant-list { display: flex; flex-direction: column; gap: 8px; }
+.pregnant-item {
+  background: #F0FFF0; border: 1.5px solid #A8D8A8; border-radius: 10px;
+  padding: 9px 12px; display: flex; align-items: center; justify-content: space-between;
+}
+.pregnant-item .pi-name { font-size: 13px; font-weight: 700; color: #1A1A1A; }
+.pregnant-item .pi-pair { font-size: 11px; color: #4A8A4A; font-weight: 500; margin-top: 2px; }
+.pregnant-item .pi-days {
+  font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 20px;
+  white-space: nowrap;
+}
+.pi-days.urgent { background: #FFECEA; color: #CC2222; }
+.pi-days.soon   { background: #FFF8CC; color: #AA6600; }
+.pi-days.normal { background: #C8EEC8; color: #1A5A1A; }
+
+/* 今日のシフト */
+.today-shift-list { display: flex; flex-direction: column; gap: 6px; }
+.today-shift-item {
+  display: flex; align-items: center; gap: 10px;
+  background: #FFF8F4; border-radius: 10px; padding: 9px 12px;
+  border: 1.5px solid #F0DEC8;
+}
+.today-shift-icon {
+  width: 32px; height: 32px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0;
+}
+.today-shift-name { font-size: 13px; font-weight: 700; color: #1A1A1A; }
+.today-shift-time { font-size: 11px; color: #A08060; font-weight: 500; margin-top: 2px; }
+.no-shift-msg { font-size: 13px; color: #B09070; text-align: center; padding: 12px 0; font-weight: 500; }
+
+/* 近い出産予定 */
+.upcoming-birth-list { display: flex; flex-direction: column; gap: 6px; }
+.upcoming-birth-item {
+  background: #FFF8F4; border: 1.5px solid #F0DEC8; border-radius: 10px;
+  padding: 9px 12px; display: flex; align-items: center; justify-content: space-between;
+}
+.ub-name { font-size: 13px; font-weight: 700; color: #1A1A1A; }
+.ub-due  { font-size: 11px; color: #A08060; font-weight: 500; margin-top: 2px; }
+.ub-badge {
+  font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 20px; white-space: nowrap;
+}
+
+.dash-empty { font-size: 13px; color: #B09070; font-weight: 500; text-align: center; padding: 12px 0; }
+
 /* ====== 犬舎レイアウト ====== */
 .kennel-layout {
   display: grid;
@@ -409,6 +503,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sa
   .cal-shift-tag { font-size: 8px; }
   .staff-shift-row label { width: 46px; font-size: 12px; }
   .breed-dates { grid-template-columns: 1fr; }
+  .dash-grid { grid-template-columns: 1fr; }
 }
 </style>
 </head>
@@ -422,7 +517,8 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sa
     </div>
   </div>
   <div class="tab-bar">
-    <button class="tab active" onclick="switchMain('dogs',this)" data-tab="dogs">&#128054; 犬の管理</button>
+    <button class="tab active" onclick="switchMain('dashboard',this)" data-tab="dashboard">🏠 ホーム</button>
+    <button class="tab" onclick="switchMain('dogs',this)" data-tab="dogs">&#128054; 犬の管理</button>
     <button class="tab" onclick="switchMain('kennel',this)" data-tab="kennel">&#127968; 犬舎</button>
     <button class="tab" onclick="switchMain('dogrun',this)" data-tab="dogrun">🐕 ドッグラン</button>
     <button class="tab" onclick="switchMain('breed',this)" data-tab="breed">&#128149; 交配</button>
@@ -434,8 +530,71 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sa
 
 <div class="content">
 
+  <!-- ダッシュボード -->
+  <div class="page active" id="page-dashboard">
+    <div class="dash-greeting">
+      <div class="dash-greeting-left">
+        <h2 id="dash-greeting-text">おはようございます 🌸</h2>
+        <p id="dash-date-text"></p>
+      </div>
+      <div class="dash-greeting-right">🐾</div>
+    </div>
+
+    <div class="dash-grid">
+      <!-- 犬の統計 -->
+      <div class="dash-card">
+        <div class="dash-card-title"><span>🐶</span>犬の統計</div>
+        <div class="dog-stats-row" id="dash-dog-stats">
+          <div class="dog-stat-item"><div class="dsnum" id="ds-total">—</div><div class="dslabel">総頭数</div></div>
+          <div class="dog-stat-item"><div class="dsnum" id="ds-female">—</div><div class="dslabel">メス ♀</div></div>
+          <div class="dog-stat-item"><div class="dsnum" id="ds-male">—</div><div class="dslabel">オス ♂</div></div>
+        </div>
+      </div>
+
+      <!-- 在室状況 -->
+      <div class="dash-card">
+        <div class="dash-card-title"><span>🏠</span>在室状況</div>
+        <div class="kennel-status-grid" id="dash-kennel-status">
+          <div class="kennel-status-item">
+            <div class="ksnum" id="ks-a">—</div>
+            <div class="kslabel">犬舎 A</div>
+            <div class="ksbar"><div class="ksbar-fill" id="ksbar-a" style="width:0%"></div></div>
+          </div>
+          <div class="kennel-status-item">
+            <div class="ksnum" id="ks-b">—</div>
+            <div class="kslabel">犬舎 B</div>
+            <div class="ksbar"><div class="ksbar-fill" id="ksbar-b" style="width:0%"></div></div>
+          </div>
+          <div class="kennel-status-item">
+            <div class="ksnum" id="ks-birth">—</div>
+            <div class="kslabel">お産部屋</div>
+            <div class="ksbar"><div class="ksbar-fill" id="ksbar-birth" style="width:0%"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 今日のシフト -->
+      <div class="dash-card dash-card-full">
+        <div class="dash-card-title"><span>📅</span>今日のシフト</div>
+        <div id="dash-today-shift"><div class="no-shift-msg">読み込み中...</div></div>
+      </div>
+
+      <!-- 妊娠中 -->
+      <div class="dash-card">
+        <div class="dash-card-title"><span>🤰</span>妊娠中</div>
+        <div class="pregnant-list" id="dash-pregnant"><div class="dash-empty">データなし</div></div>
+      </div>
+
+      <!-- 出産予定 -->
+      <div class="dash-card">
+        <div class="dash-card-title"><span>🍼</span>出産予定（30日以内）</div>
+        <div class="upcoming-birth-list" id="dash-upcoming-birth"><div class="dash-empty">予定なし</div></div>
+      </div>
+    </div>
+  </div>
+
   <!-- 犬の管理 -->
-  <div class="page active" id="page-dogs">
+  <div class="page" id="page-dogs">
     <div class="detail-panel" id="detail-panel">
       <button class="close-btn" onclick="closeDetail()">&#10005;</button>
       <div class="detail-header">
@@ -533,9 +692,9 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sa
 <!-- ボトムナビ -->
 <nav class="bottom-nav">
   <div class="bottom-nav-inner">
-    <button class="bnav-btn active" onclick="switchMain('dogs',this)" data-tab="dogs"><span class="bicon">&#128054;</span>犬</button>
+    <button class="bnav-btn active" onclick="switchMain('dashboard',this)" data-tab="dashboard"><span class="bicon">🏠</span>ホーム</button>
+    <button class="bnav-btn" onclick="switchMain('dogs',this)" data-tab="dogs"><span class="bicon">&#128054;</span>犬</button>
     <button class="bnav-btn" onclick="switchMain('kennel',this)" data-tab="kennel"><span class="bicon">&#127968;</span>犬舎</button>
-    <button class="bnav-btn" onclick="switchMain('dogrun',this)" data-tab="dogrun"><span class="bicon">🐕</span>ドッグラン</button>
     <button class="bnav-btn" onclick="switchMain('breed',this)" data-tab="breed"><span class="bicon">&#128149;</span>交配</button>
     <button class="bnav-btn" onclick="switchMain('shift',this)" data-tab="shift"><span class="bicon">&#128197;</span>シフト</button>
     <button class="bnav-btn" onclick="switchMain('staff',this)" data-tab="staff"><span class="bicon">&#128101;</span>スタッフ</button>
@@ -760,6 +919,111 @@ function calcBreedDates(estrusDate) {
   document.getElementById('b-mating-date-2').value = fmt(d12);
 }
 
+// ================= ダッシュボード =================
+function renderDashboard() {
+  // 挨拶・日付
+  const now = new Date();
+  const h = now.getHours();
+  const greeting = h < 10 ? 'おはようございます 🌸' : h < 17 ? 'こんにちは ☀️' : 'お疲れさまです 🌙';
+  document.getElementById('dash-greeting-text').textContent = greeting;
+  const DOW = ['日','月','火','水','木','金','土'];
+  document.getElementById('dash-date-text').textContent =
+    `${now.getFullYear()}年${now.getMonth()+1}月${now.getDate()}日（${DOW[now.getDay()]}）`;
+
+  // 犬の統計
+  const total  = dogs.length;
+  const female = dogs.filter(d=>d.gender==='female').length;
+  const male   = dogs.filter(d=>d.gender==='male').length;
+  document.getElementById('ds-total').textContent  = total;
+  document.getElementById('ds-female').textContent = female;
+  document.getElementById('ds-male').textContent   = male;
+
+  // 在室状況
+  const countKennel = (k) => cageAssignments.filter(a=>a.kennel===k).length;
+  const maxA = 8*4*2, maxB = 8*4*2, maxBirth = 10*2;
+  const cA = countKennel('A'), cB = countKennel('B'), cBirth = countKennel('birth');
+  document.getElementById('ks-a').textContent     = cA;
+  document.getElementById('ks-b').textContent     = cB;
+  document.getElementById('ks-birth').textContent = cBirth;
+  document.getElementById('ksbar-a').style.width     = Math.min(100, Math.round(cA/maxA*100)) + '%';
+  document.getElementById('ksbar-b').style.width     = Math.min(100, Math.round(cB/maxB*100)) + '%';
+  document.getElementById('ksbar-birth').style.width = Math.min(100, Math.round(cBirth/maxBirth*100)) + '%';
+
+  // 今日のシフト
+  const todayStr = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')}`;
+  const todayShifts = staffList.map((s,idx) => {
+    const sh = shiftsMap[`${s.id}_${todayStr}`];
+    return sh && sh.start_time ? { staff: s, shift: sh, idx } : null;
+  }).filter(Boolean);
+
+  if (todayShifts.length === 0) {
+    document.getElementById('dash-today-shift').innerHTML = '<div class="no-shift-msg">今日のシフトは登録されていません</div>';
+  } else {
+    document.getElementById('dash-today-shift').innerHTML = `<div class="today-shift-list">${
+      todayShifts.map(({staff, shift, idx}) => {
+        const color = getStaffColor(idx);
+        return `<div class="today-shift-item">
+          <div class="today-shift-icon" style="background:${color.bg};color:${color.text};">👤</div>
+          <div>
+            <div class="today-shift-name">${staff.name}</div>
+            <div class="today-shift-time">${shift.start_time.slice(0,5)} 〜 ${shift.end_time.slice(0,5)}</div>
+          </div>
+        </div>`;
+      }).join('')
+    }</div>`;
+  }
+
+  // 妊娠中
+  const pregnant = breedRecords.filter(r => r.status === 'pregnant');
+  if (pregnant.length === 0) {
+    document.getElementById('dash-pregnant').innerHTML = '<div class="dash-empty">妊娠中の母犬はいません</div>';
+  } else {
+    document.getElementById('dash-pregnant').innerHTML = pregnant.map(r => {
+      const fm = dogs.find(d=>d.id===r.female_id);
+      const ml = dogs.find(d=>d.id===r.male_id);
+      let daysHTML = '';
+      if (r.due_date) {
+        const diff = Math.ceil((new Date(r.due_date) - now) / 86400000);
+        const cls  = diff <= 7 ? 'urgent' : diff <= 14 ? 'soon' : 'normal';
+        daysHTML = `<div class="pi-days ${cls}">${diff > 0 ? 'あと'+diff+'日' : diff === 0 ? '今日！' : '超過'+Math.abs(diff)+'日'}</div>`;
+      }
+      return `<div class="pregnant-item">
+        <div>
+          <div class="pi-name">♀ ${fm ? fm.name : '?'}</div>
+          <div class="pi-pair">× ♂ ${ml ? ml.name : '?'}${r.due_date ? ' / 予定: '+r.due_date : ''}</div>
+        </div>
+        ${daysHTML}
+      </div>`;
+    }).join('');
+  }
+
+  // 出産予定（30日以内）
+  const upcoming = breedRecords.filter(r => {
+    if (!r.due_date || r.status === 'done') return false;
+    const diff = Math.ceil((new Date(r.due_date) - now) / 86400000);
+    return diff >= 0 && diff <= 30;
+  }).sort((a,b) => new Date(a.due_date) - new Date(b.due_date));
+
+  if (upcoming.length === 0) {
+    document.getElementById('dash-upcoming-birth').innerHTML = '<div class="dash-empty">30日以内の出産予定はありません</div>';
+  } else {
+    document.getElementById('dash-upcoming-birth').innerHTML = upcoming.map(r => {
+      const fm = dogs.find(d=>d.id===r.female_id);
+      const diff = Math.ceil((new Date(r.due_date) - now) / 86400000);
+      const cls  = diff <= 7 ? 'urgent' : diff <= 14 ? 'soon' : 'normal';
+      const bgMap = { urgent:'#FFECEA', soon:'#FFF8CC', normal:'#C8EEC8' };
+      const txMap = { urgent:'#CC2222', soon:'#AA6600', normal:'#1A5A1A' };
+      return `<div class="upcoming-birth-item">
+        <div>
+          <div class="ub-name">♀ ${fm ? fm.name : '?'}</div>
+          <div class="ub-due">予定日: ${r.due_date}</div>
+        </div>
+        <div class="ub-badge" style="background:${bgMap[cls]};color:${txMap[cls]};">あと${diff}日</div>
+      </div>`;
+    }).join('');
+  }
+}
+
 // ================= 犬の管理 =================
 async function loadDogs() {
   dogs = await supaFetch('dogs?order=id.asc');
@@ -920,7 +1184,6 @@ function switchDogrun(kennel, el) {
 function renderDogrun() {
   const el = document.getElementById('dogrun-container');
   const kennel = currentDogrunKennel;
-  // 左から13→1の順（Excelの見取り図に合わせて）
   const areas = ['13','12','11','10','9','8','7','6','5','4','3','2','1'];
   let count=0, total=0;
   areas.forEach(a => {
@@ -980,7 +1243,6 @@ async function assignDogToRun() {
   const sel = document.getElementById('dogrun-dog-select');
   const dogId = parseInt(sel.value);
   if (!dogId||isNaN(dogId)) return;
-  // 同じ犬が他のエリアにいたら削除
   await supaFetch(`dogrun_assignments?kennel=eq.${currentDogrunKennel}&dog_id=eq.${dogId}`,'DELETE');
   await supaFetch('dogrun_assignments','POST',{kennel:currentDogrunKennel, dogrun_area:currentDogrunArea, dog_id:dogId});
   showToast('エリアに追加しました');
@@ -1167,7 +1429,7 @@ async function assignDog() {
 }
 function openBirthInfoModal(key, dogName) {
   currentBirthCageKey = key;
-  document.getElementById('bi-title').textContent = `&#127868; ${dogName} の出産情報`;
+  document.getElementById('bi-title').textContent = `🏠 ${dogName} の出産情報`;
   const info = birthInfoMap[key]||{};
   document.getElementById('bi-due').value    = info.due_date    ||'';
   document.getElementById('bi-birth').value  = info.birth_date  ||'';
@@ -1514,20 +1776,22 @@ function switchMain(tab, el) {
   document.querySelectorAll(`[data-tab="${tab}"]`).forEach(t=>t.classList.add('active'));
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.getElementById('page-'+tab).classList.add('active');
-  if (tab==='shift')  renderShiftCal();
-  if (tab==='wage')   { loadShifts().then(()=>renderWage()); }
-  if (tab==='breed')  renderBreed();
-  if (tab==='dogrun') renderDogrun();
-  if (tab==='kennel') renderKennel(currentKennel);
-  if (tab==='staff')  renderStaffList();
+  if (tab==='dashboard') renderDashboard();
+  if (tab==='shift')     renderShiftCal();
+  if (tab==='wage')      { loadShifts().then(()=>renderWage()); }
+  if (tab==='breed')     renderBreed();
+  if (tab==='dogrun')    renderDogrun();
+  if (tab==='kennel')    renderKennel(currentKennel);
+  if (tab==='staff')     renderStaffList();
 }
 
 // ================= 初期化 =================
 async function init() {
   try {
     await Promise.all([loadDogs(), loadStaff(), loadCageAssignments(), loadBirthInfo(), loadBreedRecords(), loadDogrunAssignments()]);
-    renderKennel('A');
     await loadShifts();
+    renderDashboard();
+    renderKennel('A');
     renderWage();
   } catch(e) {
     console.error(e);
