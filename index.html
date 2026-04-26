@@ -546,7 +546,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sa
 
 <div class="app-header">
   <div class="header-top">
-    <div>
+    <div id="logo-area" onmousedown="startLogoPress()" onmouseup="cancelLogoPress()" onmouseleave="cancelLogoPress()" ontouchstart="startLogoPress()" ontouchend="cancelLogoPress()" style="cursor:pointer;user-select:none;">
       <h1>&#127800; LillyBell</h1>
       <div class="subtitle">犬舎総合管理システム</div>
     </div>
@@ -559,7 +559,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sa
     <button class="tab" onclick="switchMain('breed',this)" data-tab="breed">&#128149; 交配</button>
     <button class="tab" onclick="switchMain('shift',this)" data-tab="shift">&#128197; シフト</button>
     <button class="tab" onclick="switchMain('staff',this)" data-tab="staff">&#128101; スタッフ</button>
-    <button class="tab" onclick="switchMain('wage',this)" data-tab="wage">&#128180; 給与</button>
+    <button class="tab" id="wage-tab" onclick="switchMain('wage',this)" data-tab="wage" style="display:none;">&#128180; 給与</button>
   </div>
 </div>
 
@@ -746,7 +746,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sa
     <button class="bnav-btn" onclick="switchMain('breed',this)" data-tab="breed"><span class="bicon">&#128149;</span>交配</button>
     <button class="bnav-btn" onclick="switchMain('shift',this)" data-tab="shift"><span class="bicon">&#128197;</span>シフト</button>
     <button class="bnav-btn" onclick="switchMain('staff',this)" data-tab="staff"><span class="bicon">&#128101;</span>スタッフ</button>
-    <button class="bnav-btn" onclick="switchMain('wage',this)" data-tab="wage"><span class="bicon">&#128180;</span>給与</button>
+    <button class="bnav-btn" id="wage-bnav" onclick="switchMain('wage',this)" data-tab="wage" style="display:none;"><span class="bicon">&#128180;</span>給与</button>
   </div>
 </nav>
 
@@ -921,6 +921,32 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sa
 </div>
 
 <script>
+// ================= ロゴ長押し（給与タブ表示） =================
+let logoPressTimer = null;
+let wageVisible = false;
+
+function startLogoPress() {
+  logoPressTimer = setTimeout(() => {
+    wageVisible = !wageVisible;
+    const wageTab  = document.getElementById('wage-tab');
+    const wageBnav = document.getElementById('wage-bnav');
+    wageTab.style.display  = wageVisible ? '' : 'none';
+    wageBnav.style.display = wageVisible ? '' : 'none';
+    showToast(wageVisible ? '💰 給与タブを表示しました' : '🔒 給与タブを非表示にしました');
+    // 非表示にしたとき給与ページを開いていたらホームへ
+    if (!wageVisible) {
+      const wagePage = document.getElementById('page-wage');
+      if (wagePage.classList.contains('active')) {
+        switchMain('dashboard', document.querySelector('[data-tab="dashboard"]'));
+      }
+    }
+  }, 800); // 800ms長押し
+}
+
+function cancelLogoPress() {
+  clearTimeout(logoPressTimer);
+}
+
 // ================= Supabase =================
 const SUPA_URL = 'https://akrtgasyenuptcoezwhs.supabase.co';
 const SUPA_KEY = 'sb_publishable_VbnT0A4f8QdDLkBXYC7sOw_k2cUVXTh';
