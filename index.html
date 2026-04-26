@@ -920,6 +920,14 @@ function calcBreedDates(estrusDate) {
 }
 
 // ================= ダッシュボード =================
+// 日付文字列(YYYY-MM-DD)をローカル時刻の0時として解釈してdiff計算
+function dateDiffDays(dateStr, baseDate) {
+  const [y, m, d] = dateStr.split('-').map(Number);
+  const target = new Date(y, m - 1, d, 0, 0, 0, 0);
+  const base   = new Date(baseDate.getFullYear(), baseDate.getMonth(), baseDate.getDate(), 0, 0, 0, 0);
+  return Math.round((target - base) / 86400000);
+}
+
 function renderDashboard() {
   // 挨拶・日付
   const now = new Date();
@@ -983,7 +991,7 @@ function renderDashboard() {
       const ml = dogs.find(d=>d.id===r.male_id);
       let daysHTML = '';
       if (r.due_date) {
-        const diff = Math.ceil((new Date(r.due_date) - now) / 86400000);
+        const diff = dateDiffDays(r.due_date, now);
         const cls  = diff <= 7 ? 'urgent' : diff <= 14 ? 'soon' : 'normal';
         daysHTML = `<div class="pi-days ${cls}">${diff > 0 ? 'あと'+diff+'日' : diff === 0 ? '今日！' : '超過'+Math.abs(diff)+'日'}</div>`;
       }
@@ -1000,7 +1008,7 @@ function renderDashboard() {
   // 出産予定（30日以内）
   const upcoming = breedRecords.filter(r => {
     if (!r.due_date || r.status === 'done') return false;
-    const diff = Math.ceil((new Date(r.due_date) - now) / 86400000);
+    const diff = dateDiffDays(r.due_date, now);
     return diff >= 0 && diff <= 30;
   }).sort((a,b) => new Date(a.due_date) - new Date(b.due_date));
 
@@ -1009,7 +1017,7 @@ function renderDashboard() {
   } else {
     document.getElementById('dash-upcoming-birth').innerHTML = upcoming.map(r => {
       const fm = dogs.find(d=>d.id===r.female_id);
-      const diff = Math.ceil((new Date(r.due_date) - now) / 86400000);
+      const diff = dateDiffDays(r.due_date, now);
       const cls  = diff <= 7 ? 'urgent' : diff <= 14 ? 'soon' : 'normal';
       const bgMap = { urgent:'#FFECEA', soon:'#FFF8CC', normal:'#C8EEC8' };
       const txMap = { urgent:'#CC2222', soon:'#AA6600', normal:'#1A5A1A' };
