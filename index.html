@@ -699,6 +699,9 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sa
       <span class="section-title">交配記録</span>
       <button class="add-btn-sm" onclick="openBreedModal(null)">&#65291; 追加</button>
     </div>
+    <div style="position:relative;margin-bottom:12px;">
+      <input class="minput" id="breed-search" placeholder="🔍 母犬（♀）の名前で検索..." oninput="renderBreed()" style="margin-bottom:0;padding-left:14px;">
+    </div>
     <div id="breed-list"><div class="loading">読み込み中...</div></div>
   </div>
 
@@ -1663,8 +1666,21 @@ const STATUS_CLS   = {pregnant:'pregnant', planned:'planned', done:'done'};
 
 function renderBreed() {
   const el = document.getElementById('breed-list');
-  if (!breedRecords.length) { el.innerHTML='<p style="color:#A08060;font-size:14px;font-weight:500;text-align:center;padding:20px 0;">交配記録がありません</p>'; return; }
-  el.innerHTML = breedRecords.map(r => {
+  const searchEl = document.getElementById('breed-search');
+  const keyword = searchEl ? searchEl.value.trim() : '';
+  const filtered = keyword
+    ? breedRecords.filter(r => {
+        const fm = dogs.find(d => d.id === r.female_id);
+        return fm && fm.name.includes(keyword);
+      })
+    : breedRecords;
+  if (!filtered.length) {
+    el.innerHTML = keyword
+      ? '<p style="color:#A08060;font-size:14px;font-weight:500;text-align:center;padding:20px 0;">該当する記録がありません</p>'
+      : '<p style="color:#A08060;font-size:14px;font-weight:500;text-align:center;padding:20px 0;">交配記録がありません</p>';
+    return;
+  }
+  el.innerHTML = filtered.map(r => {
     const fm = dogs.find(d=>d.id===r.female_id);
     const ml = dogs.find(d=>d.id===r.male_id);
     const hasResult = r.status==='done' && (r.male_count!=null||r.female_count!=null);
