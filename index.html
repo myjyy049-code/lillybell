@@ -1112,7 +1112,12 @@ function renderDashboard() {
   }
 
   // 妊娠中
-  const pregnant = breedRecords.filter(r => r.status === 'pregnant');
+  const pregnant = breedRecords.filter(r => r.status === 'pregnant')
+    .sort((a, b) => {
+      if (!a.due_date) return 1;
+      if (!b.due_date) return -1;
+      return new Date(a.due_date) - new Date(b.due_date);
+    });
   if (pregnant.length === 0) {
     document.getElementById('dash-pregnant').innerHTML = '<div class="dash-empty">妊娠中の母犬はいません</div>';
   } else {
