@@ -1103,12 +1103,13 @@ function renderDashboard() {
         const which = [];
         if (r.mating_date_1 === todayDateStr) which.push('交配日①');
         if (r.mating_date_2 === todayDateStr) which.push('交配日②');
-        return `<div class="today-shift-item">
+        return `<div class="today-shift-item" onclick="switchMain('breed', document.querySelector('[data-tab=breed]')); setTimeout(()=>openBreedModal(${r.id}), 100);" style="cursor:pointer;">
           <div class="today-shift-icon" style="background:#F5D0DC;color:#882244;">💕</div>
           <div>
             <div class="today-shift-name">♀ ${fm ? fm.name : '?'} × ♂ ${ml ? ml.name : '?'}</div>
             <div class="today-shift-time">${which.join('・')}</div>
           </div>
+          <div style="margin-left:auto;font-size:11px;color:#C05A10;font-weight:600;">編集 ›</div>
         </div>`;
       }).join('')
     }</div>`;
