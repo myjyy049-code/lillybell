@@ -776,6 +776,8 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sa
     <input class="minput" id="new-born" placeholder="2023.04.01">
     <div class="mlabel">特徴</div>
     <input class="minput" id="new-features" placeholder="特徴・メモ">
+    <div class="mlabel">マイクロチップ番号</div>
+    <input class="minput" id="new-microchip" placeholder="000000000000000">
     <button class="save-btn" style="width:100%;margin-top:4px;" onclick="saveDog()">追加する</button>
     <button class="mclose-btn" onclick="closeModal('add-dog-overlay')">キャンセル</button>
   </div>
@@ -1223,6 +1225,7 @@ function renderDogsList() {
       <div class="dog-list-info">
         <div class="dog-list-name">${d.name}</div>
         <div class="dog-list-sub">${d.breed}${d.born ? ' ｜ ' + d.born : ''}${featuresText}</div>
+        ${d.microchip ? `<div style="font-size:11px;color:#B09070;font-weight:500;margin-top:2px;">🔖 ${d.microchip}</div>` : ''}
       </div>
       <div class="dog-list-badges">
         <span class="badge ${d.gender==='female'?'badge-f':'badge-m'}">${d.gender==='female'?'メス':'オス'}</span>
@@ -1262,7 +1265,9 @@ function openDetail(id) {
     <div class="mlabel">生年月日</div>
     <input class="minput" id="edit-born" value="${d.born||''}" placeholder="2023.04.01" style="margin-bottom:6px;">
     <div class="mlabel">特徴</div>
-    <input class="minput" id="edit-features" value="${d.features||''}" placeholder="特徴・メモ" style="margin-bottom:0;">
+    <input class="minput" id="edit-features" value="${d.features||''}" placeholder="特徴・メモ" style="margin-bottom:6px;">
+    <div class="mlabel">マイクロチップ番号</div>
+    <input class="minput" id="edit-microchip" value="${d.microchip||''}" placeholder="000000000000000" style="margin-bottom:0;">
   `;
   const panel = document.getElementById('detail-panel');
   panel.classList.add('open');
@@ -1278,10 +1283,11 @@ async function saveDogEdit() {
   const breed    = document.getElementById('edit-breed').value.trim();
   const gender   = document.getElementById('edit-gender').value;
   const born     = document.getElementById('edit-born').value.trim();
-  const features = document.getElementById('edit-features').value.trim();
-  const memo     = document.getElementById('dog-memo').value;
+  const features  = document.getElementById('edit-features').value.trim();
+  const microchip = document.getElementById('edit-microchip').value.trim();
+  const memo      = document.getElementById('dog-memo').value;
   if (!name||!breed) { showToast('名前と犬種は必須です'); return; }
-  await supaFetch(`dogs?id=eq.${editingDogId}`, 'PATCH', {name, breed, gender, born, features, memo});
+  await supaFetch(`dogs?id=eq.${editingDogId}`, 'PATCH', {name, breed, gender, born, features, microchip, memo});
   showToast('保存しました');
   await loadDogs();
   closeDetail();
@@ -1305,12 +1311,13 @@ async function saveDog() {
   const breed    = document.getElementById('new-breed').value.trim();
   const gender   = document.getElementById('new-gender').value;
   const born     = document.getElementById('new-born').value.trim();
-  const features = document.getElementById('new-features').value.trim();
+  const features  = document.getElementById('new-features').value.trim();
+  const microchip = document.getElementById('new-microchip').value.trim();
   if (!name||!breed) { showToast('名前と犬種は必須です'); addingNew=false; return; }
   const idx = dogs.length % EMOJIS.length;
-  await supaFetch('dogs', 'POST', {name, breed, gender, born, features, emoji:EMOJIS[idx], bg:BG_COLORS[idx]});
+  await supaFetch('dogs', 'POST', {name, breed, gender, born, features, microchip, emoji:EMOJIS[idx], bg:BG_COLORS[idx]});
   closeModal('add-dog-overlay');
-  ['new-name','new-born','new-features'].forEach(id=>document.getElementById(id).value='');
+  ['new-name','new-born','new-features','new-microchip'].forEach(id=>document.getElementById(id).value='');
   document.getElementById('new-breed').value = '';
   showToast('追加しました');
   await loadDogs();
