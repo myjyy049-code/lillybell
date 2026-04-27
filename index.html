@@ -876,9 +876,9 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sa
     </div>
 
     <div class="mlabel" style="margin-top:8px;">出産予定日</div>
-    <input class="minput" id="b-due-date" type="date">
+    <input class="minput" id="b-due-date" type="date" onchange="autoBreedStatus()">
     <div class="mlabel">出産日</div>
-    <input class="minput" id="b-birth-date" type="date">
+    <input class="minput" id="b-birth-date" type="date" onchange="autoBreedStatus()">
     <div class="mlabel">出産数（完了時）</div>
     <div class="birth-count-grid">
       <div class="birth-count-item">
@@ -1754,6 +1754,17 @@ function openBreedModal(id) {
   }
   updateMatingResultUI();
   openModal('breed-overlay');
+}
+
+function autoBreedStatus() {
+  const birthDate = document.getElementById('b-birth-date').value;
+  const dueDate   = document.getElementById('b-due-date').value;
+  const statusEl  = document.getElementById('b-status');
+  if (birthDate) {
+    statusEl.value = 'done';
+  } else if (dueDate) {
+    statusEl.value = 'pregnant';
+  }
 }
 
 async function saveBreed() {
