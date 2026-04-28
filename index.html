@@ -540,6 +540,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sa
   .breed-dates { grid-template-columns: 1fr; }
   .dash-grid { grid-template-columns: 1fr; }
 }
+
 /* ===== PWA Banner ===== */
 #pwa-banner {
   display: none; position: fixed; bottom: 0; left: 0; right: 0;
@@ -597,7 +598,6 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sa
     </div>
 
     <div class="dash-grid">
-      <!-- 犬の統計 -->
       <div class="dash-card">
         <div class="dash-card-title"><span>🐶</span>犬の統計</div>
         <div class="dog-stats-row" id="dash-dog-stats">
@@ -607,7 +607,6 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sa
         </div>
       </div>
 
-      <!-- 在室状況 -->
       <div class="dash-card">
         <div class="dash-card-title"><span>🏠</span>在室状況</div>
         <div class="kennel-status-grid" id="dash-kennel-status">
@@ -629,25 +628,21 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sa
         </div>
       </div>
 
-      <!-- 今日のシフト -->
       <div class="dash-card dash-card-full">
         <div class="dash-card-title"><span>📅</span>今日のシフト</div>
         <div id="dash-today-shift"><div class="no-shift-msg">読み込み中...</div></div>
       </div>
 
-      <!-- 今日の交配予定 -->
       <div class="dash-card dash-card-full">
         <div class="dash-card-title"><span>💕</span>今日の交配予定</div>
         <div id="dash-today-mating"><div class="dash-empty">予定なし</div></div>
       </div>
 
-      <!-- 妊娠中 -->
       <div class="dash-card">
         <div class="dash-card-title"><span>🤰</span>妊娠中</div>
         <div class="pregnant-list" id="dash-pregnant"><div class="dash-empty">データなし</div></div>
       </div>
 
-      <!-- 出産予定 -->
       <div class="dash-card">
         <div class="dash-card-title"><span>🍼</span>出産予定（30日以内）</div>
         <div class="upcoming-birth-list" id="dash-upcoming-birth"><div class="dash-empty">予定なし</div></div>
@@ -881,11 +876,9 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sa
       <option value="pregnant">妊娠中</option>
       <option value="done">完了</option>
     </select>
-    
     <div class="mlabel">発情確認日</div>
     <input class="minput" id="b-estrus-date" type="date" onchange="calcBreedDates(this.value)">
     <div class="date-info">※ 交配日①②が自動計算されます</div>
-    
     <div class="mlabel">交配日①</div>
     <input class="minput" id="b-mating-date-1" type="date">
     <div class="date-info">発情確認日を含めて10日目</div>
@@ -895,7 +888,6 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sa
       <button class="mresult-btn" id="mresult1-fail"    onclick="setMatingResult(1,'fail')">❌ 失敗</button>
       <button class="mresult-btn" id="mresult1-none"    onclick="setMatingResult(1,'')">— 未記録</button>
     </div>
-
     <div class="mlabel" style="margin-top:8px;">交配日②</div>
     <input class="minput" id="b-mating-date-2" type="date">
     <div class="date-info">発情確認日を含めて12日目</div>
@@ -905,7 +897,6 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sa
       <button class="mresult-btn" id="mresult2-fail"    onclick="setMatingResult(2,'fail')">❌ 失敗</button>
       <button class="mresult-btn" id="mresult2-none"    onclick="setMatingResult(2,'')">— 未記録</button>
     </div>
-
     <div class="mlabel" style="margin-top:8px;">出産予定日</div>
     <input class="minput" id="b-due-date" type="date" onchange="autoBreedStatus()">
     <div class="mlabel">出産日</div>
@@ -969,14 +960,13 @@ function startLogoPress() {
     wageTab.style.display  = wageVisible ? '' : 'none';
     wageBnav.style.display = wageVisible ? '' : 'none';
     showToast(wageVisible ? '💰 給与タブを表示しました' : '🔒 給与タブを非表示にしました');
-    // 非表示にしたとき給与ページを開いていたらホームへ
     if (!wageVisible) {
       const wagePage = document.getElementById('page-wage');
       if (wagePage.classList.contains('active')) {
         switchMain('dashboard', document.querySelector('[data-tab="dashboard"]'));
       }
     }
-  }, 800); // 800ms長押し
+  }, 800);
 }
 
 function cancelLogoPress() {
@@ -1037,7 +1027,6 @@ function openModal(id)  { document.getElementById(id).classList.add('open'); }
 function closeModal(id) { document.getElementById(id).classList.remove('open'); }
 function getStaffColor(idx) { return STAFF_COLORS[idx % STAFF_COLORS.length]; }
 
-// 発情確認日から交配日を自動計算
 function calcBreedDates(estrusDate) {
   if (!estrusDate) {
     document.getElementById('b-mating-date-1').value = '';
@@ -1058,7 +1047,6 @@ function calcBreedDates(estrusDate) {
 }
 
 // ================= ダッシュボード =================
-// 日付文字列(YYYY-MM-DD)をローカル時刻の0時として解釈してdiff計算
 function dateDiffDays(dateStr, baseDate) {
   const [y, m, d] = dateStr.split('-').map(Number);
   const target = new Date(y, m - 1, d, 0, 0, 0, 0);
@@ -1067,7 +1055,6 @@ function dateDiffDays(dateStr, baseDate) {
 }
 
 function renderDashboard() {
-  // 挨拶・日付
   const now = new Date();
   const h = now.getHours();
   const greeting = h < 10 ? 'おはようございます 🌸' : h < 17 ? 'こんにちは ☀️' : 'お疲れさまです 🌙';
@@ -1076,7 +1063,6 @@ function renderDashboard() {
   document.getElementById('dash-date-text').textContent =
     `${now.getFullYear()}年${now.getMonth()+1}月${now.getDate()}日（${DOW[now.getDay()]}）`;
 
-  // 犬の統計
   const total  = dogs.length;
   const female = dogs.filter(d=>d.gender==='female').length;
   const male   = dogs.filter(d=>d.gender==='male').length;
@@ -1084,7 +1070,6 @@ function renderDashboard() {
   document.getElementById('ds-female').textContent = female;
   document.getElementById('ds-male').textContent   = male;
 
-  // 在室状況
   const countKennel = (k) => cageAssignments.filter(a=>a.kennel===k).length;
   const maxA = 8*4*2, maxB = 8*4*2, maxBirth = 10*2;
   const cA = countKennel('A'), cB = countKennel('B'), cBirth = countKennel('birth');
@@ -1095,7 +1080,6 @@ function renderDashboard() {
   document.getElementById('ksbar-b').style.width     = Math.min(100, Math.round(cB/maxB*100)) + '%';
   document.getElementById('ksbar-birth').style.width = Math.min(100, Math.round(cBirth/maxBirth*100)) + '%';
 
-  // 今日のシフト
   const todayStr = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')}`;
   const todayShifts = staffList.map((s,idx) => {
     const sh = shiftsMap[`${s.id}_${todayStr}`];
@@ -1124,10 +1108,24 @@ function renderDashboard() {
   const todayMatings = breedRecords.filter(r =>
     r.mating_date_1 === todayDateStr || r.mating_date_2 === todayDateStr
   );
+
+  // 今後の交配予定（今日より後で一番近い1日分）
+  const futureDates = breedRecords
+    .flatMap(r => [r.mating_date_1, r.mating_date_2])
+    .filter(d => d && d > todayDateStr)
+    .sort();
+  const nextDate = futureDates.length ? futureDates[0] : null;
+  const nextMatings = nextDate
+    ? breedRecords.filter(r =>
+        r.mating_date_1 === nextDate || r.mating_date_2 === nextDate
+      )
+    : [];
+
+  let todayMatingHTML = '';
   if (todayMatings.length === 0) {
-    document.getElementById('dash-today-mating').innerHTML = '<div class="dash-empty">今日の交配予定はありません</div>';
+    todayMatingHTML = '<div class="dash-empty">今日の交配予定はありません</div>';
   } else {
-    document.getElementById('dash-today-mating').innerHTML = `<div class="today-shift-list">${
+    todayMatingHTML = `<div class="today-shift-list">${
       todayMatings.map(r => {
         const fm = dogs.find(d=>d.id===r.female_id);
         const ml = dogs.find(d=>d.id===r.male_id);
@@ -1145,6 +1143,29 @@ function renderDashboard() {
       }).join('')
     }</div>`;
   }
+
+  if (nextMatings.length > 0) {
+    const DOW2 = ['日','月','火','水','木','金','土'];
+    const nd = new Date(nextDate + 'T00:00:00');
+    const ndLabel = `${nd.getMonth()+1}/${nd.getDate()}（${DOW2[nd.getDay()]}）`;
+    todayMatingHTML += `<div style="margin-top:10px;padding-top:8px;border-top:1px dashed #F0DEC8;">
+      <div style="font-size:10px;font-weight:700;color:#B09070;letter-spacing:0.5px;margin-bottom:6px;">NEXT · ${ndLabel}</div>
+      ${nextMatings.map(r => {
+        const fm = dogs.find(d=>d.id===r.female_id);
+        const ml = dogs.find(d=>d.id===r.male_id);
+        const which = [];
+        if (r.mating_date_1 === nextDate) which.push('①');
+        if (r.mating_date_2 === nextDate) which.push('②');
+        return `<div style="display:flex;align-items:center;gap:8px;padding:6px 8px;background:#FFF8F4;border-radius:8px;margin-bottom:4px;opacity:0.75;">
+          <span style="font-size:12px;">💕</span>
+          <div style="font-size:12px;color:#806040;font-weight:600;">♀ ${fm ? fm.name : '?'} × ♂ ${ml ? ml.name : '?'}</div>
+          <div style="margin-left:auto;font-size:11px;color:#A08060;">交配日${which.join('・')}</div>
+        </div>`;
+      }).join('')}
+    </div>`;
+  }
+
+  document.getElementById('dash-today-mating').innerHTML = todayMatingHTML;
 
   // 妊娠中
   const pregnant = breedRecords.filter(r => r.status === 'pregnant')
@@ -1319,10 +1340,10 @@ function closeDetail() {
 }
 async function saveDogEdit() {
   if (!editingDogId) return;
-  const name     = document.getElementById('edit-name').value.trim();
-  const breed    = document.getElementById('edit-breed').value.trim();
-  const gender   = document.getElementById('edit-gender').value;
-  const born     = document.getElementById('edit-born').value.trim();
+  const name      = document.getElementById('edit-name').value.trim();
+  const breed     = document.getElementById('edit-breed').value.trim();
+  const gender    = document.getElementById('edit-gender').value;
+  const born      = document.getElementById('edit-born').value.trim();
   const features  = document.getElementById('edit-features').value.trim();
   const microchip = document.getElementById('edit-microchip').value.trim();
   const memo      = document.getElementById('dog-memo').value;
@@ -1347,10 +1368,10 @@ async function deleteDog(id) {
 async function saveDog() {
   if (addingNew) return;
   addingNew = true;
-  const name     = document.getElementById('new-name').value.trim();
-  const breed    = document.getElementById('new-breed').value.trim();
-  const gender   = document.getElementById('new-gender').value;
-  const born     = document.getElementById('new-born').value.trim();
+  const name      = document.getElementById('new-name').value.trim();
+  const breed     = document.getElementById('new-breed').value.trim();
+  const gender    = document.getElementById('new-gender').value;
+  const born      = document.getElementById('new-born').value.trim();
   const features  = document.getElementById('new-features').value.trim();
   const microchip = document.getElementById('new-microchip').value.trim();
   if (!name||!breed) { showToast('名前と犬種は必須です'); addingNew=false; return; }
@@ -1760,18 +1781,18 @@ function openBreedModal(id) {
     const r = breedRecords.find(x=>x.id===id);
     document.getElementById('breed-modal-title').textContent = '交配記録を編集';
     document.getElementById('breed-save-btn').textContent = '更新する';
-    document.getElementById('edit-breed-id').value = id;
-    document.getElementById('b-female').value       = r.female_id || '';
-    document.getElementById('b-male').value         = r.male_id   || '';
-    document.getElementById('b-status').value       = r.status    || 'planned';
-    document.getElementById('b-estrus-date').value  = r.estrus_date  || '';
+    document.getElementById('edit-breed-id').value  = id;
+    document.getElementById('b-female').value        = r.female_id || '';
+    document.getElementById('b-male').value          = r.male_id   || '';
+    document.getElementById('b-status').value        = r.status    || 'planned';
+    document.getElementById('b-estrus-date').value   = r.estrus_date   || '';
     document.getElementById('b-mating-date-1').value = r.mating_date_1 || '';
     document.getElementById('b-mating-date-2').value = r.mating_date_2 || '';
-    document.getElementById('b-due-date').value     = r.due_date     || '';
-    document.getElementById('b-birth-date').value   = r.birth_date   || '';
-    document.getElementById('b-male-count').value   = r.male_count   ?? '';
-    document.getElementById('b-female-count').value = r.female_count ?? '';
-    document.getElementById('b-dead-count').value   = r.dead_count   ?? '';
+    document.getElementById('b-due-date').value      = r.due_date      || '';
+    document.getElementById('b-birth-date').value    = r.birth_date    || '';
+    document.getElementById('b-male-count').value    = r.male_count    ?? '';
+    document.getElementById('b-female-count').value  = r.female_count  ?? '';
+    document.getElementById('b-dead-count').value    = r.dead_count    ?? '';
     matingResult1 = r.mating_result_1 || '';
     matingResult2 = r.mating_result_2 || '';
   } else {
@@ -2051,6 +2072,7 @@ async function init() {
     showToast('接続エラー。再読み込みしてください');
   }
 }
+
 // ===== PWA Banner =====
 (function() {
   const isStandalone = window.matchMedia('(display-mode: standalone)').matches
@@ -2074,6 +2096,7 @@ function dismissPwaBanner() {
   localStorage.setItem('lillybell_pwa_dismissed', '1');
   document.getElementById('pwa-banner').style.display = 'none';
 }
+
 init();
 </script>
 </body>
