@@ -723,6 +723,11 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sa
 
   <!-- シフト -->
   <div class="page" id="page-shift">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+  <span style="font-size:13px;font-weight:700;color:#806040;">定期イベント</span>
+  <button class="add-btn-sm" onclick="openEventModal(null)">＋ 追加</button>
+</div>
+<div id="event-list" style="margin-bottom:16px;display:flex;flex-wrap:wrap;gap:8px;"></div>
     <div class="month-nav">
       <button onclick="changeMonth(-1)">&#9664;</button>
       <span id="month-label"></span>
@@ -1015,6 +1020,7 @@ let editingDogId = null, editingShiftDate = null, editingBreedId = null;
 let addingNew = false;
 let dogViewMode = 'grid';
 let currentBreedFilter = '';
+let events = [];
 
 // ================= ユーティリティ =================
 function showToast(msg) {
@@ -1962,6 +1968,31 @@ function renderShiftLegend() {
     </div>`;
   }).join('');
 }
+async function loadEvents() {
+  events = await supaFetch('events?order=id.asc');
+}
+
+function getEventsForDate(dateStr) {
+  const d = new Date(dateStr + 'T00:00:00');
+  const dow = d.getDay(); // 0=日〜6=土
+  const day = d.getDate();
+  const lastDay = new Date(d.getFullYear(), d.getMonth()+1, 0).getDate();
+
+  return events.filter(ev => {
+    if (ev.repeat_type === 'once') {
+      return ev.event_date === dateStr;
+    }
+    if (ev.repeat_type === 'weekly') {
+      return ev.repeat_dow === dow;
+    }
+    if (ev.repeat_type === 'monthly_last_dow') {
+      // 月末のX曜日：当月の最後のその曜日かチェック
+      const nextWeek = new Date(d.getTime() + 7*24*60*60*1000);
+      return ev.repeat_dow === dow && nextWeek.getMonth() !== d.getMonth();
+    }
+    return false;
+  });
+}
 async function renderShiftCal() {
   await loadShifts();
   document.getElementById('month-label').textContent = `${currentYear}年${currentMonth+1}月`;
@@ -1986,9 +2017,13 @@ async function renderShiftCal() {
         shiftsHTML += `<div class="cal-shift-tag" style="background:${color.bg};color:${color.text};">${shortName} ${sh.start_time.slice(0,5)}-${sh.end_time.slice(0,5)}</div>`;
       }
     });
+    const dayEvents = getEventsForDate(dateStr);
+    const eventsHTML = dayEvents.map(ev=>
+      `<div class="cal-shift-tag" style="background:${ev.color||'#E8E8E8'};color:#fff;margin-top:1px;">${ev.title}</div>`
+    ).join('');
     html += `<div class="cal-cell ${isToday?'today':''}" onclick="openShiftModal('${dateStr}',${day})">
       <div class="cal-date ${dateCls}">${day}</div>
-      <div class="cal-shifts">${shiftsHTML}</div>
+      <div class="cal-shifts">${eventsHTML}${shiftsHTML}</div>
     </div>`;
   }
   document.getElementById('cal-grid').innerHTML = html;
@@ -2099,7 +2134,7 @@ function switchMain(tab, el) {
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.getElementById('page-'+tab).classList.add('active');
   if (tab==='dashboard') renderDashboard();
-  if (tab==='shift')     renderShiftCal();
+  if (tab==='shift') { renderShiftCal(); renderEventList(); }
   if (tab==='wage')      { loadShifts().then(()=>renderWage()); }
   if (tab==='breed')     renderBreed();
   if (tab==='dogrun')    renderDogrun();
@@ -2110,7 +2145,7 @@ function switchMain(tab, el) {
 // ================= 初期化 =================
 async function init() {
   try {
-    await Promise.all([loadDogs(), loadStaff(), loadCageAssignments(), loadBirthInfo(), loadBreedRecords(), loadDogrunAssignments()]);
+    await Promise.all([loadDogs(), loadStaff(), loadCageAssignments(), loadBirthInfo(), loadBreedRecords(), loadDogrunAssignments(), loadEvents()]);
     await loadShifts();
     renderDashboard();
     renderKennel('A');
@@ -2144,8 +2179,151 @@ function dismissPwaBanner() {
   localStorage.setItem('lillybell_pwa_dismissed', '1');
   document.getElementById('pwa-banner').style.display = 'none';
 }
+// ================= イベント管理 =================
+const EVENT_COLORS = ['#E8832A','#4A9A4A','#2266CC','#CC2222','#8844CC','#CC8800','#888888'];
+let editingEventId = null;
+let selectedEventColor = EVENT_COLORS[0];
 
+function renderEventList() {
+  const el = document.getElementById('event-list');
+  if (!el) return;
+  if (!events.length) {
+    el.innerHTML = '<span style="font-size:13px;color:#A08060;font-weight:500;">イベントがありません</span>';
+    return;
+  }
+  const DOW_LABEL = ['日','月','火','水','木','金','土'];
+  const TYPE_LABEL = { weekly:'毎週', monthly_last_dow:'月末', once:'単発' };
+  el.innerHTML = events.map(ev => {
+    const repeatLabel = ev.repeat_type === 'once'
+      ? ev.event_date
+      : `${TYPE_LABEL[ev.repeat_type]}${DOW_LABEL[ev.repeat_dow]}曜`;
+    return `<div style="display:inline-flex;align-items:center;gap:6px;background:#fff;border:2px solid #E0C0A0;border-radius:20px;padding:5px 12px;">
+      <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:${ev.color||'#888'};flex-shrink:0;"></span>
+      <span style="font-size:13px;font-weight:700;color:#1A1A1A;">${ev.title}</span>
+      <span style="font-size:11px;color:#A08060;font-weight:500;">${repeatLabel}</span>
+      <button onclick="openEventModal(${ev.id})" style="background:none;border:none;cursor:pointer;font-size:12px;color:#E8832A;font-weight:700;padding:0;">✎</button>
+      <button onclick="deleteEvent(${ev.id})" style="background:none;border:none;cursor:pointer;font-size:12px;color:#A08060;font-weight:700;padding:0;">✕</button>
+    </div>`;
+  }).join('');
+}
+
+function openEventModal(id) {
+  editingEventId = id;
+  selectedEventColor = EVENT_COLORS[0];
+  // カラーピッカー描画
+  const picker = document.getElementById('ev-color-picker');
+  picker.innerHTML = EVENT_COLORS.map(c =>
+    `<div onclick="selectEventColor('${c}')" id="ecolor-${c.replace('#','')}" style="width:24px;height:24px;border-radius:50%;background:${c};cursor:pointer;border:3px solid transparent;transition:border-color 0.15s;"></div>`
+  ).join('');
+
+  if (id) {
+    const ev = events.find(x=>x.id===id);
+    document.getElementById('event-modal-title').textContent = 'イベントを編集';
+    document.getElementById('event-save-btn').textContent = '更新する';
+    document.getElementById('edit-event-id').value = id;
+    document.getElementById('ev-title').value = ev.title||'';
+    document.getElementById('ev-repeat-type').value = ev.repeat_type||'weekly';
+    document.getElementById('ev-repeat-dow').value = ev.repeat_dow??1;
+    document.getElementById('ev-event-date').value = ev.event_date||'';
+    selectedEventColor = ev.color||EVENT_COLORS[0];
+  } else {
+    document.getElementById('event-modal-title').textContent = 'イベントを追加';
+    document.getElementById('event-save-btn').textContent = '追加する';
+    document.getElementById('edit-event-id').value = '';
+    document.getElementById('ev-title').value = '';
+    document.getElementById('ev-repeat-type').value = 'weekly';
+    document.getElementById('ev-repeat-dow').value = 4;
+    document.getElementById('ev-event-date').value = '';
+  }
+  updateEventForm();
+  selectEventColor(selectedEventColor);
+  openModal('event-overlay');
+}
+
+function selectEventColor(color) {
+  selectedEventColor = color;
+  EVENT_COLORS.forEach(c => {
+    const el = document.getElementById('ecolor-'+c.replace('#',''));
+    if (el) el.style.borderColor = c === color ? '#1A1A1A' : 'transparent';
+  });
+}
+
+function updateEventForm() {
+  const type = document.getElementById('ev-repeat-type').value;
+  document.getElementById('ev-dow-row').style.display  = type === 'once' ? 'none' : '';
+  document.getElementById('ev-date-row').style.display = type === 'once' ? '' : 'none';
+}
+
+async function saveEvent() {
+  const title = document.getElementById('ev-title').value.trim();
+  if (!title) { showToast('イベント名を入力してください'); return; }
+  const data = {
+    title,
+    color:       selectedEventColor,
+    repeat_type: document.getElementById('ev-repeat-type').value,
+    repeat_dow:  parseInt(document.getElementById('ev-repeat-dow').value)||null,
+    repeat_week: null,
+    event_date:  document.getElementById('ev-event-date').value||null,
+  };
+  if (editingEventId) {
+    await supaFetch(`events?id=eq.${editingEventId}`,'PATCH',data);
+    showToast('更新しました');
+  } else {
+    await supaFetch('events','POST',data);
+    showToast('追加しました');
+  }
+  closeModal('event-overlay');
+  await loadEvents();
+  renderEventList();
+  await renderShiftCal();
+}
+
+async function deleteEvent(id) {
+  if (!confirm('このイベントを削除しますか？')) return;
+  await supaFetch(`events?id=eq.${id}`,'DELETE');
+  showToast('削除しました');
+  await loadEvents();
+  renderEventList();
+  await renderShiftCal();
+}
 init();
 </script>
+<div class="overlay" id="event-overlay">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('event-overlay')">✕</button>
+    <h3 id="event-modal-title">イベントを追加</h3>
+    <input type="hidden" id="edit-event-id">
+    <div class="mlabel">イベント名</div>
+    <input class="minput" id="ev-title" placeholder="トリミングデー">
+    <div class="mlabel">表示色</div>
+    <div style="display:flex;gap:8px;margin-bottom:8px;flex-wrap:wrap;">
+      <div id="ev-color-picker" style="display:flex;gap:6px;flex-wrap:wrap;"></div>
+    </div>
+    <div class="mlabel">繰り返し</div>
+    <select class="mselect" id="ev-repeat-type" onchange="updateEventForm()">
+      <option value="weekly">毎週</option>
+      <option value="monthly_last_dow">月末の曜日</option>
+      <option value="once">1回限り</option>
+    </select>
+    <div id="ev-dow-row">
+      <div class="mlabel">曜日</div>
+      <select class="mselect" id="ev-repeat-dow">
+        <option value="0">日曜日</option>
+        <option value="1">月曜日</option>
+        <option value="2">火曜日</option>
+        <option value="3">水曜日</option>
+        <option value="4">木曜日</option>
+        <option value="5">金曜日</option>
+        <option value="6">土曜日</option>
+      </select>
+    </div>
+    <div id="ev-date-row" style="display:none;">
+      <div class="mlabel">日付</div>
+      <input class="minput" id="ev-event-date" type="date">
+    </div>
+    <button class="save-btn" style="width:100%;" id="event-save-btn" onclick="saveEvent()">追加する</button>
+    <button class="mclose-btn" onclick="closeModal('event-overlay')">キャンセル</button>
+  </div>
+</div>
 </body>
 </html>
