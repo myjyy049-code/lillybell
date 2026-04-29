@@ -1491,10 +1491,19 @@ function getCageDogs(kennel, key) {
 
 function kennelCageHTML(kennel, key, rowNum, max) {
   const cDogs = getCageDogs(kennel, key);
-  const cls = cDogs.length>=max?'full':cDogs.length>0?'half':'empty';
-  const tagsHTML = cDogs.length===0
+  // このケージが元の場所のお産部屋の犬を取得
+  const birthDogs = dogs.filter(d =>
+    d.prev_cage_key === key &&
+    cageAssignments.find(a => a.dog_id === d.id && a.kennel === 'birth')
+  );
+  const allDogs = cDogs.length;
+  const cls = allDogs >= max ? 'full' : allDogs > 0 || birthDogs.length > 0 ? 'half' : 'empty';
+  const tagsHTML = (cDogs.length === 0 && birthDogs.length === 0)
     ? '<span class="empty-tag">空き</span>'
-    : cDogs.map(d=>`<span class="dog-tag ${d.gender}">${d.emoji||'🐾'}${d.name}</span>`).join('');
+    : [
+        ...cDogs.map(d=>`<span class="dog-tag ${d.gender}">${d.emoji||'🐾'}${d.name}</span>`),
+        ...birthDogs.map(d=>`<span class="dog-tag ${d.gender}" style="opacity:0.55;outline:2px solid #E8832A;outline-offset:1px;" title="お産部屋に在室中">${d.emoji||'🐾'}${d.name}<span style="background:#E8832A;color:#fff;font-size:8px;font-weight:700;padding:1px 4px;border-radius:6px;margin-left:2px;">産</span></span>`)
+      ].join('');
   return `<div class="cage ${cls}" onclick="openCageModal('${kennel}','${key}',${max})">
     <span class="cage-row-num">${rowNum}</span>
     <div class="cage-dogs">${tagsHTML}</div>
@@ -1649,9 +1658,21 @@ function openCageModal(kennel, key, max) {
   openModal('cage-overlay');
 }
 async function removeDogFromCage(dogId) {
-  await supaFetch(`cage_assignments?kennel=eq.${currentKennel}&cage_key=eq.${currentCageKey}&dog_id=eq.${dogId}`,'DELETE');
-  await supaFetch(`dogs?id=eq.${dogId}`,'PATCH',{location:null});
-  showToast('解除しました');
+  const dog = dogs.find(d=>d.id===dogId);
+  // お産部屋からの解除で prev_cage_key がある場合、元のケージに自動で戻す
+  if (currentKennel === 'birth' && dog?.prev_cage_key) {
+    const prevKey = dog.prev_cage_key;
+    // prev_cage_key からkennel（AかB）を特定（LW/LP/RP/RWならA or B判断が必要なので犬のlocationから）
+    const prevKennel = dog.location && dog.location !== 'birth' ? dog.location : 'A';
+    await supaFetch(`cage_assignments?kennel=eq.${currentKennel}&cage_key=eq.${currentCageKey}&dog_id=eq.${dogId}`,'DELETE');
+    await supaFetch('cage_assignments','POST',{kennel: prevKennel, cage_key: prevKey, dog_id: dogId});
+    await supaFetch(`dogs?id=eq.${dogId}`,'PATCH',{location: prevKennel, prev_cage_key: null});
+    showToast(`${dog.name} を元のケージ（${prevKey}）に戻しました`);
+  } else {
+    await supaFetch(`cage_assignments?kennel=eq.${currentKennel}&cage_key=eq.${currentCageKey}&dog_id=eq.${dogId}`,'DELETE');
+    await supaFetch(`dogs?id=eq.${dogId}`,'PATCH',{location:null, prev_cage_key: null});
+    showToast('解除しました');
+  }
   await loadCageAssignments(); await loadDogs();
   renderKennel(currentKennel);
   openCageModal(currentKennel, currentCageKey, currentCageMax);
@@ -1661,9 +1682,18 @@ async function assignDog() {
   const dogId = parseInt(sel.value);
   if (!dogId||isNaN(dogId)) return;
   if (getCageDogs(currentKennel,currentCageKey).length>=currentCageMax) return;
+  // 既存のケージ割り当てを削除
   await supaFetch(`cage_assignments?dog_id=eq.${dogId}`,'DELETE');
+  // 新しいケージに割り当て
   await supaFetch('cage_assignments','POST',{kennel:currentKennel, cage_key:currentCageKey, dog_id:dogId});
-  await supaFetch(`dogs?id=eq.${dogId}`,'PATCH',{location:currentKennel});
+  // お産部屋への移動なら prev_cage_key を保存、それ以外はクリア
+  if (currentKennel === 'birth') {
+    const dog = dogs.find(d=>d.id===dogId);
+    const prevKey = dog ? (cageAssignments.find(a=>a.dog_id===dogId && a.kennel!=='birth')?.cage_key || null) : null;
+    await supaFetch(`dogs?id=eq.${dogId}`,'PATCH',{location: currentKennel, prev_cage_key: prevKey});
+  } else {
+    await supaFetch(`dogs?id=eq.${dogId}`,'PATCH',{location: currentKennel, prev_cage_key: null});
+  }
   showToast('割り当てました');
   await loadCageAssignments(); await loadDogs();
   renderKennel(currentKennel);
