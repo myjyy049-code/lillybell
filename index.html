@@ -1528,6 +1528,12 @@ function birthCageHTML(key, label) {
     ${birthHTML}
   </div>`;
 }
+function getBirthRoomDogs() {
+  return cageAssignments
+    .filter(a=>a.kennel==='birth')
+    .map(a=>dogs.find(d=>d.id===a.dog_id))
+    .filter(Boolean);
+}
 
 function renderKennel(kennel) {
   const el = document.getElementById('kv-'+kennel);
@@ -1579,7 +1585,7 @@ function renderKennel(kennel) {
     rpHTML += kennelCageHTML(kennel,`RP${r}`,r,max) + '<div style="height:4px;"></div>';
     rwHTML += kennelCageHTML(kennel,`RW${r}`,r,max) + '<div style="height:4px;"></div>';
   }
-
+  const birthRoomDogs = getBirthRoomDogs();
   el.innerHTML = `
     <div class="stats-bar">
       <div class="stat"><strong>${count}</strong>頭在室</div>
@@ -1605,7 +1611,21 @@ function renderKennel(kennel) {
         ${rwHTML}
       </div>
     </div>
-    <div class="entrance-label">&#9660; 入り口</div>`;
+    <div class="entrance-label">&#9660; 入り口</div>
+    ${birthRoomDogs.length > 0 ? `
+      <div style="margin-top:16px;border-top:2px dashed #F0DEC8;padding-top:14px;">
+        <div style="font-size:11px;font-weight:700;color:#B09070;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px;">🏥 お産部屋に在室中</div>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          ${birthRoomDogs.map(d=>`<div style="background:#FFF8F4;border:2px solid #F0DEC8;border-radius:10px;padding:10px 12px;display:flex;align-items:center;justify-content:space-between;">
+            <div style="display:flex;align-items:center;gap:8px;flex:1;min-width:0;">
+              <span class="dog-tag ${d.gender}">${d.emoji||'🐾'} ${d.name}</span>
+              <span style="background:#FFE8D0;color:#804020;font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;flex-shrink:0;">産</span>
+            </div>
+            <button onclick="removeDogFromCage(${d.id})" style="font-size:11px;color:#E8832A;background:transparent;border:none;cursor:pointer;font-weight:600;text-decoration:underline;flex-shrink:0;margin-left:8px;">戻す</button>
+          </div>`).join('')}
+        </div>
+      </div>
+    ` : ''}`;
 }
 
 function openCageModal(kennel, key, max) {
