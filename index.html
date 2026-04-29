@@ -597,6 +597,8 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sa
       <div class="dash-greeting-right">🐾</div>
     </div>
 
+    <div id="dash-news" style="margin-bottom:16px;"></div>
+
     <div class="dash-grid">
       <div class="dash-card">
         <div class="dash-card-title"><span>🐶</span>犬の統計</div>
@@ -1068,6 +1070,48 @@ function renderDashboard() {
   const DOW = ['日','月','火','水','木','金','土'];
   document.getElementById('dash-date-text').textContent =
     `${now.getFullYear()}年${now.getMonth()+1}月${now.getDate()}日（${DOW[now.getDay()]}）`;
+
+// ===== ニュース（過去7日以内の出産） =====
+  const newsEl = document.getElementById('dash-news');
+  const sevenDaysAgo = new Date(now.getTime() - 7*24*60*60*1000);
+  const recentBirths = breedRecords.filter(r => {
+    if (!r.birth_date) return false;
+    const bd = new Date(r.birth_date + 'T00:00:00');
+    return bd >= sevenDaysAgo && bd <= now;
+  }).sort((a,b) => new Date(b.birth_date) - new Date(a.birth_date));
+
+  if (recentBirths.length === 0) {
+    newsEl.innerHTML = '';
+  } else {
+    newsEl.innerHTML = `
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        ${recentBirths.map(r => {
+          const fm = dogs.find(d=>d.id===r.female_id);
+          const name = fm ? fm.name : '?';
+          const male   = r.male_count   || 0;
+          const female = r.female_count || 0;
+          const dead   = r.dead_count   || 0;
+          const total  = male + female;
+          const bd = new Date(r.birth_date + 'T00:00:00');
+          const diffDays = Math.round((now - bd) / 86400000);
+          const dayLabel = diffDays === 0 ? '今日' : `${diffDays}日前`;
+          const deadHTML = dead > 0 ? `<span style="color:#A08060;font-size:11px;"> / 死産${dead}頭</span>` : '';
+          return `<div style="background:linear-gradient(135deg,#FFF8F4 0%,#FFF0E4 100%);border:2px solid #F0C8A0;border-radius:14px;padding:14px 16px;display:flex;align-items:center;gap:12px;">
+            <div style="font-size:28px;flex-shrink:0;">🍼</div>
+            <div style="flex:1;">
+              <div style="font-size:13px;font-weight:700;color:#C05A10;margin-bottom:4px;">🎉 ${name} に子犬が産まれました！</div>
+              <div style="font-size:13px;color:#1A1A1A;font-weight:600;">
+                合計 ${total}頭
+                <span style="color:#114488;margin-left:8px;">♂ ${male}頭</span>
+                <span style="color:#882244;margin-left:6px;">♀ ${female}頭</span>
+                ${deadHTML}
+              </div>
+            </div>
+            <div style="font-size:11px;color:#A08060;font-weight:600;flex-shrink:0;">${dayLabel}</div>
+          </div>`;
+        }).join('')}
+      </div>`;
+  }
 
   const total  = dogs.length;
   const female = dogs.filter(d=>d.gender==='female').length;
