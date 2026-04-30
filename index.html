@@ -569,19 +569,19 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sa
 <div class="app-header">
   <div class="header-top">
     <div id="logo-area" onmousedown="startLogoPress()" onmouseup="cancelLogoPress()" onmouseleave="cancelLogoPress()" ontouchstart="startLogoPress()" ontouchend="cancelLogoPress()" style="cursor:pointer;user-select:none;">
-      <h1>&#127800; LillyBell</h1>
+      <h1>🌸 LillyBell</h1>
       <div class="subtitle">犬舎総合管理システム</div>
     </div>
   </div>
   <div class="tab-bar">
-    <button class="tab active" onclick="switchMain('dashboard',this)" data-tab="dashboard">? ホーム</button>
-    <button class="tab" onclick="switchMain('dogs',this)" data-tab="dogs">&#128054; 犬の管理</button>
-    <button class="tab" onclick="switchMain('kennel',this)" data-tab="kennel">&#127968; 犬舎</button>
-    <button class="tab" onclick="switchMain('dogrun',this)" data-tab="dogrun">? ドッグラン</button>
-    <button class="tab" onclick="switchMain('breed',this)" data-tab="breed">&#128149; 交配</button>
-    <button class="tab" onclick="switchMain('shift',this)" data-tab="shift">&#128197; シフト</button>
-    <button class="tab" onclick="switchMain('staff',this)" data-tab="staff">&#128101; スタッフ</button>
-    <button class="tab" id="wage-tab" onclick="switchMain('wage',this)" data-tab="wage" style="display:none;">&#128180; 給与</button>
+    <button class="tab active" onclick="switchMain('dashboard',this)" data-tab="dashboard">🏠 ホーム</button>
+    <button class="tab" onclick="switchMain('dogs',this)" data-tab="dogs">🐕 犬の管理</button>
+    <button class="tab" onclick="switchMain('kennel',this)" data-tab="kennel">🏡 犬舎</button>
+    <button class="tab" onclick="switchMain('dogrun',this)" data-tab="dogrun">🌿 ドッグラン</button>
+    <button class="tab" onclick="switchMain('breed',this)" data-tab="breed">💕 交配</button>
+    <button class="tab" onclick="switchMain('shift',this)" data-tab="shift">📅 シフト</button>
+    <button class="tab" onclick="switchMain('staff',this)" data-tab="staff">👥 スタッフ</button>
+    <button class="tab" id="wage-tab" onclick="switchMain('wage',this)" data-tab="wage" style="display:none;">💰 給与</button>
   </div>
 </div>
 
@@ -591,39 +591,39 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sa
   <div class="page active" id="page-dashboard">
     <div class="dash-greeting">
       <div class="dash-greeting-left">
-        <h2 id="dash-greeting-text">おはようございます ?</h2>
+        <h2 id="dash-greeting-text">おはようございます 🌸</h2>
         <p id="dash-date-text"></p>
       </div>
-      <div class="dash-greeting-right">?</div>
+      <div class="dash-greeting-right">🐾</div>
     </div>
 
     <div id="dash-news" style="margin-bottom:16px;"></div>
 
     <div class="dash-grid">
       <div class="dash-card">
-        <div class="dash-card-title"><span>?</span>犬の統計</div>
+        <div class="dash-card-title"><span>🐕</span>犬の統計</div>
         <div class="dog-stats-row" id="dash-dog-stats">
-          <div class="dog-stat-item"><div class="dsnum" id="ds-total">?</div><div class="dslabel">総頭数</div></div>
-          <div class="dog-stat-item"><div class="dsnum" id="ds-female">?</div><div class="dslabel">メス ♀</div></div>
-          <div class="dog-stat-item"><div class="dsnum" id="ds-male">?</div><div class="dslabel">オス ♂</div></div>
+          <div class="dog-stat-item"><div class="dsnum" id="ds-total">-</div><div class="dslabel">総頭数</div></div>
+          <div class="dog-stat-item"><div class="dsnum" id="ds-female">-</div><div class="dslabel">メス ♀</div></div>
+          <div class="dog-stat-item"><div class="dsnum" id="ds-male">-</div><div class="dslabel">オス ♂</div></div>
         </div>
       </div>
 
       <div class="dash-card">
-        <div class="dash-card-title"><span>?</span>在室状況</div>
+        <div class="dash-card-title"><span>🏡</span>在室状況</div>
         <div class="kennel-status-grid" id="dash-kennel-status">
           <div class="kennel-status-item">
-            <div class="ksnum" id="ks-a">?</div>
+            <div class="ksnum" id="ks-a">-</div>
             <div class="kslabel">犬舎 A</div>
             <div class="ksbar"><div class="ksbar-fill" id="ksbar-a" style="width:0%"></div></div>
           </div>
           <div class="kennel-status-item">
-            <div class="ksnum" id="ks-b">?</div>
+            <div class="ksnum" id="ks-b">-</div>
             <div class="kslabel">犬舎 B</div>
             <div class="ksbar"><div class="ksbar-fill" id="ksbar-b" style="width:0%"></div></div>
           </div>
           <div class="kennel-status-item">
-            <div class="ksnum" id="ks-birth">?</div>
+            <div class="ksnum" id="ks-birth">-</div>
             <div class="kslabel">お産部屋</div>
             <div class="ksbar"><div class="ksbar-fill" id="ksbar-birth" style="width:0%"></div></div>
           </div>
@@ -631,22 +631,22 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sa
       </div>
 
       <div class="dash-card dash-card-full">
-        <div class="dash-card-title"><span>?</span>今日のシフト</div>
+        <div class="dash-card-title"><span>📋</span>今日のシフト</div>
         <div id="dash-today-shift"><div class="no-shift-msg">読み込み中...</div></div>
       </div>
 
       <div class="dash-card dash-card-full">
-        <div class="dash-card-title"><span>?</span>今日の交配予定</div>
+        <div class="dash-card-title"><span>💕</span>今日の交配予定</div>
         <div id="dash-today-mating"><div class="dash-empty">予定なし</div></div>
       </div>
 
       <div class="dash-card">
-        <div class="dash-card-title"><span>?</span>妊娠中</div>
+        <div class="dash-card-title"><span>🤰</span>妊娠中</div>
         <div class="pregnant-list" id="dash-pregnant"><div class="dash-empty">データなし</div></div>
       </div>
 
       <div class="dash-card">
-        <div class="dash-card-title"><span>?</span>出産予定（30日以内）</div>
+        <div class="dash-card-title"><span>🍼</span>出産予定（30日以内）</div>
         <div class="upcoming-birth-list" id="dash-upcoming-birth"><div class="dash-empty">予定なし</div></div>
       </div>
     </div>
@@ -655,7 +655,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sa
   <!-- 犬の管理 -->
   <div class="page" id="page-dogs">
     <div class="detail-panel" id="detail-panel">
-      <button class="close-btn" onclick="closeDetail()">&#10005;</button>
+      <button class="close-btn" onclick="closeDetail()">✕</button>
       <div class="detail-header">
         <div class="detail-avatar" id="d-avatar"></div>
         <div>
@@ -675,8 +675,8 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sa
       </div>
     </div>
     <div class="view-toggle">
-      <button class="vtoggle-btn active" id="btn-grid-view" onclick="switchDogView('grid')">&#9638; グリッド</button>
-      <button class="vtoggle-btn" id="btn-list-view" onclick="switchDogView('list')">&#9776; リスト</button>
+      <button class="vtoggle-btn active" id="btn-grid-view" onclick="switchDogView('grid')">▦ グリッド</button>
+      <button class="vtoggle-btn" id="btn-list-view" onclick="switchDogView('list')">☰ リスト</button>
     </div>
     <div class="breed-filter-bar">
       <button class="bfilter-btn active" id="bfilter-all"            onclick="switchBreedFilter('')">すべて</button>
@@ -687,7 +687,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sa
     </div>
     <div class="dog-grid" id="dog-grid"><div class="loading">読み込み中...</div></div>
     <div class="dog-list" id="dog-list" style="display:none;"></div>
-    <button class="add-btn" onclick="openModal('add-dog-overlay')">&#65291; 犬を追加</button>
+    <button class="add-btn" onclick="openModal('add-dog-overlay')">＋ 犬を追加</button>
   </div>
 
   <!-- 犬舎 -->
@@ -695,7 +695,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sa
     <div class="sub-tabs">
       <button class="stab active" onclick="switchKennel('A',this)">犬舎 A</button>
       <button class="stab" onclick="switchKennel('B',this)">犬舎 B</button>
-      <button class="stab" onclick="switchKennel('birth',this)">&#127868; お産部屋</button>
+      <button class="stab" onclick="switchKennel('birth',this)">🏠 お産部屋</button>
     </div>
     <div class="kview active" id="kv-A"></div>
     <div class="kview" id="kv-B"></div>
@@ -715,10 +715,10 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sa
   <div class="page" id="page-breed">
     <div class="section-header">
       <span class="section-title">交配記録</span>
-      <button class="add-btn-sm" onclick="openBreedModal(null)">&#65291; 追加</button>
+      <button class="add-btn-sm" onclick="openBreedModal(null)">＋ 追加</button>
     </div>
     <div style="position:relative;margin-bottom:12px;">
-      <input class="minput" id="breed-search" placeholder="? 母犬（♀）の名前で検索..." oninput="renderBreed()" style="margin-bottom:0;padding-left:14px;">
+      <input class="minput" id="breed-search" placeholder="🔍 母犬（♀）の名前で検索..." oninput="renderBreed()" style="margin-bottom:0;padding-left:14px;">
     </div>
     <div id="breed-list"><div class="loading">読み込み中...</div></div>
   </div>
@@ -726,14 +726,14 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sa
   <!-- シフト -->
   <div class="page" id="page-shift">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
-  <span style="font-size:13px;font-weight:700;color:#806040;">定期イベント</span>
-  <button class="add-btn-sm" onclick="openEventModal(null)">＋ 追加</button>
-</div>
-<div id="event-list" style="margin-bottom:16px;display:flex;flex-wrap:wrap;gap:8px;"></div>
+      <span style="font-size:13px;font-weight:700;color:#806040;">定期イベント</span>
+      <button class="add-btn-sm" onclick="openEventModal(null)">＋ 追加</button>
+    </div>
+    <div id="event-list" style="margin-bottom:16px;display:flex;flex-wrap:wrap;gap:8px;"></div>
     <div class="month-nav">
-      <button onclick="changeMonth(-1)">&#9664;</button>
+      <button onclick="changeMonth(-1)">◀</button>
       <span id="month-label"></span>
-      <button onclick="changeMonth(1)">&#9654;</button>
+      <button onclick="changeMonth(1)">▶</button>
     </div>
     <div class="shift-legend" id="shift-legend"></div>
     <div class="cal-grid" id="cal-grid"></div>
@@ -757,8 +757,8 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sa
       <h3>今月の給与</h3>
       <div class="wage-cards" id="wage-cards"></div>
     </div>
-    <div class="paw-divider">&#128062; &#128062; &#128062;</div>
-    <p class="hint">シフト表の勤務時間 &times; 時給で自動計算</p>
+    <div class="paw-divider">🐾 🐾 🐾</div>
+    <p class="hint">シフト表の勤務時間 × 時給で自動計算</p>
   </div>
 
 </div>
@@ -766,19 +766,19 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sa
 <!-- ボトムナビ -->
 <nav class="bottom-nav">
   <div class="bottom-nav-inner">
-    <button class="bnav-btn active" onclick="switchMain('dashboard',this)" data-tab="dashboard"><span class="bicon">?</span>ホーム</button>
-    <button class="bnav-btn" onclick="switchMain('dogs',this)" data-tab="dogs"><span class="bicon">&#128054;</span>犬</button>
-    <button class="bnav-btn" onclick="switchMain('kennel',this)" data-tab="kennel"><span class="bicon">&#127968;</span>犬舎</button>
-    <button class="bnav-btn" onclick="switchMain('breed',this)" data-tab="breed"><span class="bicon">&#128149;</span>交配</button>
-    <button class="bnav-btn" onclick="switchMain('shift',this)" data-tab="shift"><span class="bicon">&#128197;</span>シフト</button>
-    <button class="bnav-btn" onclick="switchMain('staff',this)" data-tab="staff"><span class="bicon">&#128101;</span>スタッフ</button>
-    <button class="bnav-btn" id="wage-bnav" onclick="switchMain('wage',this)" data-tab="wage" style="display:none;"><span class="bicon">&#128180;</span>給与</button>
+    <button class="bnav-btn active" onclick="switchMain('dashboard',this)" data-tab="dashboard"><span class="bicon">🏠</span>ホーム</button>
+    <button class="bnav-btn" onclick="switchMain('dogs',this)" data-tab="dogs"><span class="bicon">🐕</span>犬</button>
+    <button class="bnav-btn" onclick="switchMain('kennel',this)" data-tab="kennel"><span class="bicon">🏡</span>犬舎</button>
+    <button class="bnav-btn" onclick="switchMain('breed',this)" data-tab="breed"><span class="bicon">💕</span>交配</button>
+    <button class="bnav-btn" onclick="switchMain('shift',this)" data-tab="shift"><span class="bicon">📅</span>シフト</button>
+    <button class="bnav-btn" onclick="switchMain('staff',this)" data-tab="staff"><span class="bicon">👥</span>スタッフ</button>
+    <button class="bnav-btn" id="wage-bnav" onclick="switchMain('wage',this)" data-tab="wage" style="display:none;"><span class="bicon">💰</span>給与</button>
   </div>
 </nav>
 
 <!-- ===== PWA Banner ===== -->
 <div id="pwa-banner">
-  <span class="pwa-icon">?</span>
+  <span class="pwa-icon">🌸</span>
   <div>
     <div class="pwa-title">ホーム画面に追加しませんか？</div>
     <div class="pwa-desc" id="pwa-msg"></div>
@@ -791,7 +791,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sa
 <!-- 犬追加モーダル -->
 <div class="overlay" id="add-dog-overlay">
   <div class="modal">
-    <button class="modal-close" onclick="closeModal('add-dog-overlay')">&#10005;</button>
+    <button class="modal-close" onclick="closeModal('add-dog-overlay')">✕</button>
     <h3>犬を追加</h3>
     <div class="mlabel">名前</div>
     <input class="minput" id="new-name" placeholder="もも">
@@ -822,7 +822,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sa
 <!-- ケージモーダル -->
 <div class="overlay" id="cage-overlay">
   <div class="modal">
-    <button class="modal-close" onclick="closeModal('cage-overlay')">&#10005;</button>
+    <button class="modal-close" onclick="closeModal('cage-overlay')">✕</button>
     <h3 id="modal-cage-title"></h3>
     <div id="modal-cage-body"></div>
     <div class="madd-row">
@@ -836,7 +836,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sa
 <!-- ドッグランエリアモーダル -->
 <div class="overlay" id="dogrun-overlay">
   <div class="modal">
-    <button class="modal-close" onclick="closeModal('dogrun-overlay')">&#10005;</button>
+    <button class="modal-close" onclick="closeModal('dogrun-overlay')">✕</button>
     <h3 id="dogrun-modal-title"></h3>
     <div id="dogrun-modal-body"></div>
     <div class="madd-row">
@@ -850,7 +850,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sa
 <!-- お産部屋出産情報モーダル -->
 <div class="overlay" id="birth-info-overlay">
   <div class="modal">
-    <button class="modal-close" onclick="closeModal('birth-info-overlay')">&#10005;</button>
+    <button class="modal-close" onclick="closeModal('birth-info-overlay')">✕</button>
     <h3 id="bi-title"></h3>
     <div class="mlabel">出産予定日</div>
     <input class="minput" id="bi-due" type="date">
@@ -858,8 +858,8 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sa
     <input class="minput" id="bi-birth" type="date">
     <div class="mlabel">生まれた子犬数</div>
     <div class="mgrid3">
-      <input id="bi-male" type="number" min="0" placeholder="&#9794;頭数">
-      <input id="bi-female" type="number" min="0" placeholder="&#9792;頭数">
+      <input id="bi-male" type="number" min="0" placeholder="♂頭数">
+      <input id="bi-female" type="number" min="0" placeholder="♀頭数">
       <input id="bi-dead" type="number" min="0" placeholder="死産">
     </div>
     <button class="save-btn" style="width:100%;" onclick="saveBirthInfo()">保存</button>
@@ -870,7 +870,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sa
 <!-- 交配追加・編集モーダル -->
 <div class="overlay" id="breed-overlay">
   <div class="modal">
-    <button class="modal-close" onclick="closeModal('breed-overlay')">&#10005;</button>
+    <button class="modal-close" onclick="closeModal('breed-overlay')">✕</button>
     <h3 id="breed-modal-title">交配記録を追加</h3>
     <input type="hidden" id="edit-breed-id">
     <div class="mlabel">母犬（メス）</div>
@@ -891,18 +891,18 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sa
     <div class="date-info">発情確認日を含めて10日目</div>
     <div class="mlabel" style="margin-top:4px;">交配日① 結果</div>
     <div class="mating-result-btns">
-      <button class="mresult-btn" id="mresult1-success" onclick="setMatingResult(1,'success')">? 成功</button>
-      <button class="mresult-btn" id="mresult1-fail"    onclick="setMatingResult(1,'fail')">? 失敗</button>
-      <button class="mresult-btn" id="mresult1-none"    onclick="setMatingResult(1,'')">? 未記録</button>
+      <button class="mresult-btn" id="mresult1-success" onclick="setMatingResult(1,'success')">✅ 成功</button>
+      <button class="mresult-btn" id="mresult1-fail"    onclick="setMatingResult(1,'fail')">❌ 失敗</button>
+      <button class="mresult-btn" id="mresult1-none"    onclick="setMatingResult(1,'')">⬜ 未記録</button>
     </div>
     <div class="mlabel" style="margin-top:8px;">交配日②</div>
     <input class="minput" id="b-mating-date-2" type="date">
     <div class="date-info">発情確認日を含めて12日目</div>
     <div class="mlabel" style="margin-top:4px;">交配日② 結果</div>
     <div class="mating-result-btns">
-      <button class="mresult-btn" id="mresult2-success" onclick="setMatingResult(2,'success')">? 成功</button>
-      <button class="mresult-btn" id="mresult2-fail"    onclick="setMatingResult(2,'fail')">? 失敗</button>
-      <button class="mresult-btn" id="mresult2-none"    onclick="setMatingResult(2,'')">? 未記録</button>
+      <button class="mresult-btn" id="mresult2-success" onclick="setMatingResult(2,'success')">✅ 成功</button>
+      <button class="mresult-btn" id="mresult2-fail"    onclick="setMatingResult(2,'fail')">❌ 失敗</button>
+      <button class="mresult-btn" id="mresult2-none"    onclick="setMatingResult(2,'')">⬜ 未記録</button>
     </div>
     <div class="mlabel" style="margin-top:8px;">出産予定日</div>
     <input class="minput" id="b-due-date" type="date" onchange="autoBreedStatus()">
@@ -919,7 +919,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sa
         <input id="b-female-count" type="number" min="0" placeholder="0">
       </div>
       <div class="birth-count-item">
-        <div class="birth-count-label">? 死産</div>
+        <div class="birth-count-label">💀 死産</div>
         <input id="b-dead-count" type="number" min="0" placeholder="0">
       </div>
     </div>
@@ -931,7 +931,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sa
 <!-- シフト編集モーダル -->
 <div class="overlay" id="shift-overlay">
   <div class="modal">
-    <button class="modal-close" onclick="closeModal('shift-overlay')">&#10005;</button>
+    <button class="modal-close" onclick="closeModal('shift-overlay')">✕</button>
     <h3 id="shift-modal-title"></h3>
     <div class="staff-shift-list" id="staff-shift-list"></div>
     <button class="save-btn" style="width:100%;margin-top:14px;" onclick="saveShifts()">保存</button>
@@ -942,7 +942,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sa
 <!-- スタッフ編集モーダル -->
 <div class="overlay" id="staff-edit-overlay">
   <div class="modal">
-    <button class="modal-close" onclick="closeModal('staff-edit-overlay')">&#10005;</button>
+    <button class="modal-close" onclick="closeModal('staff-edit-overlay')">✕</button>
     <h3>スタッフ編集</h3>
     <input type="hidden" id="edit-staff-id">
     <div class="mlabel">名前</div>
@@ -966,7 +966,7 @@ function startLogoPress() {
     const wageBnav = document.getElementById('wage-bnav');
     wageTab.style.display  = wageVisible ? '' : 'none';
     wageBnav.style.display = wageVisible ? '' : 'none';
-    showToast(wageVisible ? '? 給与タブを表示しました' : '? 給与タブを非表示にしました');
+    showToast(wageVisible ? '💰 給与タブを表示しました' : '🙈 給与タブを非表示にしました');
     if (!wageVisible) {
       const wagePage = document.getElementById('page-wage');
       if (wagePage.classList.contains('active')) {
@@ -1001,7 +1001,7 @@ async function supaFetch(path, method='GET', body=null) {
 }
 
 // ================= 状態 =================
-const EMOJIS = ['?','?','?','?','?','???'];
+const EMOJIS = ['🐶','🐩','🦮','🐕','🐾','🐕‍🦺'];
 const BG_COLORS = ['#FFE0EC','#FFF0D0','#D8EEFF','#E0FFE8','#F0E0FF','#FFE8D0'];
 const STAFF_COLORS = [
   { bg: '#C8EFC8', text: '#1A5A1A' },
@@ -1065,13 +1065,13 @@ function dateDiffDays(dateStr, baseDate) {
 function renderDashboard() {
   const now = new Date();
   const h = now.getHours();
-  const greeting = h < 10 ? 'おはようございます ?' : h < 17 ? 'こんにちは ??' : 'お疲れさまです ?';
+  const greeting = h < 10 ? 'おはようございます 🌸' : h < 17 ? 'こんにちは ☀️' : 'お疲れさまです 🌙';
   document.getElementById('dash-greeting-text').textContent = greeting;
   const DOW = ['日','月','火','水','木','金','土'];
   document.getElementById('dash-date-text').textContent =
     `${now.getFullYear()}年${now.getMonth()+1}月${now.getDate()}日（${DOW[now.getDay()]}）`;
 
-// ===== ニュース（過去7日以内の出産） =====
+  // ===== ニュース（過去7日以内の出産） =====
   const newsEl = document.getElementById('dash-news');
   const sevenDaysAgo = new Date(now.getTime() - 7*24*60*60*1000);
   const recentBirths = breedRecords.filter(r => {
@@ -1097,9 +1097,9 @@ function renderDashboard() {
           const dayLabel = diffDays === 0 ? '今日' : `${diffDays}日前`;
           const deadHTML = dead > 0 ? `<span style="color:#A08060;font-size:11px;"> / 死産${dead}頭</span>` : '';
           return `<div style="background:linear-gradient(135deg,#FFF8F4 0%,#FFF0E4 100%);border:2px solid #F0C8A0;border-radius:14px;padding:14px 16px;display:flex;align-items:center;gap:12px;">
-            <div style="font-size:28px;flex-shrink:0;">?</div>
+            <div style="font-size:28px;flex-shrink:0;">🎉</div>
             <div style="flex:1;">
-              <div style="font-size:13px;font-weight:700;color:#C05A10;margin-bottom:4px;">? ${name} に子犬が産まれました！</div>
+              <div style="font-size:13px;font-weight:700;color:#C05A10;margin-bottom:4px;">🍼 ${name} に子犬が産まれました！</div>
               <div style="font-size:13px;color:#1A1A1A;font-weight:600;">
                 合計 ${total}頭
                 <span style="color:#114488;margin-left:8px;">♂ ${male}頭</span>
@@ -1143,23 +1143,23 @@ function renderDashboard() {
       todayShifts.map(({staff, shift, idx}) => {
         const color = getStaffColor(idx);
         return `<div class="today-shift-item">
-          <div class="today-shift-icon" style="background:${color.bg};color:${color.text};">?</div>
+          <div class="today-shift-icon" style="background:${color.bg};color:${color.text};">👤</div>
           <div>
             <div class="today-shift-name">${staff.name}</div>
-            <div class="today-shift-time">${shift.start_time.slice(0,5)} ? ${shift.end_time.slice(0,5)}</div>
+            <div class="today-shift-time">${shift.start_time.slice(0,5)} → ${shift.end_time.slice(0,5)}</div>
           </div>
         </div>`;
       }).join('')
     }</div>`;
   }
 
-  // 今日の交配予定（mating_date_1 or mating_date_2 が今日のもの）
+  // 今日の交配予定
   const todayDateStr = todayStr;
   const todayMatings = breedRecords.filter(r =>
     r.mating_date_1 === todayDateStr || r.mating_date_2 === todayDateStr
   );
 
-  // 今後の交配予定（今日より後で一番近い1日分）
+  // 今後の交配予定
   const futureDates = breedRecords
     .flatMap(r => [r.mating_date_1, r.mating_date_2])
     .filter(d => d && d > todayDateStr)
@@ -1183,12 +1183,12 @@ function renderDashboard() {
         if (r.mating_date_1 === todayDateStr) which.push('交配日①');
         if (r.mating_date_2 === todayDateStr) which.push('交配日②');
         return `<div class="today-shift-item" onclick="switchMain('breed', document.querySelector('[data-tab=breed]')); setTimeout(()=>openBreedModal(${r.id}), 100);" style="cursor:pointer;">
-          <div class="today-shift-icon" style="background:#F5D0DC;color:#882244;">?</div>
+          <div class="today-shift-icon" style="background:#F5D0DC;color:#882244;">💕</div>
           <div>
             <div class="today-shift-name">♀ ${fm ? fm.name : '?'} × ♂ ${ml ? ml.name : '?'}</div>
             <div class="today-shift-time">${which.join('・')}</div>
           </div>
-          <div style="margin-left:auto;font-size:11px;color:#C05A10;font-weight:600;">編集 ?</div>
+          <div style="margin-left:auto;font-size:11px;color:#C05A10;font-weight:600;">編集 ›</div>
         </div>`;
       }).join('')
     }</div>`;
@@ -1199,7 +1199,7 @@ function renderDashboard() {
     const nd = new Date(nextDate + 'T00:00:00');
     const ndLabel = `${nd.getMonth()+1}/${nd.getDate()}（${DOW2[nd.getDay()]}）`;
     todayMatingHTML += `<div style="margin-top:10px;padding-top:8px;border-top:1px dashed #F0DEC8;">
-      <div style="font-size:10px;font-weight:700;color:#B09070;letter-spacing:0.5px;margin-bottom:6px;">NEXT ? ${ndLabel}</div>
+      <div style="font-size:10px;font-weight:700;color:#B09070;letter-spacing:0.5px;margin-bottom:6px;">NEXT 📅 ${ndLabel}</div>
       ${nextMatings.map(r => {
         const fm = dogs.find(d=>d.id===r.female_id);
         const ml = dogs.find(d=>d.id===r.male_id);
@@ -1207,7 +1207,7 @@ function renderDashboard() {
         if (r.mating_date_1 === nextDate) which.push('①');
         if (r.mating_date_2 === nextDate) which.push('②');
         return `<div style="display:flex;align-items:center;gap:8px;padding:6px 8px;background:#FFF8F4;border-radius:8px;margin-bottom:4px;opacity:0.75;">
-          <span style="font-size:12px;">?</span>
+          <span style="font-size:12px;">💕</span>
           <div style="font-size:12px;color:#806040;font-weight:600;">♀ ${fm ? fm.name : '?'} × ♂ ${ml ? ml.name : '?'}</div>
           <div style="margin-left:auto;font-size:11px;color:#A08060;">交配日${which.join('・')}</div>
         </div>`;
@@ -1313,7 +1313,7 @@ function renderDogsGrid() {
     const emoji = d.emoji || EMOJIS[idx % EMOJIS.length];
     const bg    = d.bg    || BG_COLORS[idx % BG_COLORS.length];
     return `<div class="dog-card" onclick="openDetail(${d.id})">
-      <button class="dog-del-btn" onclick="event.stopPropagation();deleteDog(${d.id})">&#10005;</button>
+      <button class="dog-del-btn" onclick="event.stopPropagation();deleteDog(${d.id})">✕</button>
       <div class="dog-avatar" style="background:${bg};">${emoji}</div>
       <h3>${d.name}</h3>
       <p class="breed">${d.breed}</p>
@@ -1331,30 +1331,30 @@ function renderDogsList() {
     const emoji = d.emoji || EMOJIS[idx % EMOJIS.length];
     const bg    = d.bg    || BG_COLORS[idx % BG_COLORS.length];
     const featuresText = d.features ? `<span style="color:#A08060;"> ｜ ${d.features}</span>` : '';
-const ageText = d.born ? (() => {
-  const normalized = d.born.replace(/[.\//]/g, '-').trim();
-  const born = new Date(normalized + 'T00:00:00');
-  if (isNaN(born.getTime())) return '';
-  const now = new Date();
-  const months = (now.getFullYear() - born.getFullYear()) * 12 + (now.getMonth() - born.getMonth());
-  if (months < 0) return '';
-  if (months < 12) return ` ｜ ${months}ヶ月`;
-  const years = Math.floor(months / 12);
-  const rem = months % 12;
-  return rem > 0 ? ` ｜ ${years}歳${rem}ヶ月` : ` ｜ ${years}歳`;
-})() : '';
+    const ageText = d.born ? (() => {
+      const normalized = d.born.replace(/[.\//]/g, '-').trim();
+      const born = new Date(normalized + 'T00:00:00');
+      if (isNaN(born.getTime())) return '';
+      const now = new Date();
+      const months = (now.getFullYear() - born.getFullYear()) * 12 + (now.getMonth() - born.getMonth());
+      if (months < 0) return '';
+      if (months < 12) return ` ｜ ${months}ヶ月`;
+      const years = Math.floor(months / 12);
+      const rem = months % 12;
+      return rem > 0 ? ` ｜ ${years}歳${rem}ヶ月` : ` ｜ ${years}歳`;
+    })() : '';
     return `<div class="dog-list-row" onclick="openDetail(${d.id})">
       <div class="dog-list-avatar" style="background:${bg};">${emoji}</div>
       <div class="dog-list-info">
         <div class="dog-list-name">${d.name}</div>
         <div class="dog-list-sub">${d.breed}${ageText}${featuresText}</div>
-${d.microchip ? `<div style="font-size:11px;color:#B09070;font-weight:500;margin-top:2px;">🔖 ${d.microchip}</div>` : ''}
+        ${d.microchip ? `<div style="font-size:11px;color:#B09070;font-weight:500;margin-top:2px;">🔖 ${d.microchip}</div>` : ''}
       </div>
       <div class="dog-list-badges">
         <span class="badge ${d.gender==='female'?'badge-f':'badge-m'}">${d.gender==='female'?'メス':'オス'}</span>
         <span class="badge badge-loc">${dogLocLabel(d.location)}</span>
       </div>
-      <button class="dog-list-del" onclick="event.stopPropagation();deleteDog(${d.id})">&#10005;</button>
+      <button class="dog-list-del" onclick="event.stopPropagation();deleteDog(${d.id})">✕</button>
     </div>`;
   }).join('');
 }
@@ -1486,7 +1486,7 @@ function renderDogrun() {
       const dogsHTML = doglist.length===0
         ? '<span class="empty-tag">空き</span>'
         : doglist.map(d=>`<div class="dogrun-dog-item">
-            <div class="dogrun-dog-name">${d.emoji||'?'} ${d.name}</div>
+            <div class="dogrun-dog-name">${d.emoji||'🐶'} ${d.name}</div>
             <div class="dogrun-dog-breed">${d.breed}</div>
             ${d.features?`<div class="dogrun-dog-feature">${d.features}</div>`:''}
           </div>`).join('');
@@ -1506,14 +1506,14 @@ function openDogrunModal(area) {
   const body = doglist.length===0
     ? '<p style="font-size:14px;color:#A08060;padding:8px 0;font-weight:500;">犬がいません</p>'
     : doglist.map(d=>`<div class="modal-dog-row">
-        <span style="font-size:13px;">${d.emoji||'?'} ${d.name}${d.features?' ('+d.features+')':''}</span>
+        <span style="font-size:13px;">${d.emoji||'🐶'} ${d.name}${d.features?' ('+d.features+')':''}</span>
         <button class="mremove" onclick="removeDogFromRun(${d.id})">解除</button>
       </div>`).join('');
   document.getElementById('dogrun-modal-body').innerHTML = body;
   const available = dogs.filter(d=>!doglist.find(cd=>cd.id===d.id));
   const sel = document.getElementById('dogrun-dog-select');
   sel.innerHTML = available.length===0 ? '<option>割り当て可能な犬がいません</option>'
-    : available.map(d=>`<option value="${d.id}">${d.emoji||'?'} ${d.name}（${d.features||d.breed}）</option>`).join('');
+    : available.map(d=>`<option value="${d.id}">${d.emoji||'🐶'} ${d.name}（${d.features||d.breed}）</option>`).join('');
   openModal('dogrun-overlay');
 }
 async function removeDogFromRun(dogId) {
@@ -1553,7 +1553,6 @@ function getCageDogs(kennel, key) {
 
 function kennelCageHTML(kennel, key, rowNum, max) {
   const cDogs = getCageDogs(kennel, key);
-  // このケージ・この犬舎が元の場所のお産部屋の犬を取得
   const birthDogs = dogs.filter(d =>
     d.prev_cage_key === key &&
     d.prev_kennel === kennel &&
@@ -1563,8 +1562,8 @@ function kennelCageHTML(kennel, key, rowNum, max) {
   const tagsHTML = (cDogs.length === 0 && birthDogs.length === 0)
     ? '<span class="empty-tag">空き</span>'
     : [
-        ...cDogs.map(d=>`<span class="dog-tag ${d.gender}">${d.emoji||'?'}${d.name}</span>`),
-        ...birthDogs.map(d=>`<span class="dog-tag ${d.gender}" style="opacity:0.5;">${d.emoji||'?'}${d.name}<span style="background:#E8832A;color:#fff;font-size:8px;font-weight:700;padding:1px 4px;border-radius:6px;margin-left:2px;">産</span></span>`)
+        ...cDogs.map(d=>`<span class="dog-tag ${d.gender}">${d.emoji||'🐶'}${d.name}</span>`),
+        ...birthDogs.map(d=>`<span class="dog-tag ${d.gender}" style="opacity:0.5;">${d.emoji||'🐶'}${d.name}<span style="background:#E8832A;color:#fff;font-size:8px;font-weight:700;padding:1px 4px;border-radius:6px;margin-left:2px;">産</span></span>`)
       ].join('');
   return `<div class="cage ${cls}" onclick="openCageModal('${kennel}','${key}',${max})">
     <span class="cage-row-num">${rowNum}</span>
@@ -1577,7 +1576,7 @@ function birthCageHTML(key, label) {
   const cls = cDogs.length>=1?'full':cDogs.length>0?'half':'empty';
   const tagsHTML = cDogs.length===0
     ? '<span class="empty-tag">空き</span>'
-    : cDogs.map(d=>`<span class="dog-tag ${d.gender}">${d.emoji||'?'} ${d.name}</span>`).join('');
+    : cDogs.map(d=>`<span class="dog-tag ${d.gender}">${d.emoji||'🐶'} ${d.name}</span>`).join('');
   let birthHTML = '';
   if (cDogs.length>0) {
     const info = birthInfoMap[key];
@@ -1586,11 +1585,11 @@ function birthCageHTML(key, label) {
       birthHTML = `<div class="birth-info">
         ${info.due_date?`<div>予定: <span class="bdate">${info.due_date}</span></div>`:''}
         ${info.birth_date?`<div>出産: <span class="bdate">${info.birth_date}</span></div>`:''}
-        ${(info.male_count||info.female_count)?`<div>&#9794;${info.male_count||0} &#9792;${info.female_count||0}${info.dead_count>0?' 死産'+info.dead_count:''}</div>`:''}
+        ${(info.male_count||info.female_count)?`<div>♂${info.male_count||0} ♀${info.female_count||0}${info.dead_count>0?' 死産'+info.dead_count:''}</div>`:''}
       </div>
       <button onclick="event.stopPropagation();openBirthInfoModal('${key}','${dName}')" style="margin-top:5px;font-size:11px;color:#E8832A;background:#FFF5EE;border:1.5px solid #E8A060;border-radius:7px;padding:3px 8px;cursor:pointer;width:100%;font-weight:600;">出産情報を編集</button>`;
     } else {
-      birthHTML = `<button onclick="event.stopPropagation();openBirthInfoModal('${key}','${dName}')" style="margin-top:5px;font-size:11px;color:#A08060;background:#F8F0E8;border:1.5px dashed #C8A880;border-radius:7px;padding:3px 8px;cursor:pointer;width:100%;font-weight:600;">&#127868; 出産情報を入力</button>`;
+      birthHTML = `<button onclick="event.stopPropagation();openBirthInfoModal('${key}','${dName}')" style="margin-top:5px;font-size:11px;color:#A08060;background:#F8F0E8;border:1.5px dashed #C8A880;border-radius:7px;padding:3px 8px;cursor:pointer;width:100%;font-weight:600;">🏠 出産情報を入力</button>`;
     }
   }
   return `<div class="birth-cage ${cls}" onclick="openCageModal('birth','${key}',1)">
@@ -1682,14 +1681,14 @@ function renderKennel(kennel) {
         ${rwHTML}
       </div>
     </div>
-    <div class="entrance-label">&#9660; 入り口</div>
+    <div class="entrance-label">▼ 入り口</div>
     ${birthRoomDogs.length > 0 ? `
       <div style="margin-top:16px;border-top:2px dashed #F0DEC8;padding-top:14px;">
-        <div style="font-size:11px;font-weight:700;color:#B09070;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px;">? お産部屋に在室中</div>
+        <div style="font-size:11px;font-weight:700;color:#B09070;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px;">🏠 お産部屋に在室中</div>
         <div style="display:flex;flex-direction:column;gap:8px;">
           ${birthRoomDogs.map(d=>`<div style="background:#FFF8F4;border:2px solid #F0DEC8;border-radius:10px;padding:10px 12px;display:flex;align-items:center;justify-content:space-between;">
             <div style="display:flex;align-items:center;gap:8px;flex:1;min-width:0;">
-              <span class="dog-tag ${d.gender}">${d.emoji||'?'} ${d.name}</span>
+              <span class="dog-tag ${d.gender}">${d.emoji||'🐶'} ${d.name}</span>
               <span style="background:#FFE8D0;color:#804020;font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;flex-shrink:0;">産</span>
             </div>
             <button onclick="removeDogFromCage(${d.id})" style="font-size:11px;color:#E8832A;background:transparent;border:none;cursor:pointer;font-weight:600;text-decoration:underline;flex-shrink:0;margin-left:8px;">戻す</button>
@@ -1707,7 +1706,7 @@ function openCageModal(kennel, key, max) {
   const body = cDogs.length===0
     ? '<p style="font-size:14px;color:#A08060;padding:8px 0;font-weight:500;">空きケージです</p>'
     : cDogs.map(d=>`<div class="modal-dog-row">
-        <span class="dog-tag ${d.gender}" style="font-size:13px;">${d.emoji||'?'} ${d.name}</span>
+        <span class="dog-tag ${d.gender}" style="font-size:13px;">${d.emoji||'🐶'} ${d.name}</span>
         <button class="mremove" onclick="removeDogFromCage(${d.id})">移動・解除</button>
       </div>`).join('');
   document.getElementById('modal-cage-body').innerHTML = body;
@@ -1716,13 +1715,12 @@ function openCageModal(kennel, key, max) {
   sel.disabled = isFull;
   sel.innerHTML = isFull ? '<option>満員です</option>'
     : available.length===0 ? '<option>割り当て可能な犬がいません</option>'
-    : available.map(d=>`<option value="${d.id}">${d.emoji||'?'} ${d.name}（${d.gender==='female'?'メス':'オス'}）</option>`).join('');
+    : available.map(d=>`<option value="${d.id}">${d.emoji||'🐶'} ${d.name}（${d.gender==='female'?'メス':'オス'}）</option>`).join('');
   openModal('cage-overlay');
 }
 async function removeDogFromCage(dogId) {
   const dog = dogs.find(d=>d.id===dogId);
   if (currentKennel === 'birth' && dog?.prev_cage_key && dog?.prev_kennel) {
-    // 元のケージに自動で戻す
     await supaFetch(`cage_assignments?kennel=eq.${currentKennel}&cage_key=eq.${currentCageKey}&dog_id=eq.${dogId}`,'DELETE');
     await supaFetch('cage_assignments','POST',{kennel: dog.prev_kennel, cage_key: dog.prev_cage_key, dog_id: dogId});
     await supaFetch(`dogs?id=eq.${dogId}`,'PATCH',{location: dog.prev_kennel, prev_cage_key: null, prev_kennel: null});
@@ -1741,7 +1739,6 @@ async function assignDog() {
   const dogId = parseInt(sel.value);
   if (!dogId||isNaN(dogId)) return;
   if (getCageDogs(currentKennel,currentCageKey).length>=currentCageMax) return;
-  // お産部屋への移動なら現在のケージ情報を prev_kennel / prev_cage_key に保存
   if (currentKennel === 'birth') {
     const prevAssign = cageAssignments.find(a => a.dog_id === dogId && a.kennel !== 'birth');
     const prevCageKey = prevAssign ? prevAssign.cage_key : null;
@@ -1761,7 +1758,7 @@ async function assignDog() {
 }
 function openBirthInfoModal(key, dogName) {
   currentBirthCageKey = key;
-  document.getElementById('bi-title').textContent = `? ${dogName} の出産情報`;
+  document.getElementById('bi-title').textContent = `🏠 ${dogName} の出産情報`;
   const info = birthInfoMap[key]||{};
   document.getElementById('bi-due').value    = info.due_date    ||'';
   document.getElementById('bi-birth').value  = info.birth_date  ||'';
@@ -1849,26 +1846,26 @@ function renderBreed() {
     const hasResult = r.status==='done' && (r.male_count!=null||r.female_count!=null);
     return `<div class="breed-card">
       <div class="breed-actions">
-        <button class="breed-edit" onclick="openBreedModal(${r.id})" title="編集">&#9998;</button>
-        <button class="breed-del" onclick="deleteBreed(${r.id})" title="削除">&#10005;</button>
+        <button class="breed-edit" onclick="openBreedModal(${r.id})" title="編集">✏️</button>
+        <button class="breed-del" onclick="deleteBreed(${r.id})" title="削除">✕</button>
       </div>
       <div class="breed-card-top">
-        <div class="breed-pair">&#9792; ${fm?fm.name:'?'} &times; &#9794; ${ml?ml.name:'?'}</div>
+        <div class="breed-pair">♀ ${fm?fm.name:'?'} × ♂ ${ml?ml.name:'?'}</div>
         <span class="bstatus ${STATUS_CLS[r.status]||'planned'}">${STATUS_LABEL[r.status]||r.status}</span>
       </div>
       <div class="breed-dates">
-        <div>発情確認<span>${r.estrus_date||'?'}</span></div>
-        <div>交配日①<span>${r.mating_date_1||'?'}${r.mating_result_1 ? ' ' + (r.mating_result_1==='success'?'?':'?') : ''}</span></div>
-        <div>交配日②<span>${r.mating_date_2||'?'}${r.mating_result_2 ? ' ' + (r.mating_result_2==='success'?'?':'?') : ''}</span></div>
+        <div>発情確認<span>${r.estrus_date||'—'}</span></div>
+        <div>交配日①<span>${r.mating_date_1||'—'}${r.mating_result_1 ? ' ' + (r.mating_result_1==='success'?'✅':'❌') : ''}</span></div>
+        <div>交配日②<span>${r.mating_date_2||'—'}${r.mating_result_2 ? ' ' + (r.mating_result_2==='success'?'✅':'❌') : ''}</span></div>
       </div>
       <div class="breed-dates" style="margin-bottom:0;">
-        <div>出産予定<span>${r.due_date||'?'}</span></div>
-        <div>出産日<span>${r.birth_date||'?'}</span></div>
+        <div>出産予定<span>${r.due_date||'—'}</span></div>
+        <div>出産日<span>${r.birth_date||'—'}</span></div>
         <div></div>
       </div>
       ${hasResult?`<div class="birth-result">
-        <div><div class="bnum">&#9794; ${r.male_count||0}</div><div class="blabel">オス</div></div>
-        <div><div class="bnum">&#9792; ${r.female_count||0}</div><div class="blabel">メス</div></div>
+        <div><div class="bnum">♂ ${r.male_count||0}</div><div class="blabel">オス</div></div>
+        <div><div class="bnum">♀ ${r.female_count||0}</div><div class="blabel">メス</div></div>
         <div><div class="bnum">${r.dead_count||0}</div><div class="blabel">死産</div></div>
         <div><div class="bnum">${(r.male_count||0)+(r.female_count||0)}</div><div class="blabel">合計</div></div>
       </div>`:''}
@@ -1881,10 +1878,10 @@ function openBreedModal(id) {
   const females = dogs.filter(d=>d.gender==='female');
   const males   = dogs.filter(d=>d.gender==='male');
   document.getElementById('b-female').innerHTML = females.length
-    ? females.map(d=>`<option value="${d.id}">&#9792; ${d.name}（${d.breed}）</option>`).join('')
+    ? females.map(d=>`<option value="${d.id}">♀ ${d.name}（${d.breed}）</option>`).join('')
     : '<option>メスの犬がいません</option>';
   document.getElementById('b-male').innerHTML = males.length
-    ? males.map(d=>`<option value="${d.id}">&#9794; ${d.name}（${d.breed}）</option>`).join('')
+    ? males.map(d=>`<option value="${d.id}">♂ ${d.name}（${d.breed}）</option>`).join('')
     : '<option>オスの犬がいません</option>';
 
   if (id) {
@@ -1973,10 +1970,10 @@ function renderStaffList() {
   el.innerHTML = staffList.map((s,i) => {
     const color = getStaffColor(i);
     return `<div class="staff-card">
-      <div class="staff-icon" style="background:${color.bg};color:${color.text};">&#128101;</div>
+      <div class="staff-icon" style="background:${color.bg};color:${color.text};">👤</div>
       <div class="staff-info">
         <div class="sname">${s.name}</div>
-        <div class="swage">時給 &yen;${s.hourly_wage.toLocaleString()}</div>
+        <div class="swage">時給 ¥${s.hourly_wage.toLocaleString()}</div>
       </div>
       <button class="staff-edit-btn" onclick="openStaffEdit(${s.id})">編集</button>
     </div>`;
@@ -2030,7 +2027,7 @@ async function loadEvents() {
 
 function getEventsForDate(dateStr) {
   const d = new Date(dateStr + 'T00:00:00');
-  const dow = d.getDay(); // 0=日?6=土
+  const dow = d.getDay();
   const day = d.getDate();
   const lastDay = new Date(d.getFullYear(), d.getMonth()+1, 0).getDate();
 
@@ -2042,7 +2039,6 @@ function getEventsForDate(dateStr) {
       return ev.repeat_dow === dow;
     }
     if (ev.repeat_type === 'monthly_last_dow') {
-      // 月末のX曜日：当月の最後のその曜日かチェック
       const nextWeek = new Date(d.getTime() + 7*24*60*60*1000);
       return ev.repeat_dow === dow && nextWeek.getMonth() !== d.getMonth();
     }
@@ -2099,7 +2095,7 @@ function openShiftModal(dateStr, day) {
     html += `<div class="staff-shift-row">
       <label><span class="shift-dot" style="background:${color.bg};border:1.5px solid ${color.text};"></span>${shortName}</label>
       <input type="time" id="shift-start-${s.id}" value="${start}">
-      <span class="time-sep">?</span>
+      <span class="time-sep">→</span>
       <input type="time" id="shift-end-${s.id}" value="${end}">
     </div>`;
   });
@@ -2178,7 +2174,7 @@ function renderWageCards() {
         ${s.name}
       </div>
       <div class="whours">${workDays}日 / ${totalH.toFixed(1)}h</div>
-      <div class="wamt"><span class="wyen">&yen;</span>${total.toLocaleString()}</div>
+      <div class="wamt"><span class="wyen">¥</span>${total.toLocaleString()}</div>
     </div>`;
   }).join('');
 }
@@ -2225,7 +2221,7 @@ async function init() {
   const banner = document.getElementById('pwa-banner');
   const msg    = document.getElementById('pwa-msg');
   if (isIOS) {
-    msg.innerHTML = '下の「共有」&#8679; →「ホーム画面に追加」をタップ';
+    msg.innerHTML = '下の「共有」↑ →「ホーム画面に追加」をタップ';
   } else {
     msg.textContent = 'ブラウザのメニュー →「ホーム画面に追加」をタップ';
   }
@@ -2235,6 +2231,7 @@ function dismissPwaBanner() {
   localStorage.setItem('lillybell_pwa_dismissed', '1');
   document.getElementById('pwa-banner').style.display = 'none';
 }
+
 // ================= イベント管理 =================
 const EVENT_COLORS = ['#E8832A','#4A9A4A','#2266CC','#CC2222','#8844CC','#CC8800','#888888'];
 let editingEventId = null;
@@ -2257,8 +2254,8 @@ function renderEventList() {
       <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:${ev.color||'#888'};flex-shrink:0;"></span>
       <span style="font-size:13px;font-weight:700;color:#1A1A1A;">${ev.title}</span>
       <span style="font-size:11px;color:#A08060;font-weight:500;">${repeatLabel}</span>
-      <button onclick="openEventModal(${ev.id})" style="background:none;border:none;cursor:pointer;font-size:12px;color:#E8832A;font-weight:700;padding:0;">?</button>
-      <button onclick="deleteEvent(${ev.id})" style="background:none;border:none;cursor:pointer;font-size:12px;color:#A08060;font-weight:700;padding:0;">?</button>
+      <button onclick="openEventModal(${ev.id})" style="background:none;border:none;cursor:pointer;font-size:12px;color:#E8832A;font-weight:700;padding:0;">✏️</button>
+      <button onclick="deleteEvent(${ev.id})" style="background:none;border:none;cursor:pointer;font-size:12px;color:#A08060;font-weight:700;padding:0;">✕</button>
     </div>`;
   }).join('');
 }
@@ -2266,7 +2263,6 @@ function renderEventList() {
 function openEventModal(id) {
   editingEventId = id;
   selectedEventColor = EVENT_COLORS[0];
-  // カラーピッカー描画
   const picker = document.getElementById('ev-color-picker');
   picker.innerHTML = EVENT_COLORS.map(c =>
     `<div onclick="selectEventColor('${c}')" id="ecolor-${c.replace('#','')}" style="width:24px;height:24px;border-radius:50%;background:${c};cursor:pointer;border:3px solid transparent;transition:border-color 0.15s;"></div>`
@@ -2342,11 +2338,14 @@ async function deleteEvent(id) {
   renderEventList();
   await renderShiftCal();
 }
+
 init();
 </script>
+
+<!-- イベント追加・編集モーダル -->
 <div class="overlay" id="event-overlay">
   <div class="modal">
-    <button class="modal-close" onclick="closeModal('event-overlay')">?</button>
+    <button class="modal-close" onclick="closeModal('event-overlay')">✕</button>
     <h3 id="event-modal-title">イベントを追加</h3>
     <input type="hidden" id="edit-event-id">
     <div class="mlabel">イベント名</div>
@@ -2381,5 +2380,6 @@ init();
     <button class="mclose-btn" onclick="closeModal('event-overlay')">キャンセル</button>
   </div>
 </div>
+
 </body>
 </html>
