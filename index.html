@@ -718,14 +718,33 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sa
 
   <!-- 交配管理 -->
   <div class="page" id="page-breed">
-    <div class="section-header">
-      <span class="section-title">交配記録</span>
-      <button class="add-btn-sm" onclick="openBreedModal(null)">＋ 追加</button>
+    <div class="sub-tabs" style="margin-bottom:14px;">
+      <button class="stab active" id="breed-stab-record" onclick="switchBreedTab('record',this)">📋 交配記録</button>
+      <button class="stab" id="breed-stab-health" onclick="switchBreedTab('health',this)">🏥 母犬健康管理</button>
     </div>
-    <div style="position:relative;margin-bottom:12px;">
-      <input class="minput" id="breed-search" placeholder="🔍 母犬（♀）の名前で検索..." oninput="renderBreed()" style="margin-bottom:0;padding-left:14px;">
+
+    <!-- 交配記録ビュー -->
+    <div id="breed-view-record">
+      <div class="section-header">
+        <span class="section-title">交配記録</span>
+        <button class="add-btn-sm" onclick="openBreedModal(null)">＋ 追加</button>
+      </div>
+      <div style="position:relative;margin-bottom:12px;">
+        <input class="minput" id="breed-search" placeholder="🔍 母犬（♀）の名前で検索..." oninput="renderBreed()" style="margin-bottom:0;padding-left:14px;">
+      </div>
+      <div id="breed-list"><div class="loading">読み込み中...</div></div>
     </div>
-    <div id="breed-list"><div class="loading">読み込み中...</div></div>
+
+    <!-- 母犬健康管理ビュー -->
+    <div id="breed-view-health" style="display:none;">
+      <div style="background:#FFF8F4;border:2px solid #F0DEC8;border-radius:12px;padding:12px 14px;margin-bottom:14px;font-size:12px;color:#806040;line-height:1.7;">
+        <div style="font-weight:700;color:#C05A10;margin-bottom:4px;">📋 動物愛護法（令和3年改正）繁殖規制</div>
+        <div>・生涯出産回数：<strong>6回まで</strong></div>
+        <div>・交配時年齢：<strong>原則6歳以下</strong>（7歳時点で6回未満なら7歳まで可）</div>
+        <div>・推奨インターバル：<strong>出産後180日以上</strong>（獣医学的目安）</div>
+      </div>
+      <div id="health-list"><div class="loading">読み込み中...</div></div>
+    </div>
   </div>
 
   <!-- シフト -->
@@ -1821,6 +1840,152 @@ function updateMatingResultUI() {
   });
 }
 
+// ================= 交配タブ切替 =================
+function switchBreedTab(tab, el) {
+  document.querySelectorAll('#page-breed .stab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('breed-view-record').style.display = tab === 'record' ? '' : 'none';
+  document.getElementById('breed-view-health').style.display = tab === 'health' ? '' : 'none';
+  if (tab === 'health') renderHealthPanel();
+}
+
+// ================= 母犬健康管理 =================
+function renderHealthPanel() {
+  const el = document.getElementById('health-list');
+  const females = dogs.filter(d => d.gender === 'female');
+  if (!females.length) {
+    el.innerHTML = '<div class="dash-empty">メスの犬が登録されていません</div>';
+    return;
+  }
+  const now = new Date();
+
+  el.innerHTML = females.map(dog => {
+    // この子の完了した出産記録を取得（出産日があるもの）
+    const births = breedRecords
+      .filter(r => r.female_id === dog.id && r.birth_date)
+      .sort((a, b) => new Date(b.birth_date) - new Date(a.birth_date));
+
+    const birthCount = births.length;
+    const lastBirth  = births[0] || null;
+
+    // 年齢計算
+    let ageLabel = '不明';
+    let ageYears = null;
+    if (dog.born) {
+      const normalized = dog.born.replace(/[.\//]/g, '-').trim();
+      const bornDate = new Date(normalized + 'T00:00:00');
+      if (!isNaN(bornDate.getTime())) {
+        const months = (now.getFullYear() - bornDate.getFullYear()) * 12 + (now.getMonth() - bornDate.getMonth());
+        ageYears = months / 12;
+        const y = Math.floor(months / 12);
+        const m = months % 12;
+        ageLabel = m > 0 ? `${y}歳${m}ヶ月` : `${y}歳`;
+      }
+    }
+
+    // インターバル計算（出産後180日）
+    const INTERVAL_DAYS = 180;
+    let intervalHTML = '';
+    let nextMatingDate = null;
+    if (lastBirth) {
+      const lastBirthDate = new Date(lastBirth.birth_date + 'T00:00:00');
+      const daysSince = Math.floor((now - lastBirthDate) / 86400000);
+      const remaining = INTERVAL_DAYS - daysSince;
+      nextMatingDate = new Date(lastBirthDate.getTime() + INTERVAL_DAYS * 86400000);
+      const nextStr = `${nextMatingDate.getFullYear()}/${nextMatingDate.getMonth()+1}/${nextMatingDate.getDate()}`;
+      if (remaining > 0) {
+        intervalHTML = `<div style="background:#FFECEA;border:1.5px solid #FFAAAA;border-radius:8px;padding:7px 10px;margin-top:6px;display:flex;align-items:center;gap:8px;">
+          <span style="font-size:16px;">⚠️</span>
+          <div>
+            <div style="font-size:12px;font-weight:700;color:#CC2222;">交配推奨インターバル中</div>
+            <div style="font-size:11px;color:#AA4444;margin-top:2px;">あと <strong>${remaining}日</strong> / 推奨解禁日: ${nextStr}</div>
+          </div>
+        </div>`;
+      } else {
+        intervalHTML = `<div style="background:#C8EEC8;border:1.5px solid #6ABF6A;border-radius:8px;padding:7px 10px;margin-top:6px;display:flex;align-items:center;gap:8px;">
+          <span style="font-size:16px;">✅</span>
+          <div>
+            <div style="font-size:12px;font-weight:700;color:#1A5A1A;">インターバル経過済み</div>
+            <div style="font-size:11px;color:#4A8A4A;margin-top:2px;">前回出産から ${daysSince}日経過（${lastBirth.birth_date}）</div>
+          </div>
+        </div>`;
+      }
+    } else {
+      intervalHTML = `<div style="background:#F0F0F0;border:1.5px solid #D0D0D0;border-radius:8px;padding:7px 10px;margin-top:6px;font-size:11px;color:#888;font-weight:500;">出産記録なし</div>`;
+    }
+
+    // 年齢警告
+    let ageWarnHTML = '';
+    if (ageYears !== null) {
+      if (ageYears > 7) {
+        ageWarnHTML = `<div style="background:#FFECEA;border:1.5px solid #FFAAAA;border-radius:8px;padding:6px 10px;margin-top:6px;font-size:11px;color:#CC2222;font-weight:700;">⛔ 法定年齢超過（7歳以上）— 交配不可</div>`;
+      } else if (ageYears > 6) {
+        ageWarnHTML = `<div style="background:#FFF8CC;border:1.5px solid #E8CC00;border-radius:8px;padding:6px 10px;margin-top:6px;font-size:11px;color:#AA6600;font-weight:700;">⚠️ 要確認：7歳以上（出産回数6回未満の証明が必要）</div>`;
+      } else if (ageYears >= 5.5) {
+        ageWarnHTML = `<div style="background:#FFF8CC;border:1.5px solid #E8CC00;border-radius:8px;padding:6px 10px;margin-top:6px;font-size:11px;color:#AA6600;font-weight:600;">📅 6歳上限まであと${Math.ceil((6 - ageYears) * 12)}ヶ月</div>`;
+      }
+    }
+
+    // 出産回数警告
+    let countWarnHTML = '';
+    const remaining_count = 6 - birthCount;
+    if (birthCount >= 6) {
+      countWarnHTML = `<div style="background:#FFECEA;border:1.5px solid #FFAAAA;border-radius:8px;padding:6px 10px;margin-top:6px;font-size:11px;color:#CC2222;font-weight:700;">⛔ 生涯出産回数上限（6回）に達しています — 交配不可</div>`;
+    } else if (birthCount === 5) {
+      countWarnHTML = `<div style="background:#FFF8CC;border:1.5px solid #E8CC00;border-radius:8px;padding:6px 10px;margin-top:6px;font-size:11px;color:#AA6600;font-weight:700;">⚠️ 次回が法定上限（残り1回）</div>`;
+    }
+
+    // 出産履歴リスト
+    const historyHTML = births.length === 0
+      ? '<div style="font-size:12px;color:#B09070;padding:4px 0;">出産記録なし</div>'
+      : births.slice(0, 5).map((r, i) => {
+          const ml = dogs.find(d => d.id === r.male_id);
+          const total = (r.male_count||0) + (r.female_count||0);
+          return `<div style="display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid #F0E0D0;font-size:11px;">
+            <span style="color:#A08060;font-weight:700;min-width:18px;">${i+1}回</span>
+            <span style="color:#1A1A1A;font-weight:600;">${r.birth_date}</span>
+            <span style="color:#806040;">× ♂${ml ? ml.name : '?'}</span>
+            <span style="margin-left:auto;color:#C05A10;font-weight:700;">${total}頭</span>
+          </div>`;
+        }).join('') + (births.length > 5 ? `<div style="font-size:11px;color:#A08060;padding:4px 0;">他 ${births.length - 5}件...</div>` : '');
+
+    // 全体ステータス判定
+    const isCritical = birthCount >= 6 || (ageYears !== null && ageYears > 7);
+    const isWarning  = !isCritical && (birthCount === 5 || (ageYears !== null && ageYears > 6));
+    const cardBorder = isCritical ? '#FFAAAA' : isWarning ? '#E8CC00' : '#E0C0A0';
+    const cardBg     = isCritical ? '#FFF8F8' : isWarning ? '#FFFDF0' : '#fff';
+
+    const i = dogs.indexOf(dog);
+    const emoji = dog.emoji || '🐶';
+    const bg    = dog.bg    || '#FFE0EC';
+
+    return `<div style="background:${cardBg};border:2px solid ${cardBorder};border-radius:14px;padding:14px 16px;margin-bottom:12px;">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+        <div style="width:40px;height:40px;border-radius:50%;background:${bg};display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;">${emoji}</div>
+        <div style="flex:1;">
+          <div style="font-size:15px;font-weight:700;color:#1A1A1A;">${dog.name}</div>
+          <div style="font-size:11px;color:#A08060;margin-top:1px;">${dog.breed} / ${ageLabel}</div>
+        </div>
+        <div style="text-align:right;flex-shrink:0;">
+          <div style="font-size:22px;font-weight:700;color:${birthCount>=6?'#CC2222':birthCount>=5?'#AA6600':'#C05A10'};">${birthCount}<span style="font-size:12px;color:#A08060;font-weight:500;"> / 6回</span></div>
+          <div style="font-size:10px;color:#A08060;font-weight:600;">生涯出産回数</div>
+        </div>
+      </div>
+      ${intervalHTML}
+      ${ageWarnHTML}
+      ${countWarnHTML}
+      <details style="margin-top:10px;">
+        <summary style="font-size:11px;font-weight:700;color:#B09070;cursor:pointer;list-style:none;display:flex;align-items:center;gap:4px;">
+          <span>▶ 出産履歴（${births.length}件）</span>
+        </summary>
+        <div style="margin-top:8px;padding:8px 10px;background:#FFF8F4;border-radius:8px;">
+          ${historyHTML}
+        </div>
+      </details>
+    </div>`;
+  }).join('');
+}
+
 // ================= 交配管理 =================
 async function loadBreedRecords() {
   breedRecords = await supaFetch('breed_records?order=id.desc');
@@ -2193,7 +2358,14 @@ function switchMain(tab, el) {
   if (tab==='dashboard') renderDashboard();
   if (tab==='shift') { renderShiftCal(); renderEventList(); }
   if (tab==='wage')      { loadShifts().then(()=>renderWage()); }
-  if (tab==='breed')     renderBreed();
+  if (tab==='breed') {
+    // 交配タブに入るたびに「交配記録」側にリセット
+    document.getElementById('breed-view-record').style.display = '';
+    document.getElementById('breed-view-health').style.display = 'none';
+    document.getElementById('breed-stab-record').classList.add('active');
+    document.getElementById('breed-stab-health').classList.remove('active');
+    renderBreed();
+  }
   if (tab==='dogrun')    renderDogrun();
   if (tab==='kennel')    renderKennel(currentKennel);
   if (tab==='staff')     renderStaffList();
