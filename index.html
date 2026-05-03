@@ -562,6 +562,16 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sa
   flex-shrink: 0; margin-left: auto;
 }
 .pwa-close:hover { background: #E8832A; color: #fff; }
+
+/* ソートボタン */
+.sort-btn {
+  padding: 5px 11px; font-size: 11px; font-weight: 600;
+  border-radius: 20px; cursor: pointer;
+  border: 2px solid #D0A080; background: #fff; color: #A06040;
+  transition: all 0.15s; white-space: nowrap;
+}
+.sort-btn.active { background: #E8832A; color: #fff; border-color: #E8832A; }
+.sort-btn:hover:not(.active) { background: #FFF0E0; border-color: #E8832A; }
 </style>
 </head>
 <body>
@@ -729,8 +739,16 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sa
         <span class="section-title">交配記録</span>
         <button class="add-btn-sm" onclick="openBreedModal(null)">＋ 追加</button>
       </div>
-      <div style="position:relative;margin-bottom:12px;">
+      <div style="position:relative;margin-bottom:10px;">
         <input class="minput" id="breed-search" placeholder="🔍 母犬（♀）の名前で検索..." oninput="renderBreed()" style="margin-bottom:0;padding-left:14px;">
+      </div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px;align-items:center;">
+        <span style="font-size:11px;font-weight:700;color:#B09070;">並び替え：</span>
+        <button class="sort-btn active" id="sort-new"    onclick="setBreedSort('new',this)">🕐 新しい順</button>
+        <button class="sort-btn"        id="sort-old"    onclick="setBreedSort('old',this)">🕐 古い順</button>
+        <button class="sort-btn"        id="sort-due"    onclick="setBreedSort('due',this)">📅 出産予定日順</button>
+        <button class="sort-btn"        id="sort-name"   onclick="setBreedSort('name',this)">🔤 母犬名順</button>
+        <button class="sort-btn"        id="sort-status" onclick="setBreedSort('status',this)">📋 ステータス順</button>
       </div>
       <div id="breed-list"><div class="loading">読み込み中...</div></div>
     </div>
@@ -1987,23 +2005,63 @@ function renderHealthPanel() {
 }
 
 // ================= 交配管理 =================
+let currentBreedSort = 'new';
+
+function setBreedSort(sort, el) {
+  currentBreedSort = sort;
+  document.querySelectorAll('.sort-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  renderBreed();
+}
+
 async function loadBreedRecords() {
   breedRecords = await supaFetch('breed_records?order=id.desc');
   renderBreed();
 }
 const STATUS_LABEL = {pregnant:'妊娠中', planned:'交配予定', done:'完了'};
 const STATUS_CLS   = {pregnant:'pregnant', planned:'planned', done:'done'};
+const STATUS_ORDER = {pregnant:0, planned:1, done:2};
+
+function sortBreedRecords(records) {
+  const sorted = [...records];
+  switch(currentBreedSort) {
+    case 'new':
+      return sorted.sort((a,b) => b.id - a.id);
+    case 'old':
+      return sorted.sort((a,b) => a.id - b.id);
+    case 'due':
+      return sorted.sort((a,b) => {
+        if (!a.due_date && !b.due_date) return 0;
+        if (!a.due_date) return 1;
+        if (!b.due_date) return -1;
+        return new Date(a.due_date) - new Date(b.due_date);
+      });
+    case 'name':
+      return sorted.sort((a,b) => {
+        const fa = dogs.find(d=>d.id===a.female_id);
+        const fb = dogs.find(d=>d.id===b.female_id);
+        const na = fa ? fa.name : '';
+        const nb = fb ? fb.name : '';
+        return na.localeCompare(nb, 'ja');
+      });
+    case 'status':
+      return sorted.sort((a,b) => (STATUS_ORDER[a.status]??9) - (STATUS_ORDER[b.status]??9));
+    default:
+      return sorted;
+  }
+}
 
 function renderBreed() {
   const el = document.getElementById('breed-list');
   const searchEl = document.getElementById('breed-search');
   const keyword = searchEl ? searchEl.value.trim() : '';
-  const filtered = keyword
+  const searched = keyword
     ? breedRecords.filter(r => {
         const fm = dogs.find(d => d.id === r.female_id);
         return fm && fm.name.includes(keyword);
       })
     : breedRecords;
+  const filtered = sortBreedRecords(searched);
   if (!filtered.length) {
     el.innerHTML = keyword
       ? '<p style="color:#A08060;font-size:14px;font-weight:500;text-align:center;padding:20px 0;">該当する記録がありません</p>'
