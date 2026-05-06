@@ -1099,11 +1099,11 @@ async function loadAdminPage() {
                    : ua.includes('Android') && !ua.includes('iPad') ? '&#128241; Android'
                    : ua.includes('iPad') ? '&#128241; iPad'
                    : '&#128187; PC';
-      const browser = ua.includes('EdgA') || ua.includes('EdgE') ? 'Edge'
-                    : ua.includes('Chrome') && !ua.includes('Edg') ? 'Chrome'
-                    : ua.includes('Firefox') ? 'Firefox'
-                    : ua.includes('Safari') ? 'Safari'
-                    : '不明';
+      const browser = /Edg\/|EdgA|EdgE/i.test(ua) ? 'Edge'
+              : ua.includes('Chrome') && !/Edg/i.test(ua) ? 'Chrome'
+              : ua.includes('Firefox') ? 'Firefox'
+              : ua.includes('Safari') ? 'Safari'
+              : '不明';
       return `<div style="background:#fff;border:2px solid #E0C0A0;border-radius:10px;padding:10px 14px;display:flex;align-items:center;gap:10px;">
         <div style="font-size:20px;flex-shrink:0;">${device.split(' ')[0]}</div>
         <div style="flex:1;">
@@ -1596,7 +1596,7 @@ function renderDogrun() {
     if (n>0) count++;
   });
   const statsHTML = `<div class="stats-bar">
-    <div class="stat"><strong>${total}</strong>頭遊ぶ中</div>
+    <div class="stat"><strong>${total}</strong>頭</div>
     <div class="stat"><strong>${count}/${areas.length}</strong>エリア使用中</div>
   </div>`;
   const gridHTML = `<div class="dogrun-wrapper"><div class="dogrun-grid">
