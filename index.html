@@ -354,9 +354,89 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sa
 .pwa-desc  { font-size: 12px; color: #A08060; line-height: 1.5; }
 .pwa-close { background: #F0E0D0; border: none; color: #A08060; font-size: 18px; cursor: pointer; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-left: auto; }
 .pwa-close:hover { background: #E8832A; color: #fff; }
+
+/* 印刷ボタン */
+.print-btn {
+  padding: 6px 14px; font-size: 12px; font-weight: 600;
+  border-radius: 20px; cursor: pointer;
+  border: 2px solid #A08060; background: #fff; color: #A08060;
+  transition: all 0.15s; white-space: nowrap;
+}
+.print-btn:hover { background: #A08060; color: #fff; }
+
+/* 印刷用スタイル */
+@media print {
+  @page { size: A4 landscape; margin: 10mm; }
+  body * { visibility: hidden; }
+  #dogrun-print-area, #dogrun-print-area * { visibility: visible; }
+  #dogrun-print-area {
+    position: fixed; top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: #fff;
+  }
+  .dogrun-print-header {
+    display: flex !important;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #E8832A;
+  }
+  .dogrun-print-title {
+    font-size: 18px; font-weight: 700; color: #C05A10;
+  }
+  .dogrun-print-date {
+    font-size: 11px; color: #A08060;
+  }
+  .dogrun-print-grid {
+    display: flex !important;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .dogrun-print-cell {
+    border: 2px solid #D8C0A8;
+    border-radius: 8px;
+    padding: 6px 8px;
+    width: calc((100% - 72px) / 13);
+    min-height: 100px;
+    background: #FFF8F4;
+    page-break-inside: avoid;
+  }
+  .dogrun-print-cell.full  { background: #FFF0E0; border-color: #E8A060; }
+  .dogrun-print-cell.half  { background: #FFF8EE; border-color: #E8C090; }
+  .dogrun-print-cell.empty { background: #F5F0EA; border-color: #D0C0B0; }
+  .dogrun-print-cell-label {
+    font-size: 11px; font-weight: 700; color: #C05A10;
+    text-align: center; border-bottom: 1px solid #E8C0A0;
+    padding-bottom: 4px; margin-bottom: 4px;
+  }
+  .dogrun-print-dog {
+    font-size: 10px; font-weight: 600; color: #1A1A1A;
+    padding: 2px 0;
+    border-bottom: 1px dashed #E8C0A0;
+  }
+  .dogrun-print-dog:last-child { border-bottom: none; }
+  .dogrun-print-dog-breed { font-size: 9px; color: #A08060; }
+  .dogrun-print-empty { font-size: 10px; color: #C0A090; text-align: center; margin-top: 8px; }
+  .dogrun-print-stats {
+    margin-top: 8px;
+    font-size: 10px; color: #A08060;
+    text-align: right;
+  }
+}
 </style>
 </head>
 <body>
+
+<!-- 印刷専用エリア（画面には表示しない） -->
+<div id="dogrun-print-area" style="display:none;">
+  <div class="dogrun-print-header">
+    <div class="dogrun-print-title" id="dogrun-print-title"></div>
+    <div class="dogrun-print-date" id="dogrun-print-date"></div>
+  </div>
+  <div class="dogrun-print-grid" id="dogrun-print-grid"></div>
+  <div class="dogrun-print-stats" id="dogrun-print-stats"></div>
+</div>
 
 <div class="app-header">
   <div class="header-top">
@@ -490,9 +570,10 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sa
 
   <!-- ドッグラン -->
   <div class="page" id="page-dogrun">
-    <div class="sub-tabs">
+    <div class="sub-tabs" style="align-items:center;">
       <button class="stab active" onclick="switchDogrun('A',this)">犬舎 A</button>
       <button class="stab" onclick="switchDogrun('B',this)">犬舎 B</button>
+      <button class="print-btn" onclick="printDogrun()">🖨️ 印刷</button>
     </div>
     <div id="dogrun-container"><div class="loading">読み込み中...</div></div>
   </div>
@@ -1447,6 +1528,43 @@ async function assignDogToRun() {
   await loadDogrunAssignments();
   renderDogrun();
   openDogrunModal(currentDogrunArea);
+}
+function printDogrun() {
+  const kennel = currentDogrunKennel;
+  const areas = ['13','12','11','10','9','8','7','6','5','4','3','2','1'];
+  let totalDogs = 0, usedAreas = 0;
+
+  // 印刷グリッド生成
+  const gridHTML = areas.map(a => {
+    const doglist = getDogrunDogs(kennel, a);
+    totalDogs += doglist.length;
+    if (doglist.length > 0) usedAreas++;
+    const cls = doglist.length > 0 ? (doglist.length >= 3 ? 'full' : 'half') : 'empty';
+    const dogsHTML = doglist.length === 0
+      ? '<div class="dogrun-print-empty">空き</div>'
+      : doglist.map(d => `<div class="dogrun-print-dog">
+          ${d.emoji || '🐕'} ${d.name}
+          <div class="dogrun-print-dog-breed">${d.breed}</div>
+        </div>`).join('');
+    return `<div class="dogrun-print-cell ${cls}">
+      <div class="dogrun-print-cell-label">エリア ${a}</div>
+      ${dogsHTML}
+    </div>`;
+  }).join('');
+
+  // 日時
+  const now = new Date();
+  const dateStr = `${now.getFullYear()}年${now.getMonth()+1}月${now.getDate()}日 ${now.getHours().toString().padStart(2,'0')}:${now.getMinutes().toString().padStart(2,'0')} 現在`;
+
+  document.getElementById('dogrun-print-title').textContent = `🌸 LillyBell ドッグラン配置図｜犬舎 ${kennel}`;
+  document.getElementById('dogrun-print-date').textContent = dateStr;
+  document.getElementById('dogrun-print-grid').innerHTML = gridHTML;
+  document.getElementById('dogrun-print-stats').textContent = `収容頭数：${totalDogs}頭　使用エリア：${usedAreas}/${areas.length}`;
+  document.getElementById('dogrun-print-area').style.display = 'block';
+
+  window.print();
+
+  document.getElementById('dogrun-print-area').style.display = 'none';
 }
 
 // ================= 犬舎 =================
