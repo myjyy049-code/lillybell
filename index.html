@@ -1545,6 +1545,7 @@ function printDogrun() {
       : doglist.map(d => `<div class="dogrun-print-dog">
           ${d.emoji || '🐕'} ${d.name}
           <div class="dogrun-print-dog-breed">${d.breed}</div>
+          ${d.features ? `<div class="dogrun-print-dog-breed">${d.features}</div>` : ''}
         </div>`).join('');
     return `<div class="dogrun-print-cell ${cls}">
       <div class="dogrun-print-cell-label">エリア ${a}</div>
