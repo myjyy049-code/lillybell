@@ -8,7 +8,7 @@
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sans JP', sans-serif; background: #FFF0E4; color: #1A1A1A; min-height: 100vh; }
-
+ 
 .app-header {
   background: linear-gradient(135deg, #E8832A 0%, #F0AA40 100%);
   padding: 14px 16px 0; color: #fff;
@@ -28,11 +28,11 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sa
 }
 .tab.active { background: #FFF0E4; color: #C05A10; }
 .tab:hover:not(.active) { background: rgba(255,255,255,0.35); }
-
+ 
 .content { padding: 16px; max-width: 860px; margin: 0 auto; }
 .page { display: none; }
 .page.active { display: block; }
-
+ 
 .sub-tabs { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
 .stab {
   padding: 7px 16px; font-size: 13px; font-weight: 600;
@@ -42,11 +42,11 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sa
 .stab.active { background: #E8832A; color: #fff; border-color: #E8832A; }
 .kview { display: none; }
 .kview.active { display: block; }
-
+ 
 .stats-bar { display: flex; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; }
 .stat { background: #fff; border: 2px solid #E0C0A0; border-radius: 10px; padding: 8px 14px; font-size: 12px; color: #805030; font-weight: 500; }
 .stat strong { font-size: 20px; font-weight: 700; color: #C05A10; display: block; }
-
+ 
 .dash-greeting {
   background: linear-gradient(135deg, #E8832A 0%, #F5B84A 100%);
   border-radius: 16px; padding: 16px 20px; margin-bottom: 16px; color: #fff;
@@ -56,25 +56,25 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sa
 .dash-greeting-left h2 { font-size: 18px; font-weight: 700; margin-bottom: 4px; }
 .dash-greeting-left p { font-size: 12px; opacity: 0.85; }
 .dash-greeting-right { font-size: 36px; }
-
+ 
 .dash-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
 .dash-card { background: #fff; border: 2px solid #E0C0A0; border-radius: 14px; padding: 14px 16px; }
 .dash-card-full { grid-column: 1 / -1; }
 .dash-card-title { font-size: 11px; font-weight: 700; color: #B09070; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
 .dash-card-title span { font-size: 14px; }
-
+ 
 .dog-stats-row { display: flex; gap: 8px; flex-wrap: wrap; }
 .dog-stat-item { flex: 1; min-width: 60px; background: #FFF8F4; border-radius: 10px; padding: 10px 8px; text-align: center; border: 1.5px solid #F0DEC8; }
 .dog-stat-item .dsnum { font-size: 24px; font-weight: 700; color: #C05A10; line-height: 1; }
 .dog-stat-item .dslabel { font-size: 10px; color: #A08060; font-weight: 600; margin-top: 4px; }
-
+ 
 .kennel-status-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
 .kennel-status-item { background: #FFF8F4; border-radius: 10px; padding: 10px 8px; text-align: center; border: 1.5px solid #F0DEC8; }
 .kennel-status-item .ksnum { font-size: 22px; font-weight: 700; color: #C05A10; line-height: 1; }
 .kennel-status-item .kslabel { font-size: 10px; color: #A08060; font-weight: 600; margin-top: 4px; }
 .kennel-status-item .ksbar { height: 4px; background: #F0E0D0; border-radius: 2px; margin-top: 6px; overflow: hidden; }
 .kennel-status-item .ksbar-fill { height: 100%; background: #E8832A; border-radius: 2px; transition: width 0.4s; }
-
+ 
 .pregnant-list { display: flex; flex-direction: column; gap: 8px; }
 .pregnant-item { background: #F0FFF0; border: 1.5px solid #A8D8A8; border-radius: 10px; padding: 9px 12px; display: flex; align-items: center; justify-content: space-between; }
 .pregnant-item .pi-name { font-size: 13px; font-weight: 700; color: #1A1A1A; }
@@ -83,26 +83,26 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sa
 .pi-days.urgent { background: #FFECEA; color: #CC2222; }
 .pi-days.soon   { background: #FFF8CC; color: #AA6600; }
 .pi-days.normal { background: #C8EEC8; color: #1A5A1A; }
-
+ 
 .today-shift-list { display: flex; flex-direction: column; gap: 6px; }
 .today-shift-item { display: flex; align-items: center; gap: 10px; background: #FFF8F4; border-radius: 10px; padding: 9px 12px; border: 1.5px solid #F0DEC8; }
 .today-shift-icon { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; }
 .today-shift-name { font-size: 13px; font-weight: 700; color: #1A1A1A; }
 .today-shift-time { font-size: 11px; color: #A08060; font-weight: 500; margin-top: 2px; }
 .no-shift-msg { font-size: 13px; color: #B09070; text-align: center; padding: 12px 0; font-weight: 500; }
-
+ 
 .upcoming-birth-list { display: flex; flex-direction: column; gap: 6px; }
 .upcoming-birth-item { background: #FFF8F4; border: 1.5px solid #F0DEC8; border-radius: 10px; padding: 9px 12px; display: flex; align-items: center; justify-content: space-between; }
 .ub-name { font-size: 13px; font-weight: 700; color: #1A1A1A; }
 .ub-due  { font-size: 11px; color: #A08060; font-weight: 500; margin-top: 2px; }
 .ub-badge { font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 20px; white-space: nowrap; }
 .dash-empty { font-size: 13px; color: #B09070; font-weight: 500; text-align: center; padding: 12px 0; }
-
+ 
 .kennel-layout { display: grid; grid-template-columns: 1fr 1fr 28px 1fr 1fr; gap: 4px; align-items: end; }
 .aisle { background: #E8C89A; border: 2px solid #C0A070; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 10px; color: #705030; font-weight: 700; writing-mode: vertical-rl; align-self: stretch; min-height: 100px; }
 .cage-col { display: flex; flex-direction: column; gap: 4px; }
 .col-label { text-align: center; font-size: 10px; color: #A08060; font-weight: 700; padding: 3px 2px; border-bottom: 2px solid #E0C0A0; margin-bottom: 2px; white-space: nowrap; }
-
+ 
 .cage { position: relative; border: 2px solid #D8C0A8; border-radius: 8px; padding: 5px 6px 5px 20px; cursor: pointer; background: #FFF8F4; min-height: 36px; transition: border-color 0.15s, box-shadow 0.15s; }
 .cage:hover { border-color: #E8832A; box-shadow: 0 0 0 2px rgba(232,131,42,0.15); }
 .cage.full  { background: #FFF0E0; border-color: #E8A060; }
@@ -114,9 +114,9 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sa
 .dog-tag.female { background: #F5D0DC; color: #882244; }
 .dog-tag.male   { background: #C8DEFF; color: #114488; }
 .empty-tag { font-size: 10px; color: #B0A090; }
-
+ 
 .entrance-label { text-align: center; font-size: 12px; color: #E8832A; font-weight: 700; padding: 6px 0 2px; letter-spacing: 1px; }
-
+ 
 .birth-layout { display: grid; grid-template-columns: 1fr 28px 1fr; gap: 4px; align-items: start; }
 .birth-cage { border: 2px solid #D8C0A8; border-radius: 10px; padding: 7px 9px; cursor: pointer; background: #FFF8F4; min-height: 48px; transition: border-color 0.15s, box-shadow 0.15s; }
 .birth-cage:hover { border-color: #E8832A; box-shadow: 0 0 0 2px rgba(232,131,42,0.12); }
@@ -127,7 +127,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sa
 .birth-cage-dogs { display: flex; flex-direction: column; gap: 3px; }
 .birth-info { margin-top: 5px; padding-top: 5px; border-top: 1px solid #E0C8B0; font-size: 10px; color: #806040; line-height: 1.8; font-weight: 500; }
 .birth-info .bdate { color: #C05A10; font-weight: 700; }
-
+ 
 .dogrun-wrapper { overflow-x: auto; padding-bottom: 8px; }
 .dogrun-grid { display: flex; flex-direction: row; gap: 8px; min-width: max-content; margin-bottom: 16px; }
 .dogrun-area { border: 2px solid #D8C0A8; border-radius: 12px; padding: 10px; cursor: pointer; background: #FFF8F4; width: 130px; min-height: 120px; transition: border-color 0.15s, box-shadow 0.15s; display: flex; flex-direction: column; flex-shrink: 0; }
@@ -141,14 +141,14 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sa
 .dogrun-dog-name { font-weight: 700; color: #1A1A1A; font-size: 12px; }
 .dogrun-dog-feature { color: #A08060; font-weight: 500; font-size: 10px; }
 .dogrun-dog-breed { color: #806040; font-weight: 500; font-size: 10px; }
-
+ 
 .view-toggle { display: flex; gap: 6px; margin-bottom: 10px; }
 .breed-filter-bar { display: flex; gap: 6px; margin-bottom: 14px; flex-wrap: wrap; }
 .bfilter-btn { padding: 5px 12px; font-size: 12px; font-weight: 600; border-radius: 20px; cursor: pointer; border: 2px solid #D0A080; background: #fff; color: #A06040; transition: all 0.15s; white-space: nowrap; }
 .bfilter-btn.active { background: #E8832A; color: #fff; border-color: #E8832A; }
 .vtoggle-btn { padding: 6px 14px; font-size: 13px; font-weight: 600; border-radius: 20px; cursor: pointer; border: 2px solid #D0A080; background: #fff; color: #A06040; transition: all 0.15s; }
 .vtoggle-btn.active { background: #E8832A; color: #fff; border-color: #E8832A; }
-
+ 
 .dog-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(148px, 1fr)); gap: 10px; margin-bottom: 16px; }
 .dog-card { background: #fff; border: 2px solid #E0C8B0; border-radius: 14px; padding: 13px; cursor: pointer; transition: border-color 0.15s, box-shadow 0.15s; position: relative; }
 .dog-card:hover { border-color: #E8832A; box-shadow: 0 2px 10px rgba(232,131,42,0.15); }
@@ -161,7 +161,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sa
 .badge-loc { background: #FFE8CC; color: #804020; font-size: 10px; margin-left: 4px; }
 .dog-del-btn { position: absolute; top: 8px; right: 8px; background: #F0E0D0; border: none; color: #A08060; font-size: 13px; cursor: pointer; line-height: 1; width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
 .dog-del-btn:hover { background: #E8832A; color: #fff; }
-
+ 
 .dog-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
 .dog-list-row { background: #fff; border: 2px solid #E0C8B0; border-radius: 12px; padding: 10px 14px; display: flex; align-items: center; gap: 12px; cursor: pointer; transition: border-color 0.15s, box-shadow 0.15s; position: relative; }
 .dog-list-row:hover { border-color: #E8832A; box-shadow: 0 2px 8px rgba(232,131,42,0.15); }
@@ -172,12 +172,12 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sa
 .dog-list-badges { display: flex; gap: 5px; align-items: center; flex-shrink: 0; }
 .dog-list-del { background: #F0E0D0; border: none; color: #A08060; font-size: 13px; cursor: pointer; width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
 .dog-list-del:hover { background: #E8832A; color: #fff; }
-
+ 
 .add-btn { width: 100%; padding: 12px; border: 2px dashed #D0A080; border-radius: 12px; background: transparent; color: #A06040; font-size: 14px; font-weight: 600; cursor: pointer; margin-bottom: 20px; transition: all 0.15s; }
 .add-btn:hover { background: #FFF0E0; border-color: #E8832A; color: #C05A10; }
 .add-btn-sm { padding: 7px 16px; border: none; border-radius: 8px; background: #E8832A; color: #fff; font-size: 13px; font-weight: 600; cursor: pointer; }
 .add-btn-sm:hover { background: #C05A10; }
-
+ 
 .detail-panel { display: none; background: #fff; border: 2px solid #E0C0A0; border-radius: 14px; padding: 16px; margin-bottom: 16px; }
 .detail-panel.open { display: block; }
 .detail-header { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; padding-bottom: 12px; border-bottom: 2px solid #F0E0D0; }
@@ -192,16 +192,16 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sa
 .save-btn { margin-top: 8px; padding: 10px 20px; border-radius: 10px; border: none; background: #E8832A; color: #fff; font-size: 14px; cursor: pointer; font-weight: 700; }
 .save-btn:hover { background: #C05A10; }
 .edit-fields { display: flex; flex-direction: column; gap: 8px; margin-bottom: 14px; }
-
+ 
 .month-nav { display: flex; align-items: center; gap: 14px; margin-bottom: 14px; }
 .month-nav button { background: #fff; border: 2px solid #D8C0A8; border-radius: 8px; padding: 6px 14px; cursor: pointer; font-size: 14px; color: #805030; font-weight: 600; }
 .month-nav button:hover { background: #FFF0E0; border-color: #E8832A; }
 .month-nav span { font-size: 17px; font-weight: 700; color: #1A1A1A; }
-
+ 
 .shift-legend { display: flex; gap: 10px; margin-bottom: 12px; flex-wrap: wrap; }
 .shift-legend-item { display: flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 600; color: #555; }
 .shift-legend-dot { width: 12px; height: 12px; border-radius: 3px; }
-
+ 
 .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; margin-bottom: 16px; }
 .cal-dow { text-align: center; font-size: 12px; font-weight: 700; padding: 5px 0; color: #806040; }
 .cal-dow.sun { color: #CC2222; }
@@ -215,14 +215,14 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sa
 .cal-date.sat { color: #1144AA; }
 .cal-shifts { display: flex; flex-direction: column; gap: 2px; }
 .cal-shift-tag { font-size: 9px; border-radius: 4px; padding: 1px 4px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-
+ 
 .staff-shift-list { display: flex; flex-direction: column; gap: 10px; margin-top: 8px; }
 .staff-shift-row { display: flex; align-items: center; gap: 6px; font-size: 13px; }
 .staff-shift-row label { width: 56px; flex-shrink: 0; font-weight: 700; color: #1A1A1A; font-size: 13px; }
 .staff-shift-row input[type=time] { flex: 1; padding: 6px 8px; border: 2px solid #D8C0A8; border-radius: 8px; font-size: 13px; font-family: inherit; background: #FFF8F4; color: #1A1A1A; }
 .time-sep { font-size: 12px; color: #B09070; font-weight: 600; }
 .shift-dot { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 4px; vertical-align: middle; }
-
+ 
 .wage-section { margin-bottom: 20px; }
 .wage-section h3 { font-size: 12px; font-weight: 700; color: #A08060; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px; }
 .hourly-box { background: #fff; border: 2px solid #E0C0A0; border-radius: 12px; padding: 12px 16px; margin-bottom: 16px; }
@@ -235,7 +235,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sa
 .wage-card .whours { font-size: 12px; color: #A08060; margin-bottom: 10px; font-weight: 500; }
 .wage-card .wamt { font-size: 26px; font-weight: 700; color: #C05A10; }
 .wage-card .wyen { font-size: 15px; }
-
+ 
 .staff-card { background: #fff; border: 2px solid #E0C0A0; border-radius: 12px; padding: 14px 16px; margin-bottom: 10px; display: flex; align-items: center; gap: 12px; }
 .staff-icon { width: 40px; height: 40px; border-radius: 50%; background: #FFE0C0; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
 .staff-info { flex: 1; }
@@ -243,7 +243,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sa
 .staff-info .swage { font-size: 12px; color: #A08060; margin-top: 2px; font-weight: 500; }
 .staff-edit-btn { padding: 6px 12px; border: 2px solid #D8C0A8; border-radius: 8px; background: #FFF8F4; color: #806040; font-size: 12px; font-weight: 600; cursor: pointer; }
 .staff-edit-btn:hover { border-color: #E8832A; color: #C05A10; background: #FFF0E0; }
-
+ 
 .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
 .section-title { font-size: 14px; color: #806040; font-weight: 600; }
 .breed-card { background: #fff; border: 2px solid #E0C0A0; border-radius: 14px; padding: 14px 16px; margin-bottom: 10px; position: relative; }
@@ -263,14 +263,14 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sa
 .breed-edit:hover { background: #E8832A; color: #fff; }
 .breed-del { background: #F0E0D0; border: none; color: #A08060; font-size: 12px; cursor: pointer; width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; }
 .breed-del:hover { background: #CC2222; color: #fff; }
-
+ 
 /* ===== 交配ソートボタン ===== */
 .breed-sort-bar { display: flex; gap: 6px; margin-bottom: 12px; flex-wrap: wrap; align-items: center; }
 .breed-sort-bar .sort-label { font-size: 11px; font-weight: 700; color: #B09070; margin-right: 2px; }
 .sort-btn { padding: 5px 12px; font-size: 12px; font-weight: 600; border-radius: 20px; cursor: pointer; border: 2px solid #D0A080; background: #fff; color: #A06040; transition: all 0.15s; white-space: nowrap; }
 .sort-btn.active { background: #E8832A; color: #fff; border-color: #E8832A; }
 .sort-btn:hover:not(.active) { background: #FFF0E0; border-color: #E8832A; color: #C05A10; }
-
+ 
 .overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); align-items: center; justify-content: center; z-index: 200; }
 .overlay.open { display: flex; }
 .modal { background: #fff; border-radius: 18px; padding: 20px; width: 320px; max-width: 93vw; box-shadow: 0 12px 40px rgba(0,0,0,0.2); max-height: 92vh; overflow-y: auto; }
@@ -294,34 +294,34 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sa
 .mgrid3 input { padding: 9px 6px; border: 2px solid #D8C0A8; border-radius: 9px; font-size: 13px; font-family: inherit; text-align: center; background: #FFF8F4; color: #1A1A1A; font-weight: 600; }
 .mgrid3 input:focus { outline: none; border-color: #E8832A; }
 .mlabel { font-size: 11px; font-weight: 700; color: #A08060; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.3px; }
-
+ 
 .loading { text-align: center; padding: 40px; color: #A08060; font-size: 14px; font-weight: 500; }
 .toast { position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%); background: #1A1A1A; color: #fff; padding: 10px 22px; border-radius: 22px; font-size: 14px; font-weight: 600; z-index: 300; opacity: 0; transition: opacity 0.3s; pointer-events: none; white-space: nowrap; }
 .toast.show { opacity: 1; }
-
+ 
 .bottom-nav { display: none; position: fixed; bottom: 0; left: 0; right: 0; background: #fff; border-top: 2px solid #E0C0A0; padding: 6px 0 max(6px, env(safe-area-inset-bottom)); z-index: 100; box-shadow: 0 -3px 16px rgba(180,100,0,0.12); }
 .bottom-nav-inner { display: flex; justify-content: space-around; }
 .bnav-btn { display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 4px 8px; background: none; border: none; cursor: pointer; color: #B09070; font-size: 10px; font-weight: 600; font-family: inherit; }
 .bnav-btn .bicon { font-size: 20px; line-height: 1; }
 .bnav-btn.active { color: #E8832A; }
-
+ 
 .paw-divider { text-align: center; color: #E8A060; font-size: 20px; margin: 16px 0; letter-spacing: 8px; }
 .hint { font-size: 12px; color: #A08060; margin-top: 8px; font-weight: 500; text-align: center; }
 .date-info { font-size: 11px; color: #A08060; margin-top: 3px; font-weight: 500; font-style: italic; }
-
+ 
 .mating-result-btns { display: flex; gap: 6px; margin-top: 4px; margin-bottom: 2px; }
 .mresult-btn { flex: 1; padding: 7px 4px; font-size: 12px; font-weight: 600; border: 2px solid #D8C0A8; border-radius: 9px; background: #FFF8F4; color: #806040; cursor: pointer; transition: all 0.15s; text-align: center; }
 .mresult-btn:hover { border-color: #E8832A; background: #FFF0E0; }
 .mresult-btn.active-success { background: #C8EEC8; border-color: #4A9A4A; color: #1A5A1A; }
 .mresult-btn.active-fail    { background: #FFECEA; border-color: #CC2222; color: #AA1111; }
 .mresult-btn.active-none    { background: #E8E8E8; border-color: #AAAAAA; color: #555555; }
-
+ 
 .birth-count-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-bottom: 8px; }
 .birth-count-item { display: flex; flex-direction: column; gap: 4px; }
 .birth-count-label { font-size: 11px; font-weight: 700; color: #A08060; text-align: center; }
 .birth-count-item input { width: 100%; padding: 8px 4px; border: 2px solid #D8C0A8; border-radius: 9px; font-size: 14px; font-family: inherit; text-align: center; background: #FFF8F4; color: #1A1A1A; font-weight: 600; box-sizing: border-box; }
 .birth-count-item input:focus { outline: none; border-color: #E8832A; }
-
+ 
 @media (max-width: 600px) {
   .tab-bar { display: none; }
   .bottom-nav { display: block; }
@@ -344,7 +344,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sa
   .breed-dates { grid-template-columns: 1fr; }
   .dash-grid { grid-template-columns: 1fr; }
 }
-
+ 
 #pwa-banner { display: none; position: fixed; bottom: 0; left: 0; right: 0; background: #fff; border-top: 2px solid #E0C0A0; padding: 12px 16px; z-index: 9998; align-items: center; gap: 12px; box-shadow: 0 -3px 16px rgba(180,100,0,0.1); }
 @supports (padding-bottom: env(safe-area-inset-bottom)) {
   #pwa-banner { padding-bottom: max(12px, env(safe-area-inset-bottom)); }
@@ -354,7 +354,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sa
 .pwa-desc  { font-size: 12px; color: #A08060; line-height: 1.5; }
 .pwa-close { background: #F0E0D0; border: none; color: #A08060; font-size: 18px; cursor: pointer; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-left: auto; }
 .pwa-close:hover { background: #E8832A; color: #fff; }
-
+ 
 /* 印刷ボタン */
 .print-btn {
   padding: 6px 14px; font-size: 12px; font-weight: 600;
@@ -363,7 +363,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sa
   transition: all 0.15s; white-space: nowrap;
 }
 .print-btn:hover { background: #A08060; color: #fff; }
-
+ 
 /* 印刷用スタイル */
 @media print {
   @page { size: A4 landscape; margin: 10mm; }
@@ -427,7 +427,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sa
 </style>
 </head>
 <body>
-
+ 
 <!-- 印刷専用エリア（画面には表示しない） -->
 <div id="dogrun-print-area" style="display:none;">
   <div class="dogrun-print-header">
@@ -437,7 +437,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sa
   <div class="dogrun-print-grid" id="dogrun-print-grid"></div>
   <div class="dogrun-print-stats" id="dogrun-print-stats"></div>
 </div>
-
+ 
 <div class="app-header">
   <div class="header-top">
     <div id="logo-area" onmousedown="startLogoPress()" onmouseup="cancelLogoPress()" onmouseleave="cancelLogoPress()" ontouchstart="startLogoPress()" ontouchend="cancelLogoPress()" style="cursor:pointer;user-select:none;">
@@ -457,9 +457,9 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sa
     <button class="tab" id="admin-tab" onclick="switchMain('admin',this)" data-tab="admin" style="display:none;">&#128274; 管理</button>
   </div>
 </div>
-
+ 
 <div class="content">
-
+ 
   <!-- ダッシュボード -->
   <div class="page active" id="page-dashboard">
     <div class="dash-greeting">
@@ -517,7 +517,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sa
       </div>
     </div>
   </div>
-
+ 
   <!-- 犬の管理 -->
   <div class="page" id="page-dogs">
     <div class="detail-panel" id="detail-panel">
@@ -555,7 +555,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sa
     <div class="dog-list" id="dog-list" style="display:none;"></div>
     <button class="add-btn" onclick="openModal('add-dog-overlay')">&#65291; 犬を追加</button>
   </div>
-
+ 
   <!-- 犬舎 -->
   <div class="page" id="page-kennel">
     <div class="sub-tabs">
@@ -567,7 +567,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sa
     <div class="kview" id="kv-B"></div>
     <div class="kview" id="kv-birth"></div>
   </div>
-
+ 
   <!-- ドッグラン -->
   <div class="page" id="page-dogrun">
     <div class="sub-tabs" style="align-items:center;">
@@ -577,7 +577,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sa
     </div>
     <div id="dogrun-container"><div class="loading">読み込み中...</div></div>
   </div>
-
+ 
   <!-- 交配管理 -->
   <div class="page" id="page-breed">
     <div class="section-header">
@@ -597,7 +597,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sa
     </div>
     <div id="breed-list"><div class="loading">読み込み中...</div></div>
   </div>
-
+ 
   <!-- シフト -->
   <div class="page" id="page-shift">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
@@ -613,7 +613,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sa
     <div class="shift-legend" id="shift-legend"></div>
     <div class="cal-grid" id="cal-grid"></div>
   </div>
-
+ 
   <!-- スタッフ管理 -->
   <div class="page" id="page-staff">
     <div class="section-header">
@@ -621,7 +621,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sa
     </div>
     <div id="staff-list-view"><div class="loading">読み込み中...</div></div>
   </div>
-
+ 
   <!-- 給与 -->
   <div class="page" id="page-wage">
     <div class="wage-section">
@@ -635,7 +635,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sa
     <div class="paw-divider">&#128062; &#128062; &#128062;</div>
     <p class="hint">シフト表の勤務時間 &times; 時給で自動計算</p>
   </div>
-
+ 
   <!-- 管理（アクセスログ） -->
   <div class="page" id="page-admin">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
@@ -644,9 +644,9 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sa
     </div>
     <div id="access-log-list"><div class="loading">読み込み中...</div></div>
   </div>
-
+ 
 </div>
-
+ 
 <!-- ボトムナビ -->
 <nav class="bottom-nav">
   <div class="bottom-nav-inner">
@@ -656,11 +656,12 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sa
     <button class="bnav-btn" onclick="switchMain('breed',this)" data-tab="breed"><span class="bicon">&#128149;</span>交配</button>
     <button class="bnav-btn" onclick="switchMain('shift',this)" data-tab="shift"><span class="bicon">&#128197;</span>シフト</button>
     <button class="bnav-btn" onclick="switchMain('staff',this)" data-tab="staff"><span class="bicon">&#128101;</span>スタッフ</button>
+    <button class="bnav-btn" onclick="switchMain('dogrun',this)" data-tab="dogrun"><span class="bicon">&#128062;</span>ドッグラン</button>
     <button class="bnav-btn" id="wage-bnav" onclick="switchMain('wage',this)" data-tab="wage" style="display:none;"><span class="bicon">&#128180;</span>給与</button>
     <button class="bnav-btn" id="admin-bnav" onclick="switchMain('admin',this)" data-tab="admin" style="display:none;"><span class="bicon">&#128274;</span>管理</button>
   </div>
 </nav>
-
+ 
 <!-- PWA Banner -->
 <div id="pwa-banner">
   <span class="pwa-icon">&#127800;</span>
@@ -670,9 +671,9 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sa
   </div>
   <button class="pwa-close" onclick="dismissPwaBanner()">×</button>
 </div>
-
+ 
 <div class="toast" id="toast"></div>
-
+ 
 <!-- 犬追加モーダル -->
 <div class="overlay" id="add-dog-overlay">
   <div class="modal">
@@ -703,7 +704,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sa
     <button class="mclose-btn" onclick="closeModal('add-dog-overlay')">キャンセル</button>
   </div>
 </div>
-
+ 
 <!-- ケージモーダル -->
 <div class="overlay" id="cage-overlay">
   <div class="modal">
@@ -717,7 +718,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sa
     <button class="mclose-btn" onclick="closeModal('cage-overlay')">閉じる</button>
   </div>
 </div>
-
+ 
 <!-- ドッグランエリアモーダル -->
 <div class="overlay" id="dogrun-overlay">
   <div class="modal">
@@ -731,7 +732,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sa
     <button class="mclose-btn" onclick="closeModal('dogrun-overlay')">閉じる</button>
   </div>
 </div>
-
+ 
 <!-- お産部屋出産情報モーダル -->
 <div class="overlay" id="birth-info-overlay">
   <div class="modal">
@@ -751,7 +752,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sa
     <button class="mclose-btn" onclick="closeModal('birth-info-overlay')">キャンセル</button>
   </div>
 </div>
-
+ 
 <!-- 交配追加・編集モーダル -->
 <div class="overlay" id="breed-overlay">
   <div class="modal">
@@ -812,7 +813,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sa
     <button class="mclose-btn" onclick="closeModal('breed-overlay')">キャンセル</button>
   </div>
 </div>
-
+ 
 <!-- シフト編集モーダル -->
 <div class="overlay" id="shift-overlay">
   <div class="modal">
@@ -823,7 +824,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sa
     <button class="mclose-btn" onclick="closeModal('shift-overlay')">キャンセル</button>
   </div>
 </div>
-
+ 
 <!-- スタッフ編集モーダル -->
 <div class="overlay" id="staff-edit-overlay">
   <div class="modal">
@@ -838,7 +839,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sa
     <button class="mclose-btn" onclick="closeModal('staff-edit-overlay')">キャンセル</button>
   </div>
 </div>
-
+ 
 <!-- イベントモーダル -->
 <div class="overlay" id="event-overlay">
   <div class="modal">
@@ -881,7 +882,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sa
 // ================= ロゴ長押し =================
 let logoPressTimer = null;
 let wageVisible = false;
-
+ 
 function startLogoPress() {
   logoPressTimer = setTimeout(() => {
     wageVisible = !wageVisible;
@@ -903,15 +904,15 @@ function startLogoPress() {
     }
   }, 800);
 }
-
+ 
 function cancelLogoPress() {
   clearTimeout(logoPressTimer);
 }
-
+ 
 // ================= Supabase =================
 const SUPA_URL = 'https://akrtgasyenuptcoezwhs.supabase.co';
 const SUPA_KEY = 'sb_publishable_VbnT0A4f8QdDLkBXYC7sOw_k2cUVXTh';
-
+ 
 async function supaFetch(path, method='GET', body=null) {
   const headers = {
     'apikey': SUPA_KEY,
@@ -927,14 +928,14 @@ async function supaFetch(path, method='GET', body=null) {
   const text = await res.text();
   return text ? JSON.parse(text) : null;
 }
-
+ 
 // ================= アクセスログ =================
 async function logAccess() {
   try {
     await supaFetch('access_logs', 'POST', { user_agent: navigator.userAgent });
   } catch(e) { console.warn('アクセスログ記録失敗:', e); }
 }
-
+ 
 // ================= 管理ページ =================
 async function loadAdminPage() {
   const el = document.getElementById('access-log-list');
@@ -983,7 +984,7 @@ async function loadAdminPage() {
       <div style="display:flex;flex-direction:column;gap:6px;">${logHTML}</div>`;
   } catch(e) { el.innerHTML = '<div class="loading">読み込みエラー</div>'; }
 }
-
+ 
 // ================= 状態 =================
 const EMOJIS = ['&#128054;','&#128041;','&#129454;','&#128021;','&#128062;','&#128021;‍🦺'];
 const BG_COLORS = ['#FFE0EC','#FFF0D0','#D8EEFF','#E0FFE8','#F0E0FF','#FFE8D0'];
@@ -994,7 +995,7 @@ const STAFF_COLORS = [
   { bg: '#F5D0DC', text: '#882244' },
   { bg: '#E8E0FF', text: '#442288' },
 ];
-
+ 
 let dogs = [], cageAssignments = [], birthInfoMap = {}, breedRecords = [], staffList = [], shiftsMap = {};
 let dogrunAssignments = [];
 let currentMonth = new Date().getMonth();
@@ -1007,17 +1008,17 @@ let addingNew = false;
 let dogViewMode = 'grid';
 let currentBreedFilter = '';
 let events = [];
-
+ 
 // ================= 交配ソート =================
 let currentBreedSort = 'new';
-
+ 
 function setBreedSort(sortKey) {
   currentBreedSort = sortKey;
   document.querySelectorAll('.sort-btn').forEach(b => b.classList.remove('active'));
   document.getElementById('sort-' + sortKey).classList.add('active');
   renderBreed();
 }
-
+ 
 function sortBreedRecords(records) {
   const STATUS_ORDER = { planned: 0, pregnant: 1, done: 2 };
   switch (currentBreedSort) {
@@ -1049,7 +1050,7 @@ function sortBreedRecords(records) {
       return records;
   }
 }
-
+ 
 // ================= ユーティリティ =================
 function showToast(msg) {
   const t = document.getElementById('toast');
@@ -1060,7 +1061,7 @@ function showToast(msg) {
 function openModal(id)  { document.getElementById(id).classList.add('open'); }
 function closeModal(id) { document.getElementById(id).classList.remove('open'); }
 function getStaffColor(idx) { return STAFF_COLORS[idx % STAFF_COLORS.length]; }
-
+ 
 function calcBreedDates(estrusDate) {
   if (!estrusDate) {
     document.getElementById('b-mating-date-1').value = '';
@@ -1079,7 +1080,7 @@ function calcBreedDates(estrusDate) {
   document.getElementById('b-mating-date-1').value = fmt(d10);
   document.getElementById('b-mating-date-2').value = fmt(d12);
 }
-
+ 
 // ================= ダッシュボード =================
 function dateDiffDays(dateStr, baseDate) {
   const [y, m, d] = dateStr.split('-').map(Number);
@@ -1087,7 +1088,7 @@ function dateDiffDays(dateStr, baseDate) {
   const base   = new Date(baseDate.getFullYear(), baseDate.getMonth(), baseDate.getDate(), 0, 0, 0, 0);
   return Math.round((target - base) / 86400000);
 }
-
+ 
 function renderDashboard() {
   const now = new Date();
   const h = now.getHours();
@@ -1096,7 +1097,7 @@ function renderDashboard() {
   const DOW = ['日','月','火','水','木','金','土'];
   document.getElementById('dash-date-text').textContent =
     `${now.getFullYear()}年${now.getMonth()+1}月${now.getDate()}日（${DOW[now.getDay()]}）`;
-
+ 
   const newsEl = document.getElementById('dash-news');
   const sevenDaysAgo = new Date(now.getTime() - 7*24*60*60*1000);
   const recentBirths = breedRecords.filter(r => {
@@ -1104,7 +1105,7 @@ function renderDashboard() {
     const bd = new Date(r.birth_date + 'T00:00:00');
     return bd >= sevenDaysAgo && bd <= now;
   }).sort((a,b) => new Date(b.birth_date) - new Date(a.birth_date));
-
+ 
   if (recentBirths.length === 0) {
     newsEl.innerHTML = '';
   } else {
@@ -1129,14 +1130,14 @@ function renderDashboard() {
       }).join('')}
     </div>`;
   }
-
+ 
   const total  = dogs.length;
   const female = dogs.filter(d=>d.gender==='female').length;
   const male   = dogs.filter(d=>d.gender==='male').length;
   document.getElementById('ds-total').textContent  = total;
   document.getElementById('ds-female').textContent = female;
   document.getElementById('ds-male').textContent   = male;
-
+ 
   const countKennel = (k) => cageAssignments.filter(a=>a.kennel===k).length;
   const maxA = 8*4*2, maxB = 8*4*2, maxBirth = 10*2;
   const cA = countKennel('A'), cB = countKennel('B'), cBirth = countKennel('birth');
@@ -1146,13 +1147,13 @@ function renderDashboard() {
   document.getElementById('ksbar-a').style.width     = Math.min(100, Math.round(cA/maxA*100)) + '%';
   document.getElementById('ksbar-b').style.width     = Math.min(100, Math.round(cB/maxB*100)) + '%';
   document.getElementById('ksbar-birth').style.width = Math.min(100, Math.round(cBirth/maxBirth*100)) + '%';
-
+ 
   const todayStr = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')}`;
   const todayShifts = staffList.map((s,idx) => {
     const sh = shiftsMap[`${s.id}_${todayStr}`];
     return sh && sh.start_time ? { staff: s, shift: sh, idx } : null;
   }).filter(Boolean);
-
+ 
   if (todayShifts.length === 0) {
     document.getElementById('dash-today-shift').innerHTML = '<div class="no-shift-msg">今日のシフトは登録されていません</div>';
   } else {
@@ -1169,7 +1170,7 @@ function renderDashboard() {
       }).join('')
     }</div>`;
   }
-
+ 
   const todayMatings = breedRecords.filter(r =>
     r.mating_date_1 === todayStr || r.mating_date_2 === todayStr
   );
@@ -1177,7 +1178,7 @@ function renderDashboard() {
     .filter(d => d && d > todayStr).sort();
   const nextDate = futureDates.length ? futureDates[0] : null;
   const nextMatings = nextDate ? breedRecords.filter(r => r.mating_date_1 === nextDate || r.mating_date_2 === nextDate) : [];
-
+ 
   let todayMatingHTML = '';
   if (todayMatings.length === 0) {
     todayMatingHTML = '<div class="dash-empty">今日の交配予定はありません</div>';
@@ -1200,7 +1201,7 @@ function renderDashboard() {
       }).join('')
     }</div>`;
   }
-
+ 
   if (nextMatings.length > 0) {
     const DOW2 = ['日','月','火','水','木','金','土'];
     const nd = new Date(nextDate + 'T00:00:00');
@@ -1222,7 +1223,7 @@ function renderDashboard() {
     </div>`;
   }
   document.getElementById('dash-today-mating').innerHTML = todayMatingHTML;
-
+ 
   const pregnant = breedRecords.filter(r => r.status === 'pregnant')
     .sort((a, b) => { if (!a.due_date) return 1; if (!b.due_date) return -1; return new Date(a.due_date) - new Date(b.due_date); });
   if (pregnant.length === 0) {
@@ -1246,13 +1247,13 @@ function renderDashboard() {
       </div>`;
     }).join('');
   }
-
+ 
   const upcoming = breedRecords.filter(r => {
     if (!r.due_date || r.status === 'done') return false;
     const diff = dateDiffDays(r.due_date, now);
     return diff >= 0 && diff <= 30;
   }).sort((a,b) => new Date(a.due_date) - new Date(b.due_date));
-
+ 
   if (upcoming.length === 0) {
     document.getElementById('dash-upcoming-birth').innerHTML = '<div class="dash-empty">30日以内の出産予定はありません</div>';
   } else {
@@ -1272,7 +1273,7 @@ function renderDashboard() {
     }).join('');
   }
 }
-
+ 
 // ================= 犬の管理 =================
 async function loadDogs() {
   dogs = await supaFetch('dogs?order=id.asc');
@@ -1446,10 +1447,10 @@ async function saveDog() {
   await loadDogs();
   addingNew = false;
 }
-
+ 
 // ================= ドッグラン =================
 let currentDogrunKennel = 'A';
-
+ 
 async function loadDogrunAssignments() {
   dogrunAssignments = await supaFetch('dogrun_assignments?select=*');
 }
@@ -1533,7 +1534,7 @@ function printDogrun() {
   const kennel = currentDogrunKennel;
   const areas = ['13','12','11','10','9','8','7','6','5','4','3','2','1'];
   let totalDogs = 0, usedAreas = 0;
-
+ 
   // 印刷グリッド生成
   const gridHTML = areas.map(a => {
     const doglist = getDogrunDogs(kennel, a);
@@ -1552,22 +1553,22 @@ function printDogrun() {
       ${dogsHTML}
     </div>`;
   }).join('');
-
+ 
   // 日時
   const now = new Date();
   const dateStr = `${now.getFullYear()}年${now.getMonth()+1}月${now.getDate()}日 ${now.getHours().toString().padStart(2,'0')}:${now.getMinutes().toString().padStart(2,'0')} 現在`;
-
+ 
   document.getElementById('dogrun-print-title').textContent = `🌸 LillyBell ドッグラン配置図｜犬舎 ${kennel}`;
   document.getElementById('dogrun-print-date').textContent = dateStr;
   document.getElementById('dogrun-print-grid').innerHTML = gridHTML;
   document.getElementById('dogrun-print-stats').textContent = `収容頭数：${totalDogs}頭　使用エリア：${usedAreas}/${areas.length}`;
   document.getElementById('dogrun-print-area').style.display = 'block';
-
+ 
   window.print();
-
+ 
   document.getElementById('dogrun-print-area').style.display = 'none';
 }
-
+ 
 // ================= 犬舎 =================
 async function loadCageAssignments() {
   cageAssignments = await supaFetch('cage_assignments?select=*');
@@ -1793,7 +1794,7 @@ function switchKennel(k, el) {
   document.getElementById('kv-'+k).classList.add('active');
   currentKennel=k; renderKennel(k);
 }
-
+ 
 let matingResult1 = '', matingResult2 = '';
 function setMatingResult(num, val) {
   if (num === 1) matingResult1 = val;
@@ -1812,7 +1813,7 @@ function updateMatingResultUI() {
     });
   });
 }
-
+ 
 // ================= 交配管理 =================
 async function loadBreedRecords() {
   breedRecords = await supaFetch('breed_records?order=id.desc');
@@ -1820,7 +1821,7 @@ async function loadBreedRecords() {
 }
 const STATUS_LABEL = {pregnant:'妊娠中', planned:'交配予定', done:'完了'};
 const STATUS_CLS   = {pregnant:'pregnant', planned:'planned', done:'done'};
-
+ 
 function renderBreed() {
   const el = document.getElementById('breed-list');
   const searchEl = document.getElementById('breed-search');
@@ -1867,7 +1868,7 @@ function renderBreed() {
     </div>`;
   }).join('');
 }
-
+ 
 function openBreedModal(id) {
   editingBreedId = id;
   const females = dogs.filter(d=>d.gender==='female');
@@ -1946,7 +1947,7 @@ async function deleteBreed(id) {
   showToast('削除しました');
   await loadBreedRecords();
 }
-
+ 
 // ================= スタッフ管理 =================
 async function loadStaff() { staffList = await supaFetch('staff?order=id.asc'); }
 function renderStaffList() {
@@ -1984,7 +1985,7 @@ async function saveStaff() {
   renderStaffList();
   renderWage();
 }
-
+ 
 // ================= シフト =================
 async function loadShifts() {
   const y=currentYear, m=currentMonth+1;
@@ -2100,7 +2101,7 @@ async function changeMonth(delta) {
   await renderShiftCal();
   renderWageCards();
 }
-
+ 
 // ================= 給与 =================
 function renderWage() {
   document.getElementById('hourly-list').innerHTML = staffList.map((s,i)=> {
@@ -2151,7 +2152,7 @@ function renderWageCards() {
     </div>`;
   }).join('');
 }
-
+ 
 // ================= タブ切替 =================
 function switchMain(tab, el) {
   document.querySelectorAll('.tab, .bnav-btn').forEach(t=>t.classList.remove('active'));
@@ -2167,12 +2168,12 @@ function switchMain(tab, el) {
   if (tab==='staff') renderStaffList();
   if (tab==='admin') loadAdminPage();
 }
-
+ 
 // ================= イベント管理 =================
 const EVENT_COLORS = ['#E8832A','#4A9A4A','#2266CC','#CC2222','#8844CC','#CC8800','#888888'];
 let editingEventId = null;
 let selectedEventColor = EVENT_COLORS[0];
-
+ 
 function renderEventList() {
   const el = document.getElementById('event-list');
   if (!el) return;
@@ -2263,7 +2264,7 @@ async function deleteEvent(id) {
   renderEventList();
   await renderShiftCal();
 }
-
+ 
 // ================= 初期化 =================
 async function init() {
   try {
@@ -2278,7 +2279,7 @@ async function init() {
     showToast('接続エラー。再読み込みしてください');
   }
 }
-
+ 
 // ===== PWA Banner =====
 (function() {
   const isStandalone = window.matchMedia('(display-mode: standalone)').matches || navigator.standalone;
@@ -2301,7 +2302,7 @@ function dismissPwaBanner() {
   localStorage.setItem('lillybell_pwa_dismissed', '1');
   document.getElementById('pwa-banner').style.display = 'none';
 }
-
+ 
 init();
 </script>
 </body>
